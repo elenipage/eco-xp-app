@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-export function Leaderboard() {
+export function FAQ() {
   const insets = useSafeAreaInsets()
     return (
       <View style={{
@@ -13,8 +13,7 @@ export function Leaderboard() {
         paddingLeft: insets.left,
         paddingRight: insets.right,
       }}>
-        <Text>Leaderboard</Text>
+        <Text>FAQ</Text>
       </View>
     );
   }
-
