@@ -1,55 +1,36 @@
-import * as React from "react";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React from "react";
 import { HomeScreen } from "../pages/Home";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Leaderboard } from "../pages/Leaderboard";
 import { Scanner } from "../pages/Scanner";
-import { Profile } from "../pages/Profile";
-import { Button } from "@react-navigation/elements";
-import { Quiz } from "../pages/Quiz";
-import { Text } from "react-native";
-import { useState } from "react";
-import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Help } from "../pages/Help";
 import { Stats } from "../pages/Stats";
-import { FAQ } from "../pages/FAQ";
-import { Info } from "../pages/Info";
-import { ItemConfirmation } from "../pages/ItemConfirmation";
-import { AddNewItem } from "../pages/AddNewItem";
-import { PaperProvider } from "react-native-paper";
-
-const Tab = createBottomTabNavigator();
+import { BottomNavigation } from "react-native-paper";
 
 function Tabs() {
+  const [index, setIndex] = React.useState(0);
+
+  const [routes] = React.useState([
+    { key: "home", title: "Home", focusedIcon: "home", unfocusedIcon: "home-outline" },
+    { key: "stats", title: "Stats", focusedIcon: "chart-box", unfocusedIcon: "chart-box-outline" },
+    { key: "scanner", title: "Scanner", focusedIcon: "barcode-scan" },
+    { key: "leaderboard", title: "Leaderboard", focusedIcon: "trophy", unfocusedIcon: "trophy-outline" },
+    { key: "help", title: "Help", focusedIcon: "account-cowboy-hat", unfocusedIcon: "account-cowboy-hat-outline" },
+  ]);
+
+  const renderScene = BottomNavigation.SceneMap({
+    home: HomeScreen,
+    stats: Stats,
+    scanner: Scanner,
+    leaderboard: Leaderboard,
+    help: Help,
+  });
+
   return (
-    <Tab.Navigator>
-      <Tab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{ headerShown: false }}
-      />
-      <Tab.Screen
-        name="Stats"
-        component={Stats}
-        options={{ headerShown: false }}
-      />
-      <Tab.Screen
-        name="Scan"
-        component={Scanner}
-        options={{ headerShown: false }}
-      />
-      <Tab.Screen
-        name="Leaderboard"
-        component={Leaderboard}
-        options={{ headerShown: false }}
-      />
-      <Tab.Screen
-        name="Help"
-        component={Help}
-        options={{ headerShown: false }}
-      />
-    </Tab.Navigator>
+    <BottomNavigation
+      navigationState={{ index, routes }}
+      onIndexChange={setIndex}
+      renderScene={renderScene}
+    />
   );
 }
 
