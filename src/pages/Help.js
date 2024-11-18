@@ -4,10 +4,11 @@ import { useNavigation } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export function Help() {
-  const insets = useSafeAreaInsets()
+  const insets = useSafeAreaInsets();
   const navigation = useNavigation();
-    return (
-      <View style={{
+  return (
+    <View
+      style={{
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
@@ -15,10 +16,14 @@ export function Help() {
         paddingBottom: insets.bottom,
         paddingLeft: insets.left,
         paddingRight: insets.right,
-      }}>
-        <Text>Help</Text>
-        <Button onPress={() => navigation.navigate("FAQ")}>FAQ</Button>
-        <Button onPress={() => navigation.navigate("Info")}>Info</Button>
-      </View>
-    );
-  }
+      }}
+    >
+      <Text>Help</Text>
+      <Button onPress={() => navigation.navigate("Info")}>Info</Button>
+      <Button onPress={() => navigation.navigate("FAQ")}>FAQ</Button>
+      <Button>Report a missed bin</Button>
+      <Button>Request a replacement bin</Button>
+      <Button>Report a missed collection</Button>
+    </View>
+  );
+}
