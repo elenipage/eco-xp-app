@@ -11,6 +11,12 @@ import { Quiz } from "./Quiz";
 import { Text } from "react-native";
 import { useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Help } from "./Help";
+import { Stats } from "./Stats";
+import { FAQ } from "./FAQ";
+import { Info } from "./Info";
+import { ItemConfirmation } from "./ItemConfirmation";
+import { AddNewItem } from "./AddNewItem";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -24,6 +30,11 @@ function Tabs() {
         options={{ headerShown: false }}
       />
       <Tab.Screen
+        name="Stats"
+        component={Stats}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
         name="Scan"
         component={Scanner}
         options={{ headerShown: false }}
@@ -31,6 +42,11 @@ function Tabs() {
       <Tab.Screen
         name="Leaderboard"
         component={Leaderboard}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="Help"
+        component={Help}
         options={{ headerShown: false }}
       />
     </Tab.Navigator>
@@ -53,11 +69,35 @@ function RootStack() {
           headerRight: () => <Text>{`${xp} XP`}</Text>,
         }}
       />
-      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={{ headerRight: () => <Text>{`${xp} XP`}</Text> }}
+      />
       <Stack.Screen
         name="Quiz"
         component={Quiz}
         initialParams={{ xp: xp, setXp: setXp }}
+        options={{ headerRight: () => <Text>{`${xp} XP`}</Text> }}
+      />
+      <Stack.Screen
+        name="FAQ"
+        component={FAQ}
+        options={{ headerRight: () => <Text>{`${xp} XP`}</Text> }}
+      />
+      <Stack.Screen
+        name="Info"
+        component={Info}
+        options={{ headerRight: () => <Text>{`${xp} XP`}</Text> }}
+      />
+      <Stack.Screen
+        name="Item Confirmation"
+        component={ItemConfirmation}
+        options={{ headerRight: () => <Text>{`${xp} XP`}</Text> }}
+      />
+      <Stack.Screen
+        name="Add a New Item"
+        component={AddNewItem}
         options={{ headerRight: () => <Text>{`${xp} XP`}</Text> }}
       />
     </Stack.Navigator>
