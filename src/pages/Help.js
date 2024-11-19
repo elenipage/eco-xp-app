@@ -1,37 +1,27 @@
-import { Image, View, ScrollView, Linking } from "react-native";
+import { Image, ScrollView, Linking } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+// import { useSafeAreaInsets } from "react-native-safe-area-context";
 import StandardButton from "../components/StandardButton";
-import { Surface } from "react-native-paper";
+import ButtonContainer from "../components/ButtonContainer";
+import BaseLayout from "../components/BaseLayout";
 
 export function Help() {
-  const insets = useSafeAreaInsets();
+  // const insets = useSafeAreaInsets();
   const navigation = useNavigation();
   return (
-    <ScrollView
-    // style={{
-    //   flex: 1,
-    //   alignItems: "center",
-    //   justifyContent: "space-between",
-    //   margin: 20,
-    //   paddingTop: insets.top,
-    //   paddingBottom: insets.bottom,
-    //   paddingLeft: insets.left,
-    //   paddingRight: insets.right,
-    // }}
-    >
-      <View
+    <ScrollView>
+      {/* <View
         style={{
-          flex: 1,
+          // flex: 1,
           alignItems: "center",
           justifyContent: "space-between",
+          // height:"100%",
           margin: 20,
-          paddingTop: insets.top,
-          paddingBottom: insets.bottom,
-          paddingLeft: insets.left,
-          paddingRight: insets.right,
+          paddingTop: Platform.OS === "ios" ? insets.top : 0,
+          paddingBottom: Platform.OS === "ios" ? insets.bottom : 0,
         }}
-      >
+      > */}
+      <BaseLayout>
         <Image
           style={{
             width: 200,
@@ -40,15 +30,7 @@ export function Help() {
           }}
           source={{ uri: "https://cdn-icons-png.flaticon.com/512/4718/4718001.png" }}
         />
-        <Surface
-          elevation={2}
-          style={{
-            width: "100%",
-            gap: 10,
-            borderRadius: 20,
-            padding: 20,
-          }}
-        >
+        <ButtonContainer>
           {/* Add the above surface to its own ButtonContainer component? */}
           <StandardButton
             buttonText={"Info"}
@@ -90,8 +72,9 @@ export function Help() {
               );
             }}
           />
-        </Surface>
-      </View>
+        </ButtonContainer>
+      </BaseLayout>
+      {/* </View> */}
     </ScrollView>
   );
 }
