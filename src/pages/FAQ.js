@@ -16,4 +16,9 @@ export function FAQ() {
         <Text>FAQ</Text>
       </View>
     );
-  }
+}
+  
+
+// Scrollview => surface => Text
+// Map through Q and A and put them on separate "surfaces" (native paper)
+// Additional styling - inline, StyleSheet.create, or external file
