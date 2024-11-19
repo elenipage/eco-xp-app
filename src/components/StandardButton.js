@@ -1,9 +1,9 @@
 import React from "react";
 import { Button } from "react-native-paper";
 
-function StandardButton({buttonText, clickFunction}) {
+function StandardButton({buttonText, tapFunction}) {
   return <Button mode="contained-tonal"
-  onPress={clickFunction}>{buttonText}</Button>;
+  onPress={tapFunction}>{buttonText}</Button>;
 }
 
 export default StandardButton;
