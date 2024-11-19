@@ -1,7 +1,7 @@
-import { Button } from "@react-navigation/elements";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Button } from "react-native-paper";
 
 export function HomeScreen() {
   const insets = useSafeAreaInsets;
@@ -17,7 +17,7 @@ export function HomeScreen() {
       paddingRight: insets.right,
     }}>
       <Text>Home Screen</Text>
-      <Button onPress={() => navigation.navigate("Quiz")}>Take a Quiz</Button>
+      <Button onPress={() => navigation.navigate("Quiz")} mode="contained-tonal">Take a Quiz</Button>
     </View>
   );
 }
