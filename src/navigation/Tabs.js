@@ -1,6 +1,6 @@
 import React from "react";
 import { HomeScreen } from "../pages/Home";
-import { Leaderboard } from "../pages/Leaderboard";
+import { LeaderboardPage } from "../pages/LeaderboardPage";
 import { Scanner } from "../pages/Scanner";
 import { Help } from "../pages/Help";
 import { Stats } from "../pages/Stats";
@@ -21,7 +21,7 @@ function Tabs() {
     home: HomeScreen,
     stats: Stats,
     scanner: Scanner,
-    leaderboard: Leaderboard,
+    leaderboard: LeaderboardPage,
     help: Help,
   });
 
