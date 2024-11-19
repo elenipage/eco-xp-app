@@ -5,19 +5,23 @@ function StandardButton({ buttonText, tapFunction }) {
   return (
     <Button
       mode="contained-tonal"
+      style={{
+        // height: 60,
+        width: "100%",
+        borderRadius: 30,
+      }}
       contentStyle={{
-        // width: "100%",
         height: 60,
-        alignItems: "center",
-        justifyContent: "center",
+        width: "100%",
+        // justifyContent: "center",
       }}
       onPress={tapFunction}
     >
       <Text
         style={{
-          fontSize: 18,
-          width: "100%",
-          textAlign: "center",
+          fontSize: 16,
+          // width: "100%",
+          // textAlign: "center",
         }}
       >
         {buttonText}
