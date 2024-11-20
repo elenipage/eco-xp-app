@@ -16,7 +16,13 @@ export function HomeScreen() {
         <StandardButton
           buttonText={"Take a Quiz"}
           tapFunction={() => navigation.navigate("Quiz")}
-          mode="contained-tonal"
+        >
+          Take a Quiz
+        </StandardButton>
+        {/* (temporarily) allows me to navigate to the welcome page */}
+        <StandardButton
+          buttonText={"Take a Loading Page"}
+          tapFunction={() => navigation.navigate("Loading")}
         >
           Take a Quiz
         </StandardButton>
