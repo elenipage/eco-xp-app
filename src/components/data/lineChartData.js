@@ -13,7 +13,7 @@ const singleFollowerLineChart = {
         strokeWidth: 2 
       }
     ],
-    legend: ["User", "Follower"] 
+    legend: ["You", "Jenny"] 
   };
 
 
@@ -51,4 +51,4 @@ const singleFollowerLineChart = {
         ],
       };
       
-      module.exports = {postcodeLineChart, followersLineChart, areaLineChart}
+      module.exports = {singleFollowerLineChart, postcodeLineChart, followersLineChart, areaLineChart}
