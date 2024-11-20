@@ -27,7 +27,7 @@ export default function Line(props) {
   return (
   <LineChart
   data={data}
-  width={screenWidth}
+  width={300}
   height={300}
   verticalLabelRotation={30}
   chartConfig={chartConfig}
