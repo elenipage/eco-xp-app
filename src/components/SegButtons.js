@@ -2,8 +2,8 @@ import React from "react";
 import { SegmentedButtons } from "react-native-paper";
 import { StyleSheet } from "react-native";
 
-function SegButtons() {
-  const [value, setValue] = React.useState("");
+function SegButtons(props) {
+  const { value, setValue } = props
   return (
     <SegmentedButtons
       value={value}
@@ -32,7 +32,8 @@ function SegButtons() {
 
 const styles = StyleSheet.create({
   segButton: {
-    width: "100%",
+    width: "95%",
+    
   },
 });
 

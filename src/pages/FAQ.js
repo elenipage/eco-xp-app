@@ -66,6 +66,7 @@ export function FAQ() {
         paddingBottom: insets.bottom,
         paddingLeft: insets.left,
         paddingRight: insets.right,
+
       }}
     >
       <Text style={{ fontSize: 24, fontWeight: "bold" }}>FAQ</Text>
@@ -78,4 +79,3 @@ export function FAQ() {
       ))}
     </View>
   );
-}
