@@ -5,6 +5,9 @@ const followersData = [
     { userName: 'Sam', avatarUrl: 'https://avatar.iran.liara.run/public/41', xp: 85 }
 ];
 
+const followersSorted = followersData.sort((b, a) => a.xp - b.xp);
+const followersPreview = [followersSorted[0], followersSorted[1], followersSorted[3]]
+
 const postcodeData = [
     { userName: 'Joe', avatarUrl: 'https://avatar.iran.liara.run/public/32', xp: 52 },
     { userName: 'Mia', avatarUrl: 'https://avatar.iran.liara.run/public/78', xp: 140 },
@@ -27,4 +30,4 @@ const areaData = [
 ];
 
 
-export {followersData, postcodeData, areaData}
+export {followersData, followersPreview, postcodeData, areaData}
