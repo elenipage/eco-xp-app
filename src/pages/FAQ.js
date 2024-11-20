@@ -1,6 +1,7 @@
-import { Text, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Text, View, ScrollView } from "react-native";
+// import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FAQCard } from "../components/HelpSectionFAQ";
+import BaseLayout from "../components/BaseLayout";
 
 export function FAQ() {
   const recyclingFAQs = [
@@ -42,8 +43,7 @@ export function FAQ() {
         "The Recycle Now Recycling Locator widget is available for third party website use under licence. The widget can be embedded on one or more pages using a simple piece of code.",
     },
     {
-      Question:
-        "How can I add my organisation as a location on the Recycling Locator?",
+      Question: "How can I add my organisation as a location on the Recycling Locator?",
       Answer:
         "We are able to accept applications from other organisations who have recycling or re-use locations available that are open to the public. For more details, please email: PartnerEnquiries@wrap.org.uk.",
     },
@@ -55,27 +55,32 @@ export function FAQ() {
     },
   ];
 
-  const insets = useSafeAreaInsets();
+  // const insets = useSafeAreaInsets();
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        paddingTop: insets.top,
-        paddingBottom: insets.bottom,
-        paddingLeft: insets.left,
-        paddingRight: insets.right,
+    // <View
+    //   style={{
+    //     flex: 1,
+    //     alignItems: "center",
+    //     justifyContent: "center",
+    //     paddingTop: insets.top,
+    //     paddingBottom: insets.bottom,
+    //     paddingLeft: insets.left,
+    //     paddingRight: insets.right,
 
-      }}
-    >
-      <Text style={{ fontSize: 24, fontWeight: "bold" }}>FAQ</Text>
-      {recyclingFAQs.map((object, index) => (
-        <FAQCard
-          key={index}
-          FAQQuestion={object.Question}
-          FAQAnswer={object.Answer}
-        />
-      ))}
-    </View>
+    //   }}
+    // >
+    <ScrollView>
+      <BaseLayout>
+        <Text style={{ fontSize: 24, fontWeight: "bold" }}>FAQ</Text>
+        {recyclingFAQs.map((object, index) => (
+          <FAQCard
+            key={index}
+            FAQQuestion={object.Question}
+            FAQAnswer={object.Answer}
+          />
+        ))}
+      </BaseLayout>
+    </ScrollView>
+    // </View>
   );
+}
