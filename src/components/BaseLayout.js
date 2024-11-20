@@ -13,8 +13,8 @@ function BaseLayout(props) {
         // height:"100%",
         paddingLeft: 20,
         paddingRight: 20,
-        paddingTop: Platform.OS === "ios" ? insets.top : 20,
-        paddingBottom: Platform.OS === "ios" ? insets.bottom : 20,
+        paddingTop: Platform.OS === "ios" ? insets.top : 0,
+        paddingBottom: Platform.OS === "ios" ? insets.bottom : 0,
       }}
     >
       {children}
