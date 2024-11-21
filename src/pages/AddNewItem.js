@@ -19,7 +19,7 @@ export function AddNewItem() {
   // const[itemBrand,setItemBrand] = useState("")
   const[itemMaterial, setItemMaterial] = useState("")
   const[materials, setMaterials] = useState([])
-  const[materialsObjects, setMaterialsObjects] = useState([])
+  const[materialsList, setMaterialsList] = useState([])
   const [image, setImage] = useState(null);
 
 
@@ -27,12 +27,12 @@ export function AddNewItem() {
   useEffect(() => {
     fetchMaterials().then(({data}) => {
 
-      setMaterialsObjects(data.materials)
+      setMaterials(data.materials)
 
       const materials = data.materials.map((material) => {
         return material.material_name
       })
-      setMaterials(materials)
+      setMaterialsList(materials)
   
     })
     .catch((err)=> {
@@ -44,22 +44,24 @@ export function AddNewItem() {
     label: 'Packaging material',
     value: null,
   };
-  const options = materials.map((material) => { return {label: material, value: material}})
+  const options = materialsList.map((material) => { return {label: material, value: material}})
 
   const handleSubmit = () => {
 
-    const curr = materialsObjects.filter((material) => {
-        material.material_name === itemMaterial
-        return material.material_id
+    const filtered = materials.filter((material) => {
+        return material.material_name === itemMaterial
     })
 
     const obj = { 
 
       item_name: itemName,
-      material_id: curr,
+      material_id: filtered[0].material_id,
       barcode: barcodeValue,
       image_url: image,
     }
+
+    console.log(obj)
+
   };
 
   return (

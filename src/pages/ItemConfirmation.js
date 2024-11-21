@@ -11,10 +11,6 @@ export function ItemConfirmation() {
   
   const route = useRoute()
   const { scannedItemData } = route.params
-  console.log(scannedItemData)
-  const itemTitle = "Bleach"
-  const itemMaterial = "Plastic"
-  const itemImgUrl = 'https://m.media-amazon.com/images/I/41F3HIxG3TL._AC_.jpg'
   const itemXP = 10
   const isRecyclable = true;
 
