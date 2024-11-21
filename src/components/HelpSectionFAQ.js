@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Surface } from "react-native-paper";
 
 function FAQCard({ FAQQuestion, FAQAnswer }) {
@@ -11,9 +11,16 @@ function FAQCard({ FAQQuestion, FAQAnswer }) {
       onPressOut={() => setIsPressed(false)}
       style={[styles.cardContainer, isPressed && styles.pressedCard]}
     >
-      <Surface elevation={3} style={styles.card}>
-        <Text style={styles.question}>{FAQQuestion}</Text>
-        <Text style={styles.answer}>{FAQAnswer}</Text>
+      <Surface
+        elevation={3}
+        style={[styles.card, isPressed && styles.pressedCard]}
+      >
+        <Text style={[styles.question, isPressed && styles.pressedText]}>
+          {FAQQuestion}
+        </Text>
+        <Text style={[styles.answer, isPressed && styles.pressedText]}>
+          {FAQAnswer}
+        </Text>
       </Surface>
     </TouchableOpacity>
   );
@@ -24,11 +31,17 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     borderRadius: 12,
     padding: 15,
-    backgroundColor: "#fff",
     width: "90%",
     alignSelf: "center",
     borderWidth: 1.5,
     borderColor: "#ddd",
+    backgroundColor: "#fff",
+  },
+
+  card: {
+    padding: 15,
+    borderRadius: 12,
+    backgroundColor: "#F0F8E2",
   },
 
   question: {
@@ -36,18 +49,25 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#2e3d49",
     marginBottom: 15,
+    backgroundColor: "#F0F8E2",
   },
+
   answer: {
     fontSize: 16,
     fontWeight: "400",
     color: "#4a4a4a",
     marginTop: 5,
+    backgroundColor: "#F0F8E2",
   },
 
   pressedCard: {
     backgroundColor: "#e8f7ff",
     transform: [{ scale: 0.95 }],
     elevation: 10,
+  },
+
+  pressedText: {
+    color: "#2e3d49",
   },
 });
 
