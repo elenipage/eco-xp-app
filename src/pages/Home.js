@@ -8,7 +8,6 @@ import { followersPreview } from "../components/data/leaderboardData";
 
 export function HomeScreen() {
   const navigation = useNavigation();
-  console.log(followersPreview)
   return (
     <ScrollView>
       <BaseLayout>
