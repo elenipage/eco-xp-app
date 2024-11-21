@@ -11,14 +11,14 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <PaperProvider>
-        <UserProvider>
-          <LoadingProvider>
-          <XpProvider>
-              <NavigationContainer>
-                <RootStack />
-              </NavigationContainer>
-            </XpProvider>
-        </UserProvider>
+        <LoadingProvider>
+          <UserProvider>
+            <XpProvider>
+                <NavigationContainer>
+                  <RootStack />
+                </NavigationContainer>
+              </XpProvider>
+          </UserProvider>
         </LoadingProvider>
       </PaperProvider>
     </SafeAreaProvider>
