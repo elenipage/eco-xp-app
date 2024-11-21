@@ -6,9 +6,12 @@ import { ScrollView } from "react-native-gesture-handler";
 import BaseLayout from "../components/BaseLayout";
 import { FollowersFollowing } from "../components/FollowersFollowing";
 import { Surface } from "react-native-paper";
+import { useUser } from "../context/user-context";
 
 export function Profile() {
   const insets = useSafeAreaInsets();
+  const { user } = useUser()
+  console.log(user)
   return (
     <ScrollView>
       <BaseLayout>
@@ -29,11 +32,11 @@ export function Profile() {
               border: "5px solid #6DA99A",
             }}
             source={{
-              uri: "https://media.licdn.com/dms/image/v2/D4E03AQHp3QR7NwD02w/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1715085387323?e=1737590400&v=beta&t=cMjFvIwY5d0XCGXUKpdbP9IkEXuIP2IcjGQDEL21lRU",
+              uri: user.avatar_img_url,
             }}
           />
           <View style={{ width: "50%" }}>
-            <Text style={{ fontSize: 25, marginBottom: 10 }}>LouisUser</Text>
+            <Text style={{ fontSize: 25, marginBottom: 10 }}>{user.username}</Text>
             <FollowersFollowing />
           </View>
         </View>
