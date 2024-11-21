@@ -21,12 +21,6 @@ export function HomeScreen() {
           Take a Quiz
         </StandardButton>
         {/* (temporarily) allows me to navigate to the welcome page */}
-        <StandardButton
-          buttonText={"Loading Page Preview"}
-          tapFunction={() => navigation.navigate("Loading")}
-        >
-          Take a Quiz
-        </StandardButton>
       </BaseLayout>
     </ScrollView>
   );
