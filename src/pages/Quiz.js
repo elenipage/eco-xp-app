@@ -1,26 +1,31 @@
 import { StyleSheet, Text, View, Image, Button } from "react-native";
-import quizData from "../components/data/quizData";
-import { useState } from "react";
+import quizzes from "../components/data/quizData";
+import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
 import BaseLayout from "../components/BaseLayout";
 
 export function Quiz({ route }) {
   const { xp, setXp } = route.params;
+  const [localXp, setLocalXp] = useState(0)
+  const [selectedQuiz, setSelectedQuiz] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [feedback, setFeedback] = useState(null);
   const [showAnswer, setShowAnswer] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
-  const [localXp, setLocalXp] = useState(xp);
   const navigation = useNavigation();
 
-  const currentQuestion = quizData[currentQuestionIndex];
+  useEffect(() => {
+    const randomQuiz = quizzes[Math.floor(Math.random() * quizzes.length)];
+    setSelectedQuiz(randomQuiz);
+  }, []);
+
+  const currentQuestion = selectedQuiz[currentQuestionIndex];
 
   function handleAnswer(isCorrect, xpReward) {
     if (isCorrect) {
-      const newXp = localXp + Number(xpReward);
-      setLocalXp(newXp);
-      setXp(newXp);
+      setXp((prevXp) => prevXp + Number(xpReward));
+      setLocalXp((prevLocal) => prevLocal + Number(xpReward))
       setFeedback("Correct! 🎉");
     } else {
       setFeedback("Incorrect. 😞");
@@ -31,11 +36,19 @@ export function Quiz({ route }) {
   function handleNext() {
     setFeedback(null);
     setShowAnswer(false);
-    if (currentQuestionIndex < quizData.length - 1) {
+    if (currentQuestionIndex < selectedQuiz.length - 1) {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
     } else {
       setQuizCompleted(true);
     }
+  }
+
+  if (!selectedQuiz.length) {
+    return (
+      <View style={styles.loadingContainer}>
+        <Text>Loading quiz...</Text>
+      </View>
+    );
   }
 
   if (quizCompleted) {
@@ -46,7 +59,7 @@ export function Quiz({ route }) {
             width: 200,
             height: 200,
             marginBottom: 20,
-            borderRadius:70
+            borderRadius: 70,
           }}
           source={{
             uri: "https://static.vecteezy.com/system/resources/previews/007/410/214/non_2x/team-business-holding-plants-cooperation-nature-on-earth-day-conservation-eco-friendly-ecology-esg-or-ecology-problem-concept-illustration-vector.jpg",
@@ -109,7 +122,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom:150
+    marginBottom: 150,
   },
   text: {
     fontSize: 18,
