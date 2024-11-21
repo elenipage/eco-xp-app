@@ -120,7 +120,8 @@ function RootStack() {
       <Stack.Screen name="Add a New Item" component={AddNewItem} />
       <Stack.Screen name="Take a Picture" component={TakePicture} />
       <Stack.Screen name="Drop Down Menu Info" component={InfoDropDownMenu} />
-      <Stack.Screen name="Login" component={LoginPage} />
+      {/* <Stack.Screen name="Recycling Info" component={RecyclingInfo} />
+      <Stack.Screen name="Plastic Life Cycle" component={PlasticLifeCycle} /> */}
     </Stack.Navigator>
   );
 }
