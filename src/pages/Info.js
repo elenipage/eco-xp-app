@@ -5,14 +5,14 @@ import {
   View,
   Dimensions,
   Image,
-  ScrollView,
+  FlatList,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 
 import RecyclingInfo from "../components/RecyclingInfo";
 import PlasticLifeCycle from "../components/PlasticLifeCycle";
 
-// Get the screen width using Dimensions API
+// gscreen width using Dimensions API
 const { width } = Dimensions.get("window");
 
 export function InfoDropDownMenu() {
@@ -27,16 +27,25 @@ export function InfoDropDownMenu() {
   ]);
 
   let content = null;
-  // Conditional rendering for dropdown content
   if (value === "What can I recycle?") {
     content = <RecyclingInfo />;
   } else if (value === "Life cycle of a plastic bottle") {
     content = <PlasticLifeCycle />;
   }
 
+  const images = [
+    {
+      id: "1",
+      source: require("../../assets/reduce-reuse-recycle.jpg"),
+    },
+    {
+      id: "2",
+      source: require("../../assets/reduce-reuse-recycle.jpg"),
+    },
+  ];
+
   return (
     <View style={styles.container}>
-      {/* Dropdown Menu */}
       <DropDownPicker
         open={open}
         value={value}
@@ -53,20 +62,23 @@ export function InfoDropDownMenu() {
           </View>
         )}
       />
-      {/* Conditional Content Rendering */}
-      {content} {/* selected component displayed here */}
-      {/* Images Section: Render only when no dropdown is selected */}
+
+      <FlatList
+        data={content ? [content] : []}
+        renderItem={({ item }) => item}
+        keyExtractor={(item, index) => index.toString()}
+        style={styles.contentContainer}
+      />
+
       {value === null && (
-        <ScrollView contentContainerStyle={styles.imageContainer}>
-          <Image
-            style={styles.image_one}
-            source={require("../../assets/reduce-reuse-recycle.jpg")}
-          />
-          <Image
-            style={styles.image_two}
-            source={require("../../assets/reduce-reuse-recycle.jpg")}
-          />
-        </ScrollView>
+        <FlatList
+          data={images}
+          renderItem={({ item }) => (
+            <Image style={styles.image} source={item.source} />
+          )}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={styles.imageContainer}
+        />
       )}
     </View>
   );
@@ -78,47 +90,47 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     padding: 20,
+    flexDirection: "column",
   },
 
   dropdownContainer: {
-    paddingBottom: 50,
-  },
+    paddingBottom: 20,
 
-  dropdown: {
-    color: "yellow",
-  },
+    labelStyle: {
+      fontWeight: "700",
+      color: "#000",
+      fontSize: 16,
+      textAlign: "center",
+    },
 
-  labelStyle: {
-    fontWeight: "700",
-    color: "#000",
-    fontSize: 16,
-    textAlign: "center",
-  },
+    dropdownItem: {
+      padding: 10,
+    },
 
-  dropdownItem: {
-    padding: 10,
-  },
+    itemText: {
+      fontSize: 16,
+      color: "#000",
+      fontWeight: 700,
+    },
 
-  itemText: {
-    fontSize: 16,
-    color: "#000",
-    fontWeight: 700,
-  },
+    contentContainer: {
+      flex: 1,
+      marginTop: 20,
+      paddingBottom: 20,
+    },
 
-  imageContainer: {
-    flexGrow: 1, // This ensures the content in ScrollView is arranged properly
-    marginTop: 20, // Adds some space above images
-    alignItems: "center",
-  },
+    imageContainer: {
+      flexGrow: 1,
+      marginTop: 30,
+      alignItems: "center",
+      paddingBottom: 50,
+    },
 
-  image_one: {
-    marginVertical: 20,
-    marginHorizontal: 15,
-    borderRadius: 15,
-  },
-  image_two: {
-    marginVertical: 20,
-    marginHorizontal: 15,
-    borderRadius: 15,
+    image: {
+      marginVertical: 20,
+      marginHorizontal: 15,
+      borderRadius: 15,
+      resizeMode: "contain",
+    },
   },
 });
