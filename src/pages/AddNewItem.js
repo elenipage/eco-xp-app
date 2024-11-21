@@ -1,13 +1,12 @@
 import { StyleSheet, Text, View, TextInput, Image} from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
-
 import React, {useEffect, useState} from 'react';
 import { useRoute } from "@react-navigation/native"
 import {Button, Surface} from 'react-native-paper'
 import BaseLayout from '../../src/components/BaseLayout.js';
 import RNPickerSelect from 'react-native-picker-select'
 import AddImage from '../components/AddImage.js';
-import { fetchMaterials } from '../../axios.js';
+import { fetchMaterials, postNewItem } from '../../axios.js';
 
 export function AddNewItem() {
 
@@ -47,21 +46,25 @@ export function AddNewItem() {
   const options = materialsList.map((material) => { return {label: material, value: material}})
 
   const handleSubmit = () => {
-
     const filtered = materials.filter((material) => {
         return material.material_name === itemMaterial
     })
 
-    const obj = { 
-
-      item_name: itemName,
-      material_id: filtered[0].material_id,
-      barcode: barcodeValue,
-      image_url: image,
+    const obj = {
+      item_name: itemName, 
+      material_id: filtered[0].material_id, 
+      barcode: barcodeValue.toString(), 
+      img_url: 'https://ecom-su-static-prod.wtrecom.com/images/products/11/LN_474469_BP_11.jpg'
     }
 
     console.log(obj)
 
+    postNewItem(obj).then((response) => {
+      console.log(response)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
   };
 
   return (
@@ -82,7 +85,6 @@ export function AddNewItem() {
             <Text style={styles.title}>Add an item</Text>
             <Image source={require('../../assets/household.png')} style={styles.icon}></Image>
             <TextInput style={styles.input} placeholder="Item name" onChangeText={text => setItemName(text)}/>
-            {/* <TextInput style={styles.input} placeholder="Item brand" onChangeText={text => setItemBrand(text)}/> */}
             <View style={styles.input}>
             <Text>Packaging material:</Text>
             <RNPickerSelect
@@ -92,8 +94,8 @@ export function AddNewItem() {
             value={itemMaterial}
             />
             </View>
-
             <Text editable={false} style={styles.input}>Barcode: {barcodeValue}</Text>
+            <Button mode="contained-tonal" tapFunction={() => navigation.navigate("Take a Picture")}>Take a picture</Button>
             <View>
               <AddImage image={image} setImage={setImage}></AddImage> 
             </View>

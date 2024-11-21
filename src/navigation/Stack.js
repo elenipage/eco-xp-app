@@ -14,6 +14,7 @@ import { useXp } from "../context/Xp-context";
 import { LoadingPage } from "../pages/LoadingPage";
 import { OtherProfile } from "../pages/OtherProfile";
 import { useEffect, useState } from "react";
+import TakePicture from "../components/TakePicture";
 
 const Stack = createStackNavigator();
 
@@ -107,6 +108,7 @@ function RootStack() {
       <Stack.Screen name="Info" component={Info} />
       <Stack.Screen name="Item Confirmation" component={ItemConfirmation} />
       <Stack.Screen name="Add a New Item" component={AddNewItem} />
+      <Stack.Screen name="Take a Picture" component={TakePicture} />
     </Stack.Navigator>
   );
 }

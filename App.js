@@ -22,4 +22,4 @@ export default function App() {
   );
 }
 
-// Find out how to change android status and navbar colours to match app colours
+// Find out how to change android status and navbar colours to match app colours 
