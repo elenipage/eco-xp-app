@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View, TextInput, Image} from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
+
 import React, {useEffect, useState} from 'react';
+import { useRoute } from "@react-navigation/native"
 import {Button, Surface} from 'react-native-paper'
 import BaseLayout from '../../src/components/BaseLayout.js';
 import RNPickerSelect from 'react-native-picker-select'
@@ -10,7 +12,8 @@ import { fetchMaterials } from '../../axios.js';
 export function AddNewItem() {
 
   const insets = useSafeAreaInsets()
-  const barcode = 2345678901
+  const route = useRoute()
+  const { barcodeValue } = route.params
 
   const[itemName, setItemName] = useState("")
   // const[itemBrand,setItemBrand] = useState("")
@@ -51,12 +54,12 @@ export function AddNewItem() {
     })
 
     const obj = { 
+
       item_name: itemName,
       material_id: curr,
-      barcode: barcode,
+      barcode: barcodeValue,
       image_url: image,
     }
-    console.log(obj)
   };
 
   return (
@@ -87,7 +90,8 @@ export function AddNewItem() {
             value={itemMaterial}
             />
             </View>
-            <Text editable={false} style={styles.input}>Barcode: {barcode}</Text>
+
+            <Text editable={false} style={styles.input}>Barcode: {barcodeValue}</Text>
             <View>
               <AddImage image={image} setImage={setImage}></AddImage> 
             </View>

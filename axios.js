@@ -19,5 +19,11 @@ export function fetchMaterials () {
 
 export function postNewItem () {
     return apiClient.post(`/materials`, obj)
+
+export function fetchItemByBarcode(scannedBarcode){
+    return apiClient.get(`/items/barcode/${scannedBarcode}`)
+    .then(({data})=>{
+        return data.item
+    })
 }
 

@@ -31,8 +31,8 @@ function Tabs() {
     },
     {
       key: "help",
-      focusedIcon: "help",
-      unfocusedIcon: "help-outline",
+      focusedIcon: "help-circle",
+      unfocusedIcon: "help-circle-outline",
     },
   ]);
 

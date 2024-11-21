@@ -13,12 +13,19 @@ import { Appbar, Tooltip, Avatar } from "react-native-paper";
 import { useXp } from "../context/Xp-context";
 import { LoadingPage } from "../pages/LoadingPage";
 import { OtherProfile } from "../pages/OtherProfile";
+import { useEffect, useState } from "react";
 
 const Stack = createStackNavigator();
 
+
+
+
 function HeaderDemo({ navigation, route, options, back }) {
   const { xp } = useXp();
-
+  const [currentXp, setCurrentXp] = useState()
+  useEffect(() => {
+  setCurrentXp(xp)
+  }, [xp])
   return (
     <Appbar.Header style={{ justifyContent: "space-between" }}>
       {back ? (
@@ -69,7 +76,7 @@ function HeaderDemo({ navigation, route, options, back }) {
             }}
           >
             <Appbar.Action icon="one-up" onPress={() => {}} />
-            <Text>{`${xp} XP`}</Text>
+            <Text>{`${currentXp} XP`}</Text>
           </View>
         </Tooltip>
       </View>
@@ -100,7 +107,6 @@ function RootStack() {
       <Stack.Screen name="Info" component={Info} />
       <Stack.Screen name="Item Confirmation" component={ItemConfirmation} />
       <Stack.Screen name="Add a New Item" component={AddNewItem} />
-      <Stack.Screen name="Loading" component={LoadingPage} />
     </Stack.Navigator>
   );
 }
