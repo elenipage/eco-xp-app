@@ -14,18 +14,16 @@ import { useXp } from "../context/Xp-context";
 import { LoadingPage } from "../pages/LoadingPage";
 import { OtherProfile } from "../pages/OtherProfile";
 import { useEffect, useState } from "react";
+import BinDates from "../components/BinDate";
 
 const Stack = createStackNavigator();
 
-
-
-
 function HeaderDemo({ navigation, route, options, back }) {
   const { xp } = useXp();
-  const [currentXp, setCurrentXp] = useState()
+  const [currentXp, setCurrentXp] = useState();
   useEffect(() => {
-  setCurrentXp(xp)
-  }, [xp])
+    setCurrentXp(xp);
+  }, [xp]);
   return (
     <Appbar.Header style={{ justifyContent: "space-between" }}>
       {back ? (
@@ -107,8 +105,7 @@ function RootStack() {
       <Stack.Screen name="Item Confirmation" component={ItemConfirmation} />
       <Stack.Screen name="Add a New Item" component={AddNewItem} />
       <Stack.Screen name="Drop Down Menu Info" component={InfoDropDownMenu} />
-      {/* <Stack.Screen name="Recycling Info" component={RecyclingInfo} />
-      <Stack.Screen name="Plastic Life Cycle" component={PlasticLifeCycle} /> */}
+      <Stack.Screen name="Bin Dates Info" component={BinDates} />
     </Stack.Navigator>
   );
 }

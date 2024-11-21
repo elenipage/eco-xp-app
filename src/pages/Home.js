@@ -8,7 +8,7 @@ import { followersPreview } from "../components/data/leaderboardData";
 
 export function HomeScreen() {
   const navigation = useNavigation();
-  console.log(followersPreview)
+  console.log(followersPreview);
   return (
     <ScrollView>
       <BaseLayout>
@@ -20,7 +20,13 @@ export function HomeScreen() {
         >
           Take a Quiz
         </StandardButton>
-        {/* (temporarily) allows me to navigate to the welcome page */}
+        {/* (temporarily) allows me to navigate to the bin dates component */}
+        <StandardButton
+          buttonText={"Bin Dates Info"}
+          tapFunction={() => navigation.navigate("Bin Dates Info")}
+        >
+          Bin Dates Info
+        </StandardButton>
       </BaseLayout>
     </ScrollView>
   );
