@@ -41,7 +41,7 @@ export function Profile() {
           </View>
         </View>
         <Surface style={{width:"100%", alignItems:"center", justifyContent: "center", padding:10, borderRadius:10, marginBottom:20}}>
-          <Text style={{width:"100%", fontSize:20, marginBottom:10}}>Hi Louis!</Text>
+          <Text style={{width:"100%", fontSize:20, marginBottom:10}}>Hi {user.first_name}!</Text>
           <Text style={{width:"100%", fontSize:16, marginBottom:10}}>Your recycling contributions for November:</Text>
           <Surface style={{width:270 , justifyContent: "center", alignItems:"center", padding:10, borderRadius:10}}>
           <Streak data={commitsData} />
