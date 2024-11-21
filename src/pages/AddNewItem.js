@@ -7,7 +7,7 @@ import {Button, Surface} from 'react-native-paper'
 import BaseLayout from '../../src/components/BaseLayout.js';
 import RNPickerSelect from 'react-native-picker-select'
 import AddImage from '../components/AddImage.js';
-import { fetchMaterials } from '../../axios.js';
+import { fetchMaterials } from '../../utils/api.js';
 
 export function AddNewItem() {
 

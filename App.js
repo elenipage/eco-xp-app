@@ -1,22 +1,25 @@
-import * as React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import { PaperProvider } from "react-native-paper";
-import RootStack from "./src/navigation/Stack";
-import { XpProvider } from "./src/context/Xp-context";
+import * as React from "react"
+import { NavigationContainer } from "@react-navigation/native"
+import { SafeAreaProvider } from "react-native-safe-area-context"
+import { PaperProvider } from "react-native-paper"
+import RootStack from "./src/navigation/Stack"
+import { XpProvider } from "./src/context/Xp-context"
+import { UserProvider } from "./src/context/user-context"
 
 export default function App() {
   return (
     <SafeAreaProvider>
       <PaperProvider>
-        <XpProvider>
-          <NavigationContainer>
-            <RootStack />
-          </NavigationContainer>
-        </XpProvider>
+        <UserProvider>
+          <XpProvider>
+            <NavigationContainer>
+              <RootStack />
+            </NavigationContainer>
+          </XpProvider>
+        </UserProvider>
       </PaperProvider>
     </SafeAreaProvider>
-  );
+  )
 }
 
 // Find out how to change android status and navbar colours to match app colours
