@@ -5,18 +5,22 @@ import { PaperProvider } from "react-native-paper"
 import RootStack from "./src/navigation/Stack"
 import { XpProvider } from "./src/context/Xp-context"
 import { UserProvider } from "./src/context/user-context"
+import { LoadingProvider } from "./src/context/Loading-context";
+
 
 export default function App() {
   return (
     <SafeAreaProvider>
       <PaperProvider>
-        <UserProvider>
-          <XpProvider>
-            <NavigationContainer>
-              <RootStack />
-            </NavigationContainer>
-          </XpProvider>
-        </UserProvider>
+        <LoadingProvider>
+          <UserProvider>
+            <XpProvider>
+              <NavigationContainer>
+                <RootStack />
+              </NavigationContainer>
+            </XpProvider>
+          </UserProvider>
+        </LoadingProvider>
       </PaperProvider>
     </SafeAreaProvider>
   )
