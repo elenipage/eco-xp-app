@@ -3,7 +3,9 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Surface, Button } from "react-native-paper";
 import { useRoute } from "@react-navigation/native"
 import BaseLayout from '../../src/components/BaseLayout.js'
-import React,{ useState, useRef } from 'react';
+import React,{ useState, useRef, useEffect } from 'react';
+import LottieView from 'lottie-react-native';
+
 
 export function ItemConfirmation() {
   
@@ -21,9 +23,9 @@ export function ItemConfirmation() {
   const [isRecycled, setIsRecycled] = useState(false)
   const [isBinned, setIsBinned] = useState(false)
 
-  function triggerConfetti() {
+  useEffect(()=> {
     confettiRef.current?.play(0);
-  }
+  },[isRecycled])
   
   return (
     <SafeAreaProvider>
@@ -74,16 +76,16 @@ export function ItemConfirmation() {
               {isBinned? <Text>You binned {scannedItemData.item_name}</Text> : <Button onPress={() => setIsBinned(true)} mode="contained-tonal">Bin item: {scannedItemData.item_name}</Button>}
             </View>}
           </Surface>
-        {/* <LottieView
-          ref={confettiRef}
-          source={require('../../assets/confetti.json')}
-          autoPlay={false}
-          loop={false}
-          style={styles.lottie}
-          resizeMode='cover'
-        /> */}
         </View>
       </BaseLayout>
+      {/* <LottieView
+        ref={confettiRef}
+        source={require('../../assets/confetti.json')}
+        autoPlay={true}
+        loop={true}
+        style={styles.lottie}
+        resizeMode='cover'
+      /> */}
     </SafeAreaProvider>
   );
 }
