@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Dimensions } from "react-native";
+import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 
 import RecyclingInfo from "../components/RecyclingInfo";
@@ -45,6 +45,14 @@ export function InfoDropDownMenu() {
         )}
       />
       {content} {/* selected component displayed here */}
+      <Image
+        style={styles.image_one}
+        source={require("../../assets/reduce-reuse-recycle.jpg")}
+      />
+      <Image
+        style={styles.image_two}
+        source={require("../../assets/reduce-reuse-recycle.jpg")}
+      />
     </View>
   );
 }
@@ -61,9 +69,7 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
   },
 
-  dropdown: {
-    color: "yellow",
-  },
+  dropdown: {},
 
   labelStyle: {
     fontWeight: "700",
@@ -80,5 +86,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#000",
     fontWeight: 700,
+  },
+
+  image_one: {
+    marginVertical: 40,
+    marginHorizontal: 15,
+    borderRadius: 15,
+  },
+  image_two: {
+    marginVertical: 40,
+    marginHorizontal: 15,
+    borderRadius: 15,
   },
 });
