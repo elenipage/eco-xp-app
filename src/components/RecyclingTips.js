@@ -66,8 +66,7 @@ function RecyclingTipsCarousel() {
 
 const styles = StyleSheet.create({
   heading: {
-    fontSize: 30,
-    fontWeight: "bold",
+    fontSize: 25,
   },
   text: {
     fontSize: 20,

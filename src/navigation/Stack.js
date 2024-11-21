@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Profile } from "../pages/Profile";
+import { Profile } from "../pages/UserProfile";
 import { Quiz } from "../pages/Quiz";
 import { Text, TouchableOpacity, View } from "react-native";
 import { FAQ } from "../pages/FAQ";
@@ -11,12 +11,21 @@ import { AddNewItem } from "../pages/AddNewItem";
 import Tabs from "./Tabs";
 import { Appbar, Tooltip, Avatar } from "react-native-paper";
 import { useXp } from "../context/Xp-context";
+import { LoadingPage } from "../pages/LoadingPage";
+import { OtherProfile } from "../pages/OtherProfile";
+import { useEffect, useState } from "react";
 
 const Stack = createStackNavigator();
 
+
+
+
 function HeaderDemo({ navigation, route, options, back }) {
   const { xp } = useXp();
-
+  const [currentXp, setCurrentXp] = useState()
+  useEffect(() => {
+  setCurrentXp(xp)
+  }, [xp])
   return (
     <Appbar.Header style={{ justifyContent: "space-between" }}>
       {back ? (
@@ -67,7 +76,7 @@ function HeaderDemo({ navigation, route, options, back }) {
             }}
           >
             <Appbar.Action icon="one-up" onPress={() => {}} />
-            <Text>{`${xp} XP`}</Text>
+            <Text>{`${currentXp} XP`}</Text>
           </View>
         </Tooltip>
       </View>
@@ -88,6 +97,7 @@ function RootStack() {
     >
       <Stack.Screen name="Main" component={Tabs} />
       <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="Other Profile" component={OtherProfile} />
       <Stack.Screen
         name="Quiz"
         component={Quiz}
