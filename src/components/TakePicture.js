@@ -26,7 +26,7 @@ export default function TakePicture({image, setImage}) {
         return (
         <View style={styles.container}>
         <Text style={styles.message}>
-            We need your permission to show the camera
+            We need your permission to show the camera!
         </Text>
         <Button onPress={requestPermission} title="grant permission" />
         </View>
