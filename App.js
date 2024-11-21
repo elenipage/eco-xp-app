@@ -4,16 +4,19 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { PaperProvider } from "react-native-paper";
 import RootStack from "./src/navigation/Stack";
 import { XpProvider } from "./src/context/Xp-context";
+import { LoadingProvider } from "./src/context/Loading-context";
 
 export default function App() {
   return (
     <SafeAreaProvider>
       <PaperProvider>
-        <XpProvider>
-          <NavigationContainer>
-            <RootStack />
-          </NavigationContainer>
-        </XpProvider>
+        <LoadingProvider>
+          <XpProvider>
+            <NavigationContainer>
+              <RootStack />
+            </NavigationContainer>
+          </XpProvider>
+        </LoadingProvider>
       </PaperProvider>
     </SafeAreaProvider>
   );
