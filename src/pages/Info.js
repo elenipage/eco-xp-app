@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  Image,
+  ScrollView,
+} from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 
 import RecyclingInfo from "../components/RecyclingInfo";
@@ -20,6 +27,7 @@ export function InfoDropDownMenu() {
   ]);
 
   let content = null;
+  // Conditional rendering for dropdown content
   if (value === "What can I recycle?") {
     content = <RecyclingInfo />;
   } else if (value === "Life cycle of a plastic bottle") {
@@ -28,6 +36,7 @@ export function InfoDropDownMenu() {
 
   return (
     <View style={styles.container}>
+      {/* Dropdown Menu */}
       <DropDownPicker
         open={open}
         value={value}
@@ -44,15 +53,21 @@ export function InfoDropDownMenu() {
           </View>
         )}
       />
+      {/* Conditional Content Rendering */}
       {content} {/* selected component displayed here */}
-      <Image
-        style={styles.image_one}
-        source={require("../../assets/reduce-reuse-recycle.jpg")}
-      />
-      <Image
-        style={styles.image_two}
-        source={require("../../assets/reduce-reuse-recycle.jpg")}
-      />
+      {/* Images Section: Render only when no dropdown is selected */}
+      {value === null && (
+        <ScrollView contentContainerStyle={styles.imageContainer}>
+          <Image
+            style={styles.image_one}
+            source={require("../../assets/reduce-reuse-recycle.jpg")}
+          />
+          <Image
+            style={styles.image_two}
+            source={require("../../assets/reduce-reuse-recycle.jpg")}
+          />
+        </ScrollView>
+      )}
     </View>
   );
 }
@@ -69,7 +84,9 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
   },
 
-  dropdown: {},
+  dropdown: {
+    color: "yellow",
+  },
 
   labelStyle: {
     fontWeight: "700",
@@ -88,13 +105,19 @@ const styles = StyleSheet.create({
     fontWeight: 700,
   },
 
+  imageContainer: {
+    flexGrow: 1, // This ensures the content in ScrollView is arranged properly
+    marginTop: 20, // Adds some space above images
+    alignItems: "center",
+  },
+
   image_one: {
-    marginVertical: 40,
+    marginVertical: 20,
     marginHorizontal: 15,
     borderRadius: 15,
   },
   image_two: {
-    marginVertical: 40,
+    marginVertical: 20,
     marginHorizontal: 15,
     borderRadius: 15,
   },
