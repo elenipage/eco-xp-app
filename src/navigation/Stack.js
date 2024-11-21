@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Profile } from "../pages/Profile";
+import { Profile } from "../pages/UserProfile";
 import { Quiz } from "../pages/Quiz";
 import { Text, TouchableOpacity, View } from "react-native";
 import { FAQ } from "../pages/FAQ";
@@ -11,6 +11,8 @@ import { AddNewItem } from "../pages/AddNewItem";
 import Tabs from "./Tabs";
 import { Appbar, Tooltip, Avatar } from "react-native-paper";
 import { useXp } from "../context/Xp-context";
+import { LoadingPage } from "../pages/LoadingPage";
+import { OtherProfile } from "../pages/OtherProfile";
 
 const Stack = createStackNavigator();
 
@@ -88,6 +90,7 @@ function RootStack() {
     >
       <Stack.Screen name="Main" component={Tabs} />
       <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="Other Profile" component={OtherProfile} />
       <Stack.Screen
         name="Quiz"
         component={Quiz}
@@ -97,6 +100,7 @@ function RootStack() {
       <Stack.Screen name="Info" component={Info} />
       <Stack.Screen name="Item Confirmation" component={ItemConfirmation} />
       <Stack.Screen name="Add a New Item" component={AddNewItem} />
+      <Stack.Screen name="Loading" component={LoadingPage} />
     </Stack.Navigator>
   );
 }

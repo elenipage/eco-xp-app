@@ -94,8 +94,6 @@ export function LeaderboardPage() {
   const postcodeSorted = postcodeData.sort((b, a) => a.xp - b.xp);
   const areaSorted = areaData.sort((b, a) => a.xp - b.xp);
 
-  console.log(followersSorted, postcodeSorted, areaSorted);
-
   const [value, setValue] = useState("friends");
 
   return (
