@@ -32,3 +32,10 @@ export function fetchUserByID(userID) {
     return data.user
   })
 }
+
+export function updateXpByID(userID, increment) {
+  const incObj = { inc_xp: increment }
+  return apiClient.patch(`/users/${userID}`, incObj).then(({ data }) => {
+console.log(data.xp)
+  })
+}

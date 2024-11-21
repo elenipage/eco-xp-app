@@ -1,19 +1,23 @@
-import { StyleSheet, Text, View, Image, Button } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import quizzes from "../components/data/quizData";
 import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
 import BaseLayout from "../components/BaseLayout";
+import { updateXpByID } from "../../utils/api";
+import { useUser } from "../context/user-context";
+import { Button } from "react-native-paper";
 
 export function Quiz({ route }) {
   const { xp, setXp } = route.params;
-  const [localXp, setLocalXp] = useState(0)
+  const [localXp, setLocalXp] = useState(0);
   const [selectedQuiz, setSelectedQuiz] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [feedback, setFeedback] = useState(null);
   const [showAnswer, setShowAnswer] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
   const navigation = useNavigation();
+  const { user } = useUser();
 
   useEffect(() => {
     const randomQuiz = quizzes[Math.floor(Math.random() * quizzes.length)];
@@ -24,9 +28,11 @@ export function Quiz({ route }) {
 
   function handleAnswer(isCorrect, xpReward) {
     if (isCorrect) {
-      setXp((prevXp) => prevXp + Number(xpReward));
-      setLocalXp((prevLocal) => prevLocal + Number(xpReward))
-      setFeedback("Correct! 🎉");
+      updateXpByID(user.user_id, Number(xpReward)).then(() => {
+        setXp((prevXp) => prevXp + Number(xpReward));
+        setLocalXp((prevLocal) => prevLocal + Number(xpReward));
+        setFeedback("Correct! 🎉");
+      });
     } else {
       setFeedback("Incorrect. 😞");
       setShowAnswer(true);
@@ -67,10 +73,9 @@ export function Quiz({ route }) {
         />
         <Text style={styles.quizCompleteText}>Quiz Complete!</Text>
         <Text style={styles.totalXpText}>Total XP: {localXp}</Text>
-        <Button
-          title="Return to Home"
-          onPress={() => navigation.navigate("Main")}
-        />
+        <Button onPress={() => navigation.navigate("Main")}>
+          Return to Home
+        </Button>
       </View>
     );
   }
@@ -93,17 +98,13 @@ export function Quiz({ route }) {
                 }
               </Text>
             )}
-            <Button title="Next Question" onPress={handleNext} />
+            <Button onPress={handleNext}>Next Question</Button> 
           </View>
         ) : (
           currentQuestion.options.map((option) => (
-            <Button
-              key={option.id}
-              title={`${option.id}. ${option.text}`}
-              onPress={() =>
-                handleAnswer(option.isCorrect, currentQuestion.xpReward)
-              }
-            />
+            <Button key={option.id} onPress={() =>
+              handleAnswer(option.isCorrect, currentQuestion.xpReward)
+            }>{option.id}. {option.text}</Button>
           ))
         )}
       </BaseLayout>
