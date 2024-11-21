@@ -5,7 +5,7 @@ import { Profile } from "../pages/UserProfile";
 import { Quiz } from "../pages/Quiz";
 import { Text, TouchableOpacity, View } from "react-native";
 import { FAQ } from "../pages/FAQ";
-import { Info } from "../pages/Info";
+import { InfoDropDownMenu } from "../pages/Info";
 import { ItemConfirmation } from "../pages/ItemConfirmation";
 import { AddNewItem } from "../pages/AddNewItem";
 import Tabs from "./Tabs";
@@ -14,75 +14,85 @@ import { useXp } from "../context/Xp-context";
 import { LoadingPage } from "../pages/LoadingPage";
 import { OtherProfile } from "../pages/OtherProfile";
 import { useEffect, useState } from "react";
+import { LoginPage } from "../pages/Login";
+import { useUser } from "../context/user-context";
 import TakePicture from "../components/TakePicture";
-
 const Stack = createStackNavigator();
 
-
-
-
 function HeaderDemo({ navigation, route, options, back }) {
+  const { user } = useUser();
   const { xp } = useXp();
-  const [currentXp, setCurrentXp] = useState()
+  const [currentXp, setCurrentXp] = useState();
   useEffect(() => {
-  setCurrentXp(xp)
-  }, [xp])
-  return (
-    <Appbar.Header style={{ justifyContent: "space-between" }}>
-      {back ? (
-        <Appbar.BackAction onPress={navigation.goBack} />
-      ) : (
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("Profile");
+    setCurrentXp(xp);
+  }, [xp]);
+
+  if (user === null)
+    return (
+      <Appbar.Header
+        style={{ justifyContent: "space-between" }}
+      ></Appbar.Header>
+    );
+  else if (user) {
+    return (
+      <Appbar.Header style={{ justifyContent: "space-between" }}>
+        {back && back.title !== "Login" ? (
+          <Appbar.BackAction onPress={navigation.goBack} />
+        ) : (
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Profile");
+            }}
+          >
+            <Avatar.Image
+              size={40}
+              source={{
+                uri: user.avatar_img_url,
+              }}
+            />
+          </TouchableOpacity>
+        )}
+        {back && back.title !== "Login" ? (
+          <Appbar.Content title={`${route.name}`} />
+        ) : null}
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          <Avatar.Image
-            size={40}
-            source={{
-              uri: "https://media.licdn.com/dms/image/v2/D4E03AQHp3QR7NwD02w/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1715085387323?e=1737590400&v=beta&t=cMjFvIwY5d0XCGXUKpdbP9IkEXuIP2IcjGQDEL21lRU",
-            }}
-          />
-        </TouchableOpacity>
-      )}
-      {back ? <Appbar.Content title={`${route.name}`} /> : null}
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Tooltip title="Streak">
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Appbar.Action
-              icon="fire-circle"
-              onPress={() => {}}
-            ></Appbar.Action>
-            <Text>0</Text>
-          </View>
-        </Tooltip>
-        <Tooltip title="XP">
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Appbar.Action icon="one-up" onPress={() => {}} />
-            <Text>{`${currentXp} XP`}</Text>
-          </View>
-        </Tooltip>
-      </View>
-    </Appbar.Header>
-  );
+          <Tooltip title="Streak">
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Appbar.Action
+                icon="fire-circle"
+                onPress={() => {}}
+              ></Appbar.Action>
+              <Text>0</Text>
+            </View>
+          </Tooltip>
+          <Tooltip title="XP">
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Appbar.Action icon="one-up" onPress={() => {}} />
+              <Text>{`${currentXp} XP`}</Text>
+            </View>
+          </Tooltip>
+        </View>
+      </Appbar.Header>
+    );
+  }
 }
 
 function RootStack() {
@@ -90,7 +100,7 @@ function RootStack() {
   const navigation = useNavigation();
   return (
     <Stack.Navigator
-      initialRouteName="Main"
+      initialRouteName="Login"
       headerMode="screen"
       screenOptions={{
         header: (props) => <HeaderDemo {...props} />,
@@ -105,10 +115,12 @@ function RootStack() {
         initialParams={{ xp: xp, setXp: setXp }}
       />
       <Stack.Screen name="FAQ" component={FAQ} />
-      <Stack.Screen name="Info" component={Info} />
+      <Stack.Screen name="Info" component={InfoDropDownMenu} />
       <Stack.Screen name="Item Confirmation" component={ItemConfirmation} />
       <Stack.Screen name="Add a New Item" component={AddNewItem} />
       <Stack.Screen name="Take a Picture" component={TakePicture} />
+      <Stack.Screen name="Drop Down Menu Info" component={InfoDropDownMenu} />
+      <Stack.Screen name="Login" component={LoginPage} />
     </Stack.Navigator>
   );
 }
