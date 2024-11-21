@@ -5,7 +5,7 @@ import { Profile } from "../pages/UserProfile";
 import { Quiz } from "../pages/Quiz";
 import { Text, TouchableOpacity, View } from "react-native";
 import { FAQ } from "../pages/FAQ";
-import { Info } from "../pages/Info";
+import { InfoDropDownMenu } from "../pages/Info";
 import { ItemConfirmation } from "../pages/ItemConfirmation";
 import { AddNewItem } from "../pages/AddNewItem";
 import Tabs from "./Tabs";
@@ -104,9 +104,11 @@ function RootStack() {
         initialParams={{ xp: xp, setXp: setXp }}
       />
       <Stack.Screen name="FAQ" component={FAQ} />
-      <Stack.Screen name="Info" component={Info} />
       <Stack.Screen name="Item Confirmation" component={ItemConfirmation} />
       <Stack.Screen name="Add a New Item" component={AddNewItem} />
+      <Stack.Screen name="Drop Down Menu Info" component={InfoDropDownMenu} />
+      {/* <Stack.Screen name="Recycling Info" component={RecyclingInfo} />
+      <Stack.Screen name="Plastic Life Cycle" component={PlasticLifeCycle} /> */}
     </Stack.Navigator>
   );
 }
