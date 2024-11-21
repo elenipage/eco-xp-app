@@ -28,14 +28,16 @@ export function Help() {
             height: 200,
             marginBottom: 20,
           }}
-          source={{ uri: "https://cdn-icons-png.flaticon.com/512/4718/4718001.png" }}
+          source={{
+            uri: "https://cdn-icons-png.flaticon.com/512/4718/4718001.png",
+          }}
         />
         <ButtonContainer>
           {/* Add the above surface to its own ButtonContainer component? */}
           <StandardButton
             buttonText={"Info"}
             tapFunction={() => {
-              navigation.navigate("Info");
+              navigation.navigate("Drop Down Menu Info");
             }}
           />
 
