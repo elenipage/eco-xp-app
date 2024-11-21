@@ -7,12 +7,14 @@ import {
   Image,
   FlatList,
 } from "react-native";
+import { useFonts } from "expo-font";
+import { Roboto_400Regular, Roboto_700Bold } from "@expo-google-fonts/roboto";
 import DropDownPicker from "react-native-dropdown-picker";
 
 import RecyclingInfo from "../components/RecyclingInfo";
 import PlasticLifeCycle from "../components/PlasticLifeCycle";
 
-// gscreen width using Dimensions API
+// get screen width using Dimensions API
 const { width } = Dimensions.get("window");
 
 export function InfoDropDownMenu() {
@@ -43,7 +45,6 @@ export function InfoDropDownMenu() {
       source: require("../../assets/reduce-reuse-recycle.jpg"),
     },
   ];
-
   return (
     <View style={styles.container}>
       <DropDownPicker
@@ -111,6 +112,7 @@ const styles = StyleSheet.create({
       fontSize: 16,
       color: "#000",
       fontWeight: 700,
+      fontFamily: "Roboto_700Bold",
     },
 
     contentContainer: {
