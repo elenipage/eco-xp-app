@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, TextInput} from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import React, {useState} from 'react';
+import { useRoute } from "@react-navigation/native"
 import {Button} from 'react-native-paper'
 import BaseLayout from '../../src/components/BaseLayout.js';
 import RNPickerSelect from 'react-native-picker-select'
@@ -9,7 +10,8 @@ import AddImage from '../components/AddImage.js';
 export function AddNewItem() {
 
   const insets = useSafeAreaInsets()
-  const barcode = 2345678901
+  const route = useRoute()
+  const { barcodeValue } = route.params
 
   const[itemName, setItemName] = useState("")
   const[itemBrand,setItemBrand] = useState("")
@@ -31,7 +33,7 @@ export function AddNewItem() {
       itemName: itemName,
       itemBrand: itemBrand,
       itemMaterial: itemMaterial,
-      barcode: barcode,
+      barcode: barcodeValue,
       image: image,
     }
     console.log(JSON.stringify(obj, null, 2));
@@ -55,7 +57,7 @@ export function AddNewItem() {
             value={itemMaterial}
             />
             </View>
-            <Text editable={false} style={styles.input}>{barcode}</Text>
+            <Text editable={false} style={styles.input}>{barcodeValue}</Text>
             <View>
               <AddImage image={image} setImage={setImage}></AddImage> 
             </View>
