@@ -1,9 +1,20 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Surface } from "react-native-paper";
+import { useFonts } from "expo-font";
+import { Roboto_400Regular, Roboto_700Bold } from "@expo-google-fonts/roboto";
 
 function FAQCard({ FAQQuestion, FAQAnswer }) {
   const [isPressed, setIsPressed] = useState(false);
+
+  const [fontsLoaded] = useFonts({
+    Roboto_400Regular,
+    Roboto_700Bold,
+  });
+
+  if (!fontsLoaded) {
+    return <Text>Loading fonts...</Text>;
+  }
 
   return (
     <TouchableOpacity
@@ -46,7 +57,7 @@ const styles = StyleSheet.create({
 
   question: {
     fontSize: 18,
-    fontWeight: "600",
+    fontFamily: "Roboto_700Bold",
     color: "#2e3d49",
     marginBottom: 15,
     backgroundColor: "#F0F8E2",
@@ -54,7 +65,8 @@ const styles = StyleSheet.create({
 
   answer: {
     fontSize: 16,
-    fontWeight: "400",
+
+    fontFamily: "Roboto_400Regular",
     color: "#4a4a4a",
     marginTop: 5,
     backgroundColor: "#F0F8E2",
