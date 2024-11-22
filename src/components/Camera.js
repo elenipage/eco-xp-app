@@ -1,38 +1,35 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  TouchableOpacity,
-  TextInput,
-} from "react-native"
-import { StatusBar } from "expo-status-bar"
-import { useRef, useState } from "react"
-import { CameraView, useCameraPermissions } from "expo-camera"
-import { useNavigation } from "@react-navigation/native"
-import { fetchItemByBarcode } from "../../utils/api"
+import { StyleSheet, Text, View, Button, TouchableOpacity, TextInput } from "react-native";
+import { StatusBar } from "expo-status-bar";
+import { useRef, useState } from "react";
+import { CameraView, useCameraPermissions } from "expo-camera";
+import { useNavigation } from "@react-navigation/native";
+import { fetchItemByBarcode } from "../../utils/api";
+import { Portal } from "react-native-paper";
+import ConfirmationDialogue from "./ConfirmationDialogue";
 
 export default function Camera() {
-  const [permission, requestPermission] = useCameraPermissions()
-  const [cameraActive, setCameraActive] = useState()
-  const [scannedBarcode, setScannedBarcode] = useState()
-  const navigation = useNavigation()
-  const lastScannedTimestampRef = useRef(0)
-  const [scanned, setScanned] = useState(false)
+  const [permission, requestPermission] = useCameraPermissions();
+  const [cameraActive, setCameraActive] = useState();
+  const [scannedBarcode, setScannedBarcode] = useState();
+  const navigation = useNavigation();
+  const lastScannedTimestampRef = useRef(0);
+  const [scanned, setScanned] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
 
   if (!permission) {
-    return <View />
+    return <View />;
   }
 
   if (!permission.granted) {
     return (
       <View style={styles.container}>
-        <Text style={styles.message}>
-          We need your permission to show the camera
-        </Text>
-        <Button onPress={requestPermission} title="grant permission" />
+        <Text style={styles.message}>We need your permission to show the camera</Text>
+        <Button
+          onPress={requestPermission}
+          title="grant permission"
+        />
       </View>
-    )
+    );
   }
 
   return (
@@ -41,26 +38,40 @@ export default function Camera() {
         style={styles.camera}
         facing="back"
         onBarcodeScanned={({ data }) => {
-          const timestamp = Date.now()
+          const timestamp = Date.now();
 
           if (scanned || timestamp - lastScannedTimestampRef.current < 1000) {
-            return
+            return;
           }
-          lastScannedTimestampRef.current = timestamp
+          lastScannedTimestampRef.current = timestamp;
+          setScannedBarcode(data);
           fetchItemByBarcode(data)
-          .then((scannedItemData)=>{
-            navigation.navigate("Item Confirmation", { scannedItemData: scannedItemData })            
-          }).catch((error)=>{
-            if(error.response.status === 404){
-              navigation.navigate("Add a New Item", { barcodeValue: data })
-            }
-          })
+            .then((scannedItemData) => {
+              navigation.navigate("Item Confirmation", { scannedItemData: scannedItemData });
+            })
+            .catch((error) => {
+              if (error.response.status === 404) {
+                setShowDialog(true);
+                // navigation.navigate("Add a New Item", { barcodeValue: data });
+              }
+            });
         }}
       >
         <View style={styles.buttonContainer}></View>
       </CameraView>
+      <ConfirmationDialogue
+        visible={showDialog}
+        onClose={() => {
+          setShowDialog(false);
+          setScanned(false);
+        }}
+        onConfirm={() => {
+          setShowDialog(false);
+          navigation.navigate("Add a New Item", { barcodeValue: scannedBarcode });
+        }}
+      />
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -91,4 +102,4 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "white",
   },
-})
+});
