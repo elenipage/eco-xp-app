@@ -27,7 +27,6 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {headers:
   {Authorization: `Bearer ${SUPABASE_SERVICE_KEY}`}
 });
 
-
 export function AddNewItem() {
   const route = useRoute()
   const { barcodeValue } = route.params
