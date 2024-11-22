@@ -56,7 +56,7 @@ export function Profile() {
           />
           <View style={{ width: "50%" }}>
             <Text style={{ fontSize: 25, marginBottom: 10 }}>{user.username}</Text>
-            <FollowersFollowing followerCount={followerCount} followingCount={followingCount}/>
+            <FollowersFollowing user_id={user.user_id} followerCount={followerCount} followingCount={followingCount}/>
           </View>
         </View>
         <Surface style={{width:"100%", alignItems:"center", justifyContent: "center", padding:10, borderRadius:10, marginBottom:20}}>

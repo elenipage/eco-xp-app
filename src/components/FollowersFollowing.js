@@ -3,8 +3,8 @@ import { Surface } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 
 export function FollowersFollowing(props) {
-  const { navigation } = useNavigation();
-  const { followerCount, followingCount } = props;
+  const navigation = useNavigation();
+  const { user_id, followerCount, followingCount } = props;
   return (
     <View
       style={{
@@ -23,7 +23,7 @@ export function FollowersFollowing(props) {
       >
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("Followers");
+            navigation.navigate("Followers", {user_id: user_id});
           }}
         >
           <Text>Followers</Text>
@@ -40,7 +40,7 @@ export function FollowersFollowing(props) {
       >
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("Following");
+            navigation.navigate("Following", {user_id: user_id});
           }}
         >
           <Text>Following</Text>
