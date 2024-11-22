@@ -1,81 +1,106 @@
-import { StyleSheet, Text, View, Image } from "react-native";
-import { SafeAreaProvider, useSafeAreaInsets } from "react-native-safe-area-context";
-import React, { useEffect, useState } from "react";
-import { useRoute } from "@react-navigation/native";
-import { Button, Surface, TextInput } from "react-native-paper";
-import BaseLayout from "../../src/components/BaseLayout.js";
-import RNPickerSelect from "react-native-picker-select";
-import AddImage from "../components/AddImage.js";
-import { fetchMaterials, postNewItem } from "../../utils/api.js";
+import { StyleSheet, Text, View, Image } from "react-native"
+import {
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context"
+import React, { useEffect, useState } from "react"
+import { useRoute, useNavigation } from "@react-navigation/native"
+import {
+  Button,
+  Surface,
+  TextInput,
+  List,
+  Dialog,
+  Portal,
+} from "react-native-paper"
+import BaseLayout from "../../src/components/BaseLayout.js"
+import AddImage from "../components/AddImage.js"
+import { ScrollView } from "react-native-gesture-handler"
+import ItemAddedConfirmation from "../components/ItemAddedConfirmation.js"
+import ItemAddedError from "../components/ItemAddedError.js"
+import { fetchMaterials, postNewItem } from "../../utils/api.js"
+import TakePicture from "../components/TakePicture.js"
+import { createClient } from '@supabase/supabase-js';  
+import {SUPABASE_URL, SUPABASE_SERVICE_KEY} from '@env'
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {headers: 
+  {Authorization: `Bearer ${SUPABASE_SERVICE_KEY}`}
+});
 
 export function AddNewItem() {
-  const insets = useSafeAreaInsets();
-  const route = useRoute();
-  const { barcodeValue } = route.params;
+  const route = useRoute()
+  const { barcodeValue } = route.params
+  const [itemName, setItemName] = useState("")
+  const [itemMaterial, setItemMaterial] = useState([])
+  const [materials, setMaterials] = useState([])
+  // const [materialsList, setMaterialsList] = useState([])
+  const [image, setImage] = useState(null)
+  const [expanded, setExpanded] = useState(false)
+  const [confirmVisible, setConfirmVisible] = useState(false)
+  const [errorVisible, setErrorVisible] = useState(false)
+  const [takingPhoto, setTakingPhoto] = useState(false)
+  const [path,setPath] = useState("")
 
-  const [itemName, setItemName] = useState("");
-  // const[itemBrand,setItemBrand] = useState("")
-  const [itemMaterial, setItemMaterial] = useState("");
-  const [materials, setMaterials] = useState([]);
-  const [materialsList, setMaterialsList] = useState([]);
-  const [image, setImage] = useState(null);
+  const toggleDropdown = () => setExpanded(!expanded)
 
   useEffect(() => {
     fetchMaterials()
       .then(({ data }) => {
-        setMaterials(data.materials);
+        setMaterials(data.materials)
 
         const materials = data.materials.map((material) => {
-          return material.material_name;
-        });
-        setMaterialsList(materials);
+          return material.material_name
+        })
+        setMaterialsList(materials)
       })
       .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  const placeholder = {
-    label: "Packaging material",
-    value: null,
-  };
-  const options = materialsList.map((material) => {
-    return { label: material, value: material };
-  });
+        console.log(err)
+      })
+  }, [])
 
   const handleSubmit = () => {
-    const filtered = materials.filter((material) => {
-      return material.material_name === itemMaterial;
-    });
-
+    
     const obj = {
       item_name: itemName,
-      material_id: filtered[0].material_id,
+      material_id: itemMaterial[1],
       barcode: barcodeValue.toString(),
-      img_url: "https://ecom-su-static-prod.wtrecom.com/images/products/11/LN_474469_BP_11.jpg",
-    };
+      img_url: ""
+    }
+    
+    try {
+      console.log(path)
+      const { data } = supabase
+      .storage
+      .from('Photos')
+      .getPublicUrl(path)
+      console.log(data.publicUrl)
+      obj.img_url = data.publicUrl
+    }
+    catch (error) {
+      alert("Error fetching url:", error.message);
+    } 
 
-    console.log(obj);
+    console.log(obj)
 
     postNewItem(obj)
-      .then((response) => {
-        console.log(response);
+      .then(({data}) => {
+        setConfirmVisible(true)
+        console.log(data)
       })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+      .catch((error) => {
+        console.log(error)
+        setErrorVisible(true)
+      })
+  }
 
-  return (
+  return takingPhoto? <TakePicture setTakingPhoto={setTakingPhoto} setPath={setPath} supabase={supabase}></TakePicture>: (
     <SafeAreaProvider>
       <BaseLayout>
         <Surface
           elevation={3}
           style={{
-            // padding: 20,
             height: "100%",
             width: "100%",
-            // margin: 10,
             alignItems: "center",
             justifyContent: "center",
             borderRadius: 20,
@@ -91,45 +116,62 @@ export function AddNewItem() {
               style={styles.input}
               label="Item name"
               onChangeText={(text) => setItemName(text)}
+              borderColor={"red"}
             />
             <View style={styles.input}>
               <Text>Packaging material:</Text>
-              <RNPickerSelect
-                placeholder={placeholder}
-                items={options}
-                onValueChange={(value) => setItemMaterial(value)}
-                value={itemMaterial}
-              />
+
+              <List.Accordion
+                title={itemMaterial ? itemMaterial[0] : "Select a material"}
+                left={(props) => <List.Icon {...props} icon="recycle" />}
+                expanded={expanded}
+                onPress={toggleDropdown}
+              >
+                <ScrollView
+                  height={200}
+                  width={"100%"}
+                  style={{ backgroundColor: "white" }}
+                >
+                  {materials.map((material) => {
+                    return (
+                      <List.Item
+                        onPress={() => {
+                          setItemMaterial([
+                            material.material_name,
+                            material.material_id
+                          ])
+                          toggleDropdown()
+                        }}
+                        title={material.material_name}
+                      />
+                    )
+                  })}
+                </ScrollView>
+              </List.Accordion>
             </View>
-            <Text
-              editable={false}
-              style={styles.input}
-            >
+
+            <Text editable={false} style={styles.input}>
               Barcode: {barcodeValue}
             </Text>
             <Button
               mode="contained-tonal"
-              tapFunction={() => navigation.navigate("Take a Picture")}
+              onPress={() => setTakingPhoto(true)}
             >
               Take a picture
             </Button>
             <View>
-              <AddImage
-                image={image}
-                setImage={setImage}
-              ></AddImage>
+              <AddImage image={image} setImage={setImage}></AddImage>
             </View>
-            <Button
-              mode="contained-tonal"
-              onPress={handleSubmit}
-            >
+            <Button mode="contained-tonal" onPress={handleSubmit}>
               Submit
             </Button>
+            <ItemAddedConfirmation visible={confirmVisible} setConfirmVisible={setConfirmVisible}/>
+            <ItemAddedError errorVisible={errorVisible} setErrorVisible={setErrorVisible}/>
           </View>
         </Surface>
       </BaseLayout>
     </SafeAreaProvider>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -137,6 +179,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flex: 1,
+    width: "100%",
   },
   title: {
     fontSize: 24,
@@ -148,7 +191,7 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     padding: 10,
     marginBottom: 20,
-    width: 250,
+    width: "80%",
   },
   icon: {
     width: 100,
@@ -158,4 +201,4 @@ const styles = StyleSheet.create({
     padding: 0,
     borderRadius: 30,
   },
-});
+})
