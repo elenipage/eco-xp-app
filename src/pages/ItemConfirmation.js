@@ -4,24 +4,34 @@ import { Surface, Button } from "react-native-paper";
 import { useRoute } from "@react-navigation/native"
 import BaseLayout from '../../src/components/BaseLayout.js'
 import React,{ useState, useRef, useEffect } from 'react';
-import LottieView from 'lottie-react-native';
+import { useUser } from '../context/user-context.js';
+import { useXp } from '../context/Xp-context.js';
+import { updateXpByID } from '../../utils/api.js';
 
 
 export function ItemConfirmation() {
-  
   const route = useRoute()
   const { scannedItemData } = route.params
-  console.log(scannedItemData)
-  const itemTitle = "Bleach"
-  const itemMaterial = "Plastic"
-  const itemImgUrl = 'https://m.media-amazon.com/images/I/41F3HIxG3TL._AC_.jpg'
   const itemXP = 10
   const isRecyclable = true;
-
   const confettiRef = useRef(null)
-
   const [isRecycled, setIsRecycled] = useState(false)
   const [isBinned, setIsBinned] = useState(false)
+  const { user } = useUser()
+  const { setXp } = useXp()
+
+  function handleRecycle () {
+    updateXpByID(user.user_id, itemXP).then(() => {
+      setXp((prevXp) => prevXp + itemXP);
+    })
+    .then(()=> {
+      return <Text>Congrats, you gained {itemXP} xp</Text>
+    })
+  }
+
+  useEffect(()=> {
+    handleRecycle()
+  },[isRecycled])
 
   useEffect(()=> {
     confettiRef.current?.play(0);
@@ -67,7 +77,7 @@ export function ItemConfirmation() {
               <Image style={styles.icon}
               source={require('../../assets/recycling-bin.png')} ></Image>
               <Text style={styles.titleText}>You can recycle me!!</Text>
-              {isRecycled? <Text>Congrats, you gained {itemXP} xp</Text> : <Button onPress={() => {setIsRecycled(true)}} mode="contained-tonal">Recycle {scannedItemData.item_name} for {itemXP} XP</Button>}
+              {!isRecycled && <Button onPress={() => {setIsRecycled(true)}} mode="contained-tonal">Recycle {scannedItemData.item_name} for {itemXP} XP</Button>}
             </View> : 
             <View style={styles.container}>
               <Image style={styles.icon}
