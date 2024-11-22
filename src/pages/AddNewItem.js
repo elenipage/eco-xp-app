@@ -16,11 +16,10 @@ import {
 import BaseLayout from "../../src/components/BaseLayout.js"
 import RNPickerSelect from "react-native-picker-select"
 import AddImage from "../components/AddImage.js"
-import { fetchMaterials, postNewItem } from "../../axios.js"
 import { ScrollView } from "react-native-gesture-handler"
-import { useNavigation } from "@react-navigation/native";
 import ItemAddedConfirmation from "../components/ItemAddedConfirmation.js"
 import ItemAddedError from "../components/ItemAddedError.js"
+import { fetchMaterials, postNewItem } from "../../utils/api.js"
 
 export function AddNewItem() {
   const navigation = useNavigation();
@@ -28,7 +27,6 @@ export function AddNewItem() {
   const route = useRoute()
   const { barcodeValue } = route.params
   const [itemName, setItemName] = useState("")
-  // const[itemBrand,setItemBrand] = useState("")
   const [itemMaterial, setItemMaterial] = useState(null)
   const [materials, setMaterials] = useState([])
   const [materialsList, setMaterialsList] = useState([])
