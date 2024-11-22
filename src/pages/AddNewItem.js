@@ -5,14 +5,25 @@ import {
 } from "react-native-safe-area-context"
 import React, { useEffect, useState } from "react"
 import { useRoute } from "@react-navigation/native"
-import { Button, Surface, TextInput, List } from "react-native-paper"
+import {
+  Button,
+  Surface,
+  TextInput,
+  List,
+  Dialog,
+  Portal,
+} from "react-native-paper"
 import BaseLayout from "../../src/components/BaseLayout.js"
 import RNPickerSelect from "react-native-picker-select"
 import AddImage from "../components/AddImage.js"
 import { fetchMaterials, postNewItem } from "../../axios.js"
 import { ScrollView } from "react-native-gesture-handler"
+import { useNavigation } from "@react-navigation/native";
+import ItemAddedConfirmation from "../components/ItemAddedConfirmation.js"
+import ItemAddedError from "../components/ItemAddedError.js"
 
 export function AddNewItem() {
+  const navigation = useNavigation();
   const insets = useSafeAreaInsets()
   const route = useRoute()
   const { barcodeValue } = route.params
@@ -24,6 +35,8 @@ export function AddNewItem() {
   const [materialsList, setMaterialsList] = useState([])
   const [image, setImage] = useState(null)
   const [expanded, setExpanded] = useState(false)
+  const [confirmVisible, setConfirmVisible] = useState(false)
+  const [errorVisible, setErrorVisible] = useState(false)
 
   const toggleDropdown = () => setExpanded(!expanded)
 
@@ -63,14 +76,13 @@ export function AddNewItem() {
         "https://ecom-su-static-prod.wtrecom.com/images/products/11/LN_474469_BP_11.jpg",
     }
 
-    console.log(obj)
 
     postNewItem(obj)
       .then((response) => {
-        console.log(response)
+        setConfirmVisible(true)
       })
-      .catch((err) => {
-        console.log(err)
+      .catch(() => {
+        setErrorVisible(true)
       })
   }
 
@@ -99,29 +111,38 @@ export function AddNewItem() {
               style={styles.input}
               label="Item name"
               onChangeText={(text) => setItemName(text)}
+              borderColor={"red"}
             />
             <View style={styles.input}>
               <Text>Packaging material:</Text>
-              
-                <List.Accordion
-                  title={itemMaterial?itemMaterial[0]:"Select a material"}
-                  left={(props) => <List.Icon {...props} icon="recycle" />}
-                  expanded={expanded}
-                  onPress={toggleDropdown}
-                ><ScrollView height={200} width={"100%"} style={{backgroundColor:"white"}}>
 
-                  {materials.map((material)=>{
-                    return<List.Item 
-                    onPress={() => {
-                      setItemMaterial([material.material_name,material.material_id])
-                      toggleDropdown()
-                    }}
-                    title={material.material_name}
-                  />
+              <List.Accordion
+                title={itemMaterial ? itemMaterial[0] : "Select a material"}
+                left={(props) => <List.Icon {...props} icon="recycle" />}
+                expanded={expanded}
+                onPress={toggleDropdown}
+              >
+                <ScrollView
+                  height={200}
+                  width={"100%"}
+                  style={{ backgroundColor: "white" }}
+                >
+                  {materials.map((material) => {
+                    return (
+                      <List.Item
+                        onPress={() => {
+                          setItemMaterial([
+                            material.material_name,
+                            material.material_id,
+                          ])
+                          toggleDropdown()
+                        }}
+                        title={material.material_name}
+                      />
+                    )
                   })}
                 </ScrollView>
-                </List.Accordion>
-              
+              </List.Accordion>
             </View>
             <Text editable={false} style={styles.input}>
               Barcode: {barcodeValue}
@@ -138,6 +159,8 @@ export function AddNewItem() {
             <Button mode="contained-tonal" onPress={handleSubmit}>
               Submit
             </Button>
+            <ItemAddedConfirmation visible={confirmVisible} setConfirmVisible={setConfirmVisible}/>
+            <ItemAddedError errorVisible={errorVisible} setErrorVisible={setErrorVisible}/>
           </View>
         </Surface>
       </BaseLayout>
@@ -150,7 +173,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flex: 1,
-    width:"100%"
+    width: "100%",
   },
   title: {
     fontSize: 24,
@@ -162,7 +185,7 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     padding: 10,
     marginBottom: 20,
-    width: '80%',
+    width: "80%",
   },
   icon: {
     width: 100,

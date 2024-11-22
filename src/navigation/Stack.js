@@ -16,6 +16,7 @@ import { OtherProfile } from "../pages/OtherProfile";
 import { useEffect, useState } from "react";
 import { LoginPage } from "../pages/Login";
 import { useUser } from "../context/user-context";
+import { Scanner } from "../pages/Scanner";
 
 const Stack = createStackNavigator();
 
@@ -120,6 +121,7 @@ function RootStack() {
       <Stack.Screen name="Add a New Item" component={AddNewItem} />
       <Stack.Screen name="Drop Down Menu Info" component={InfoDropDownMenu} />
       <Stack.Screen name="Login" component={LoginPage} />
+      <Stack.Screen name="Scanner" component={Scanner} />
     </Stack.Navigator>
   );
 }
