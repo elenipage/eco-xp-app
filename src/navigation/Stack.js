@@ -11,11 +11,12 @@ import { AddNewItem } from "../pages/AddNewItem";
 import Tabs from "./Tabs";
 import { Appbar, Tooltip, Avatar } from "react-native-paper";
 import { useXp } from "../context/Xp-context";
-import { LoadingPage } from "../pages/LoadingPage";
 import { OtherProfile } from "../pages/OtherProfile";
 import { useEffect, useState } from "react";
 import { LoginPage } from "../pages/Login";
 import { useUser } from "../context/user-context";
+import { Followers } from "../pages/Followers";
+import { Following } from "../pages/Following";
 
 const Stack = createStackNavigator();
 
@@ -120,6 +121,8 @@ function RootStack() {
       <Stack.Screen name="Add a New Item" component={AddNewItem} />
       <Stack.Screen name="Drop Down Menu Info" component={InfoDropDownMenu} />
       <Stack.Screen name="Login" component={LoginPage} />
+      <Stack.Screen name="Followers" component={Followers} />
+      <Stack.Screen name="Following" component={Following} />
     </Stack.Navigator>
   );
 }

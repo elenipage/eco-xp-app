@@ -6,7 +6,7 @@ import { Button, Surface, TextInput } from "react-native-paper";
 import BaseLayout from "../../src/components/BaseLayout.js";
 import RNPickerSelect from "react-native-picker-select";
 import AddImage from "../components/AddImage.js";
-import { fetchMaterials, postNewItem } from "../../axios.js";
+import { fetchMaterials, postNewItem } from "../../utils/api.js";
 
 export function AddNewItem() {
   const insets = useSafeAreaInsets();

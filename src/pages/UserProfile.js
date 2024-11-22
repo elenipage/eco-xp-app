@@ -1,5 +1,4 @@
 import { StyleSheet, Text, View, Image } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Streak from "../components/StreakChart";
 import commitsData from "../components/data/streakData";
 import { ScrollView } from "react-native-gesture-handler";
@@ -7,11 +6,31 @@ import BaseLayout from "../components/BaseLayout";
 import { FollowersFollowing } from "../components/FollowersFollowing";
 import { Surface } from "react-native-paper";
 import { useUser } from "../context/user-context";
+import { fetchFollowersByUserID, fetchFollowingByUserID } from "../../utils/api";
+import { useEffect, useState } from "react";
+import { LoadingPage } from "./LoadingPage";
 
 export function Profile() {
-  const insets = useSafeAreaInsets();
   const { user } = useUser()
-  console.log(user)
+  const [followerCount, setFollowerCount] = useState(0)
+  const [followingCount, setFollowingCount] = useState(0)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    setIsLoading(true)
+    fetchFollowersByUserID(user.user_id).then((followers) => {
+      setFollowerCount(followers.length)
+    })
+    .then(() => {
+      fetchFollowingByUserID(user.user_id).then((following) => {
+        setFollowingCount(following.length)
+        setIsLoading(false)
+      })
+    })
+  }, [])
+
+  if (isLoading) return <LoadingPage/>
+
   return (
     <ScrollView>
       <BaseLayout>
@@ -37,7 +56,7 @@ export function Profile() {
           />
           <View style={{ width: "50%" }}>
             <Text style={{ fontSize: 25, marginBottom: 10 }}>{user.username}</Text>
-            <FollowersFollowing />
+            <FollowersFollowing followerCount={followerCount} followingCount={followingCount}/>
           </View>
         </View>
         <Surface style={{width:"100%", alignItems:"center", justifyContent: "center", padding:10, borderRadius:10, marginBottom:20}}>

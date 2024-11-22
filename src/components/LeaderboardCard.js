@@ -12,7 +12,6 @@ export function LeaderboardCard({ data }) {
     data: data,
     icon: "avatarUrl",
     onRowPress: (item, index) => {
-      console.log(user, '<<user', item, '<<item')
       if (user.username === item.username) {
         navigation.navigate("Profile");
       } else {
