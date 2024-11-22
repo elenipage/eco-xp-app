@@ -6,6 +6,7 @@ import BaseLayout from '../../src/components/BaseLayout.js'
 import React,{ useState, useRef, useEffect } from 'react';
 import { useUser } from '../context/user-context.js';
 import { useXp } from '../context/Xp-context.js';
+import { updateXpByID } from '../../utils/api.js';
 
 
 export function ItemConfirmation() {
