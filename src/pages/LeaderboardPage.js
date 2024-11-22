@@ -97,12 +97,13 @@ export function LeaderboardPage() {
           username: user.username,
           avatarUrl: user.avatar_img_url,
           xp: user.xp,
-        });
+        })
+        console.log(followingResult)
         const followersSorted = followingResult.sort((b, a) => a.xp - b.xp);
         const postcodeSorted = postcodeResult.sort((b, a) => a.xp - b.xp);
         const areaSorted = areaResult.sort((b, a) => a.xp - b.xp);
 
-        return Promise.all([followersSorted, postcodeSorted, areaSorted]);
+        return Promise.all([followersSorted, postcodeSorted, areaSorted])
       })
       .then(([followersSorted, postcodeSorted, areaSorted]) => {
         setData({
