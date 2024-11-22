@@ -1,141 +1,198 @@
-import { StyleSheet, Text, View, TextInput, Image} from 'react-native';
-import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
-import React, {useEffect, useState} from 'react';
+import { StyleSheet, Text, View, Image } from "react-native"
+import {
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context"
+import React, { useEffect, useState } from "react"
 import { useRoute, useNavigation } from "@react-navigation/native"
-import {Button, Surface} from 'react-native-paper'
-import BaseLayout from '../../src/components/BaseLayout.js';
-import RNPickerSelect from 'react-native-picker-select'
-import AddImage from '../components/AddImage.js';
-import { fetchMaterials, postNewItem } from '../../axios.js';
+import {
+  Button,
+  Surface,
+  TextInput,
+  List,
+  Dialog,
+  Portal,
+} from "react-native-paper"
+import BaseLayout from "../../src/components/BaseLayout.js"
+import RNPickerSelect from "react-native-picker-select"
+import AddImage from "../components/AddImage.js"
+import { fetchMaterials, postNewItem } from "../../axios.js"
+import { ScrollView } from "react-native-gesture-handler"
+import { useNavigation } from "@react-navigation/native";
+import ItemAddedConfirmation from "../components/ItemAddedConfirmation.js"
+import ItemAddedError from "../components/ItemAddedError.js"
 
 export function AddNewItem() {
-
-  // const { data: url } = await supabase.storage
-  // .from('Photoa')
-  // .getPublicUrl(filePath)
-
+  const navigation = useNavigation();
+  const insets = useSafeAreaInsets()
   const route = useRoute()
   const { barcodeValue } = route.params
-  
-  const navigation = useNavigation()
+  const [itemName, setItemName] = useState("")
+  // const[itemBrand,setItemBrand] = useState("")
+  const [itemMaterial, setItemMaterial] = useState(null)
+  const [materials, setMaterials] = useState([])
+  const [materialsList, setMaterialsList] = useState([])
+  const [image, setImage] = useState(null)
+  const [expanded, setExpanded] = useState(false)
+  const [confirmVisible, setConfirmVisible] = useState(false)
+  const [errorVisible, setErrorVisible] = useState(false)
 
-  const[itemName, setItemName] = useState("")
-  const[itemMaterial, setItemMaterial] = useState("")
-  const[materials, setMaterials] = useState([])
-  const[materialsList, setMaterialsList] = useState([])
-  const [image, setImage] = useState(null);
 
-
+  const toggleDropdown = () => setExpanded(!expanded)
 
   useEffect(() => {
-    fetchMaterials().then(({data}) => {
+    fetchMaterials()
+      .then(({ data }) => {
+        setMaterials(data.materials)
 
-      setMaterials(data.materials)
-
-      const materials = data.materials.map((material) => {
-        return material.material_name
+        const materials = data.materials.map((material) => {
+          return material.material_name
+        })
+        setMaterialsList(materials)
       })
-      setMaterialsList(materials)
-  
-    })
-    .catch((err)=> {
-      console.log(err)
-    })
-  },[])
-  
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [])
+
   const placeholder = {
-    label: 'Packaging material',
+    label: "Packaging material",
     value: null,
-  };
-  const options = materialsList.map((material) => { return {label: material, value: material}})
+  }
+  const options = materialsList.map((material) => {
+    return { label: material, value: material }
+  })
 
   const handleSubmit = () => {
     const filtered = materials.filter((material) => {
-        return material.material_name === itemMaterial
+      return material.material_name === itemMaterial
     })
 
     const obj = {
-      item_name: itemName, 
-      material_id: filtered[0].material_id, 
-      barcode: barcodeValue.toString(), 
-      img_url: 'https://ecom-su-static-prod.wtrecom.com/images/products/11/LN_474469_BP_11.jpg'
+      item_name: itemName,
+      material_id: itemMaterial[1],
+      barcode: barcodeValue.toString(),
+      img_url:
+        "https://ecom-su-static-prod.wtrecom.com/images/products/11/LN_474469_BP_11.jpg",
     }
 
-    console.log(obj)
-
-    postNewItem(obj).then(({data}) => {
-      console.log(data)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  };
+    postNewItem(obj)
+      .then((response) => {
+        setConfirmVisible(true)
+      })
+      .catch(() => {
+        setErrorVisible(true)
+      })
+  }
 
   return (
     <SafeAreaProvider>
       <BaseLayout>
-        <Surface elevation={3}
-            style={{
-              marginBottom:20,
-              padding: 20,
-              height: '96%',
-            width: 300,
-            margin: 10,
+        <Surface
+          elevation={3}
+          style={{
+            // padding: 20,
+            height: "100%",
+            width: "100%",
+            // margin: 10,
             alignItems: "center",
             justifyContent: "center",
-            borderRadius:20
-          }}>
+            borderRadius: 20,
+          }}
+        >
           <View style={styles.container}>
             <Text style={styles.title}>Add an item</Text>
-            <Image source={require('../../assets/household.png')} style={styles.icon}></Image>
-            <TextInput style={styles.input} placeholder="Item name" onChangeText={text => setItemName(text)}/>
-            <View style={styles.input}>
-            <Text>Packaging material:</Text>
-            <RNPickerSelect
-            placeholder={placeholder}
-            items={options}
-            onValueChange={(value) => setItemMaterial(value)}
-            value={itemMaterial}
+            <Image
+              source={require("../../assets/household.png")}
+              style={styles.icon}
+            ></Image>
+            <TextInput
+              style={styles.input}
+              label="Item name"
+              onChangeText={(text) => setItemName(text)}
+              borderColor={"red"}
             />
+            <View style={styles.input}>
+              <Text>Packaging material:</Text>
+
+              <List.Accordion
+                title={itemMaterial ? itemMaterial[0] : "Select a material"}
+                left={(props) => <List.Icon {...props} icon="recycle" />}
+                expanded={expanded}
+                onPress={toggleDropdown}
+              >
+                <ScrollView
+                  height={200}
+                  width={"100%"}
+                  style={{ backgroundColor: "white" }}
+                >
+                  {materials.map((material) => {
+                    return (
+                      <List.Item
+                        onPress={() => {
+                          setItemMaterial([
+                            material.material_name,
+                            material.material_id,
+                          ])
+                          toggleDropdown()
+                        }}
+                        title={material.material_name}
+                      />
+                    )
+                  })}
+                </ScrollView>
+              </List.Accordion>
             </View>
-            <Text editable={false} style={styles.input}>Barcode: {barcodeValue}</Text>
-            <Button mode="contained-tonal" onPress={() => navigation.navigate("Take a Picture")}>Take a picture</Button>
+
+            <Text editable={false} style={styles.input}>
+              Barcode: {barcodeValue}
+            </Text>
+            <Button
+              mode="contained-tonal"
+              onPress={() => navigation.navigate("Take a Picture")}
+            >
+              Take a picture
+            </Button>
             <View>
-              <AddImage image={image} setImage={setImage}></AddImage> 
+              <AddImage image={image} setImage={setImage}></AddImage>
             </View>
-            <Button mode="contained-tonal" onPress={handleSubmit}>Submit</Button>
+            <Button mode="contained-tonal" onPress={handleSubmit}>
+              Submit
+            </Button>
+            <ItemAddedConfirmation visible={confirmVisible} setConfirmVisible={setConfirmVisible}/>
+            <ItemAddedError errorVisible={errorVisible} setErrorVisible={setErrorVisible}/>
           </View>
         </Surface>
       </BaseLayout>
     </SafeAreaProvider>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     flex: 1,
+    width: "100%",
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 20,
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     padding: 10,
     marginBottom: 20,
-    width: 250,
+    width: "80%",
   },
   icon: {
     width: 100,
     height: 100,
-    justifyContent: 'center',
+    justifyContent: "center",
     margin: 0,
     padding: 0,
     borderRadius: 30,
   },
 })
-

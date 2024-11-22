@@ -1,28 +1,23 @@
 import React from "react";
 import { Text, View, Image } from "react-native";
-import SegButtons from "../components/SegButtons";
-import TestLayout from "../styles/TestLayout";
-import { useState } from "react";
-import { LeaderboardCard } from "../components/LeaderboardCard";
+import { useState, useEffect } from "react";
 import {
-  followersData,
   postcodeData,
   areaData,
+  followingData,
 } from "../components/data/leaderboardData";
 import { Surface } from "react-native-paper";
+import { useUser } from "../context/user-context";
+import { LoadingPage } from "./LoadingPage";
+import TestLayout from "../styles/TestLayout";
+import SegButtons from "../components/SegButtons";
+import { LeaderboardCard } from "../components/LeaderboardCard";
 
-const user = {
-  userName: "Louis",
-  avatarUrl:
-    "https://media.licdn.com/dms/image/v2/D4E03AQHp3QR7NwD02w/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1715085387323?e=1737590400&v=beta&t=cMjFvIwY5d0XCGXUKpdbP9IkEXuIP2IcjGQDEL21lRU",
-  xp: 88,
-};
-
-function LeaderboardHeader(leaderBoard) {
-  const name = user.userName;
+function LeaderboardHeader(leaderBoard, user) {
+  const name = user.username;
   let userPosition = 0;
   leaderBoard.forEach((position, index) => {
-    if (position.userName === name) {
+    if (position.username === name) {
       userPosition = index + 1;
     }
   });
@@ -70,7 +65,7 @@ function LeaderboardHeader(leaderBoard) {
             border: "5px solid #6DA99A",
           }}
           source={{
-            uri: "https://media.licdn.com/dms/image/v2/D4E03AQHp3QR7NwD02w/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1715085387323?e=1737590400&v=beta&t=cMjFvIwY5d0XCGXUKpdbP9IkEXuIP2IcjGQDEL21lRU",
+            uri: user.avatar_img_url,
           }}
         />
         <View
@@ -90,27 +85,55 @@ function LeaderboardHeader(leaderBoard) {
 }
 
 export function LeaderboardPage() {
-  const followersSorted = followersData.sort((b, a) => a.xp - b.xp);
-  const postcodeSorted = postcodeData.sort((b, a) => a.xp - b.xp);
-  const areaSorted = areaData.sort((b, a) => a.xp - b.xp);
-
   const [value, setValue] = useState("friends");
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const { user } = useUser();
+  useEffect(() => {
+    setIsLoading(true);
+    Promise.all([followingData(user), postcodeData(user), areaData(user)])
+      .then(([followingResult, postcodeResult, areaResult]) => {
+        followingResult.push({
+          username: user.username,
+          avatarUrl: user.avatar_img_url,
+          xp: user.xp,
+        })
+        console.log(followingResult)
+        const followersSorted = followingResult.sort((b, a) => a.xp - b.xp);
+        const postcodeSorted = postcodeResult.sort((b, a) => a.xp - b.xp);
+        const areaSorted = areaResult.sort((b, a) => a.xp - b.xp);
+
+        return Promise.all([followersSorted, postcodeSorted, areaSorted])
+      })
+      .then(([followersSorted, postcodeSorted, areaSorted]) => {
+        setData({
+          friends: followersSorted,
+          postcode: postcodeSorted,
+          area: areaSorted,
+        });
+        setIsLoading(false);
+      });
+  }, []);
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
 
   return (
     <View style={TestLayout.container}>
       {value === "friends"
-        ? LeaderboardHeader(followersSorted)
+        ? LeaderboardHeader(data.friends, user)
         : value === "postcode"
-        ? LeaderboardHeader(postcodeSorted)
-        : LeaderboardHeader(areaSorted)}
+        ? LeaderboardHeader(data.postcode, user)
+        : LeaderboardHeader(data.area, user)}
       <SegButtons value={value} setValue={setValue} />
 
       {value === "friends" ? (
-        <LeaderboardCard data={followersData} />
+        <LeaderboardCard data={data.friends} />
       ) : value === "postcode" ? (
-        <LeaderboardCard data={postcodeData} />
+        <LeaderboardCard data={data.postcode} />
       ) : (
-        <LeaderboardCard data={areaData} />
+        <LeaderboardCard data={data.area} />
       )}
     </View>
   );
