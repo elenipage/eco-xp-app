@@ -4,7 +4,7 @@ import {
   useSafeAreaInsets,
 } from "react-native-safe-area-context"
 import React, { useEffect, useState } from "react"
-import { useRoute } from "@react-navigation/native"
+import { useRoute, useNavigation } from "@react-navigation/native"
 import {
   Button,
   Surface,
@@ -27,7 +27,6 @@ export function AddNewItem() {
   const insets = useSafeAreaInsets()
   const route = useRoute()
   const { barcodeValue } = route.params
-
   const [itemName, setItemName] = useState("")
   // const[itemBrand,setItemBrand] = useState("")
   const [itemMaterial, setItemMaterial] = useState(null)
@@ -37,6 +36,7 @@ export function AddNewItem() {
   const [expanded, setExpanded] = useState(false)
   const [confirmVisible, setConfirmVisible] = useState(false)
   const [errorVisible, setErrorVisible] = useState(false)
+
 
   const toggleDropdown = () => setExpanded(!expanded)
 
@@ -75,7 +75,6 @@ export function AddNewItem() {
       img_url:
         "https://ecom-su-static-prod.wtrecom.com/images/products/11/LN_474469_BP_11.jpg",
     }
-
 
     postNewItem(obj)
       .then((response) => {
@@ -144,12 +143,13 @@ export function AddNewItem() {
                 </ScrollView>
               </List.Accordion>
             </View>
+
             <Text editable={false} style={styles.input}>
               Barcode: {barcodeValue}
             </Text>
             <Button
               mode="contained-tonal"
-              tapFunction={() => navigation.navigate("Take a Picture")}
+              onPress={() => navigation.navigate("Take a Picture")}
             >
               Take a picture
             </Button>

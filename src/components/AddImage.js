@@ -55,9 +55,7 @@ export default function AddImage ({setImage, image}) {
 // };
 
     return !image? <Button mode="contained-tonal" onPress={pickImage}>Pick image from camera roll</Button> : <Image style={styles.icon} source={{ uri: image.assets[0].uri}}></Image>
-        
-        {/* {image && <Image source={{ uri: image }} style={styles.image} />} */}
-        {/* {image && <Button mode="contained-tonal" title="Upload Image" onPress={setImage(image)}>Select image</Button>} */}
+
 }
 
 const styles = StyleSheet.create({
