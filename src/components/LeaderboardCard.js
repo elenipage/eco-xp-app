@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 export function LeaderboardCard({data}) {
   const navigation = useNavigation();
     const props = {
-        labelBy: "userName",
+        labelBy: "username",
         sortBy: "xp",
         data: data,
         icon: "avatarUrl",
