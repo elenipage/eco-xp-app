@@ -14,11 +14,11 @@ import { useXp } from "../context/Xp-context";
 import { LoadingPage } from "../pages/LoadingPage";
 import { OtherProfile } from "../pages/OtherProfile";
 import { useEffect, useState } from "react";
-import BinDates from "../components/BinDate";
 
 const Stack = createStackNavigator();
 
 function HeaderDemo({ navigation, route, options, back }) {
+  const { user } = useUser();
   const { xp } = useXp();
   const [currentXp, setCurrentXp] = useState();
   useEffect(() => {
@@ -87,7 +87,7 @@ function RootStack() {
   const navigation = useNavigation();
   return (
     <Stack.Navigator
-      initialRouteName="Main"
+      initialRouteName="Login"
       headerMode="screen"
       screenOptions={{
         header: (props) => <HeaderDemo {...props} />,
@@ -102,10 +102,12 @@ function RootStack() {
         initialParams={{ xp: xp, setXp: setXp }}
       />
       <Stack.Screen name="FAQ" component={FAQ} />
+      <Stack.Screen name="Info" component={InfoDropDownMenu} />
       <Stack.Screen name="Item Confirmation" component={ItemConfirmation} />
       <Stack.Screen name="Add a New Item" component={AddNewItem} />
       <Stack.Screen name="Drop Down Menu Info" component={InfoDropDownMenu} />
-      <Stack.Screen name="Bin Dates Info" component={BinDates} />
+      {/* <Stack.Screen name="Recycling Info" component={RecyclingInfo} />
+      <Stack.Screen name="Plastic Life Cycle" component={PlasticLifeCycle} /> */}
     </Stack.Navigator>
   );
 }

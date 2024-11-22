@@ -63,7 +63,7 @@ export default function RecyclingInfo() {
           </Text>
         )}
         renderSectionHeader={({ section: { title } }) => (
-          <View style={styles.headerContainer}>
+          <View>
             <Text style={styles.header}>{title}</Text>
           </View>
         )}
@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+    backgroundColor: "#F0F8E2",
   },
   title: {
     paddingBottom: 20,
@@ -88,31 +89,43 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   titleText: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: "bold",
     fontFamily: "Roboto_700Bold",
+    color: "#228B22",
+    textAlign: "center",
+    textShadowColor: "#A9A9A9",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+    letterSpacing: 1.2,
   },
-  headerContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 15,
-  },
+
   header: {
     fontSize: 20,
     fontWeight: "bold",
-    paddingVertical: 12,
+    paddingVertical: 8,
     paddingHorizontal: 10,
-    textAlign: "center",
-    marginRight: 10,
+    textAlign: "left",
+    marginBottom: 5,
     fontFamily: "Roboto_700Bold",
+    color: "#1E90FF",
+    backgroundColor: "#F5F5F5",
+    borderRadius: 5,
   },
+
   item: {
     fontSize: 16,
-    paddingVertical: 8,
+    paddingVertical: 4,
     paddingHorizontal: 15,
     textAlign: "left",
-    color: "red",
+    color: "#4B4B4B",
     fontFamily: "Roboto_400Regular",
+    marginBottom: 6,
+  },
+
+  sectionSeparator: {
+    borderBottomWidth: 1,
+    borderBottomColor: "#D3D3D3",
+    marginVertical: 8,
   },
 });

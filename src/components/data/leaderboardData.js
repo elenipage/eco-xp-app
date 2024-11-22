@@ -1,33 +1,77 @@
-const followersData = [
-    { userName: 'Joe', avatarUrl: 'https://avatar.iran.liara.run/public/32', xp: 52 },
-    { userName: 'Louis', avatarUrl: 'https://media.licdn.com/dms/image/v2/D4E03AQHp3QR7NwD02w/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1715085387323?e=1737590400&v=beta&t=cMjFvIwY5d0XCGXUKpdbP9IkEXuIP2IcjGQDEL21lRU', xp: 88},
-    { userName: 'Jenny', avatarUrl: 'https://avatar.iran.liara.run/public/63', xp: 120 },
-    { userName: 'Sam', avatarUrl: 'https://avatar.iran.liara.run/public/41', xp: 85 }
-];
+import { useUser } from "../../context/user-context";
+import {
+  fetchFollowingByUserID,
+  fetchUsersByPostcode,
+  fetchUsersByPostcodePrefix,
+} from "../../../utils/api";
 
-const followersSorted = followersData.sort((b, a) => a.xp - b.xp);
-const followersPreview = [followersSorted[0], followersSorted[1], followersSorted[3]]
+function followingData(user) {
+  const userID = user.user_id;
+  return fetchFollowingByUserID(userID).then((following) => {
+    return following.map((followee) => {
+        return {
+          username: followee.username,
+          avatarUrl: followee.avatar_img_url,
+          xp: followee.xp,
+        };
+      })
+  });
+}
 
-const postcodeData = [
-    { userName: 'Joe', avatarUrl: 'https://avatar.iran.liara.run/public/32', xp: 52 },
-    { userName: 'Mia', avatarUrl: 'https://avatar.iran.liara.run/public/78', xp: 140 },
-    { userName: 'Alex', avatarUrl: 'https://avatar.iran.liara.run/public/22', xp: 95 },
-    { userName: 'Louis', avatarUrl: 'https://media.licdn.com/dms/image/v2/D4E03AQHp3QR7NwD02w/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1715085387323?e=1737590400&v=beta&t=cMjFvIwY5d0XCGXUKpdbP9IkEXuIP2IcjGQDEL21lRU', xp: 88},
-    { userName: 'Chris', avatarUrl: 'https://avatar.iran.liara.run/public/26', xp: 110 },
-    { userName: 'Taylor', avatarUrl: 'https://avatar.iran.liara.run/public/56', xp: 80 },
-];
+function postcodeData(user) {
+const postcode = user.postcode;
+  return fetchUsersByPostcode(postcode).then((postcodeUsers) => {
+    return postcodeUsers.map((user) => {
+        return {
+          username: user.username,
+          avatarUrl: user.avatar_img_url,
+          xp: user.xp,
+        };
+      })
+  });
+}
 
+function areaData(user) {
+const postcode = user.postcode;
+const splitPostcode = postcode.split(" ");
+  const prefix = splitPostcode[0].match(/[a-zA-Z]+/g);
+  return fetchUsersByPostcodePrefix(prefix).then((prefixUsers) => {
+    return prefixUsers
+      .map((user) => {
+        return {
+          username: user.username,
+          avatarUrl: user.avatar_img_url,
+          xp: user.xp,
+        };
+      })
+  });
+}
 
-const areaData = [
-    { userName: 'Joe', avatarUrl: 'https://avatar.iran.liara.run/public/32', xp: 52 },
-    { userName: 'Mia', avatarUrl: 'https://avatar.iran.liara.run/public/78', xp: 140 },
-    { userName: 'Alex', avatarUrl: 'https://avatar.iran.liara.run/public/22', xp: 95 },
-    { userName: 'Louis', avatarUrl: 'https://media.licdn.com/dms/image/v2/D4E03AQHp3QR7NwD02w/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1715085387323?e=1737590400&v=beta&t=cMjFvIwY5d0XCGXUKpdbP9IkEXuIP2IcjGQDEL21lRU', xp: 88},
-    { userName: 'Chris', avatarUrl: 'https://avatar.iran.liara.run/public/26', xp: 110 },
-    { userName: 'Taylor', avatarUrl: 'https://avatar.iran.liara.run/public/56', xp: 80 },
-    { userName: 'Jordan', avatarUrl: 'https://avatar.iran.liara.run/public/45', xp: 70 },
-    { userName: 'Morgan', avatarUrl: 'https://avatar.iran.liara.run/public/57', xp: 130 }
-];
+// [
+//     { userName: 'Joe', avatarUrl: 'https://avatar.iran.liara.run/public/32', xp: 52 },
+//     { userName: 'Louis', avatarUrl: 'https://media.licdn.com/dms/image/v2/D4E03AQHp3QR7NwD02w/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1715085387323?e=1737590400&v=beta&t=cMjFvIwY5d0XCGXUKpdbP9IkEXuIP2IcjGQDEL21lRU', xp: 88},
+//     { userName: 'Jenny', avatarUrl: 'https://avatar.iran.liara.run/public/63', xp: 120 },
+//     { userName: 'Sam', avatarUrl: 'https://avatar.iran.liara.run/public/41', xp: 85 }
+// ];
 
+// const postcodeData = [
+//     { userName: 'Joe', avatarUrl: 'https://avatar.iran.liara.run/public/32', xp: 52 },
+//     { userName: 'Mia', avatarUrl: 'https://avatar.iran.liara.run/public/78', xp: 140 },
+//     { userName: 'Alex', avatarUrl: 'https://avatar.iran.liara.run/public/22', xp: 95 },
+//     { userName: 'Louis', avatarUrl: 'https://media.licdn.com/dms/image/v2/D4E03AQHp3QR7NwD02w/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1715085387323?e=1737590400&v=beta&t=cMjFvIwY5d0XCGXUKpdbP9IkEXuIP2IcjGQDEL21lRU', xp: 88},
+//     { userName: 'Chris', avatarUrl: 'https://avatar.iran.liara.run/public/26', xp: 110 },
+//     { userName: 'Taylor', avatarUrl: 'https://avatar.iran.liara.run/public/56', xp: 80 },
+// ];
 
-export {followersData, followersPreview, postcodeData, areaData}
+// const areaData = [
+//     { userName: 'Joe', avatarUrl: 'https://avatar.iran.liara.run/public/32', xp: 52 },
+//     { userName: 'Mia', avatarUrl: 'https://avatar.iran.liara.run/public/78', xp: 140 },
+//     { userName: 'Alex', avatarUrl: 'https://avatar.iran.liara.run/public/22', xp: 95 },
+//     { userName: 'Louis', avatarUrl: 'https://media.licdn.com/dms/image/v2/D4E03AQHp3QR7NwD02w/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1715085387323?e=1737590400&v=beta&t=cMjFvIwY5d0XCGXUKpdbP9IkEXuIP2IcjGQDEL21lRU', xp: 88},
+//     { userName: 'Chris', avatarUrl: 'https://avatar.iran.liara.run/public/26', xp: 110 },
+//     { userName: 'Taylor', avatarUrl: 'https://avatar.iran.liara.run/public/56', xp: 80 },
+//     { userName: 'Jordan', avatarUrl: 'https://avatar.iran.liara.run/public/45', xp: 70 },
+//     { userName: 'Morgan', avatarUrl: 'https://avatar.iran.liara.run/public/57', xp: 130 }
+// ];
+
+export { followingData, postcodeData, areaData };

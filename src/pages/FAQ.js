@@ -1,5 +1,4 @@
 import { Text, View, ScrollView } from "react-native";
-// import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FAQCard } from "../components/HelpSectionFAQ";
 import BaseLayout from "../components/BaseLayout";
 

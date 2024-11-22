@@ -36,7 +36,7 @@ const quizzes = [
       },
       {
         id: 4,
-        question: "How many times can aluminum be recycled?",
+        question: "How many times can aluminium be recycled?",
         options: [
           { id: "a", text: "Once", isCorrect: false },
           { id: "b", text: "5 times", isCorrect: false },
