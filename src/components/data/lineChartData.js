@@ -1,5 +1,6 @@
 
-const singleFollowerLineChart = {
+function singleFollowerLineChart (user) {
+  const data = {
     labels: ["M", "T", "W", "T", "F", "S", "S"],
     datasets: [
       {
@@ -13,7 +14,9 @@ const singleFollowerLineChart = {
         strokeWidth: 2 
       }
     ],
-    legend: ["You", "Jenny"] 
+    legend: ["You", user.first_name] 
+  }
+    return data
   };
 
 
