@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, TextInput, Image} from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import React, {useEffect, useState} from 'react';
-import { useRoute } from "@react-navigation/native"
+import { useRoute, useNavigation } from "@react-navigation/native"
 import {Button, Surface} from 'react-native-paper'
 import BaseLayout from '../../src/components/BaseLayout.js';
 import RNPickerSelect from 'react-native-picker-select'
@@ -10,12 +10,16 @@ import { fetchMaterials, postNewItem } from '../../axios.js';
 
 export function AddNewItem() {
 
-  const insets = useSafeAreaInsets()
+  // const { data: url } = await supabase.storage
+  // .from('Photoa')
+  // .getPublicUrl(filePath)
+
   const route = useRoute()
   const { barcodeValue } = route.params
+  
+  const navigation = useNavigation()
 
   const[itemName, setItemName] = useState("")
-  // const[itemBrand,setItemBrand] = useState("")
   const[itemMaterial, setItemMaterial] = useState("")
   const[materials, setMaterials] = useState([])
   const[materialsList, setMaterialsList] = useState([])
@@ -59,8 +63,8 @@ export function AddNewItem() {
 
     console.log(obj)
 
-    postNewItem(obj).then((response) => {
-      console.log(response)
+    postNewItem(obj).then(({data}) => {
+      console.log(data)
     })
     .catch((err) => {
       console.log(err)
@@ -95,7 +99,7 @@ export function AddNewItem() {
             />
             </View>
             <Text editable={false} style={styles.input}>Barcode: {barcodeValue}</Text>
-            <Button mode="contained-tonal" tapFunction={() => navigation.navigate("Take a Picture")}>Take a picture</Button>
+            <Button mode="contained-tonal" onPress={() => navigation.navigate("Take a Picture")}>Take a picture</Button>
             <View>
               <AddImage image={image} setImage={setImage}></AddImage> 
             </View>
