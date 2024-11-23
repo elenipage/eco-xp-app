@@ -11,7 +11,6 @@ import { AddNewItem } from "../pages/AddNewItem";
 import Tabs from "./Tabs";
 import { Appbar, Tooltip, Avatar } from "react-native-paper";
 import { useXp } from "../context/Xp-context";
-import { LoadingPage } from "../pages/LoadingPage";
 import { OtherProfile } from "../pages/OtherProfile";
 import { useEffect, useState } from "react";
 import { LoginPage } from "../pages/Login";
@@ -123,9 +122,10 @@ function RootStack() {
       <Stack.Screen name="Add a New Item" component={AddNewItem} />
       <Stack.Screen name="Drop Down Menu Info" component={InfoDropDownMenu} />
       <Stack.Screen name="Login" component={LoginPage} />
+      <Stack.Screen name="Followers" component={Followers} />
+      <Stack.Screen name="Following" component={Following} />
       <Stack.Screen name="Take a Picture" component={TakePicture} />
       <Stack.Screen name="Scanner" component={Scanner} />
-      <Stack.Screen name="Bin Dates" component={BinDates} />
     </Stack.Navigator>
   );
 }

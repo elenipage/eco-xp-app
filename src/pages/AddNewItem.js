@@ -14,27 +14,32 @@ import {
   Portal,
 } from "react-native-paper"
 import BaseLayout from "../../src/components/BaseLayout.js"
-import RNPickerSelect from "react-native-picker-select"
 import AddImage from "../components/AddImage.js"
 import { ScrollView } from "react-native-gesture-handler"
 import ItemAddedConfirmation from "../components/ItemAddedConfirmation.js"
 import ItemAddedError from "../components/ItemAddedError.js"
 import { fetchMaterials, postNewItem } from "../../utils/api.js"
+import TakePicture from "../components/TakePicture.js"
+import { createClient } from '@supabase/supabase-js';  
+import {SUPABASE_URL, SUPABASE_SERVICE_KEY} from '@env'
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {headers: 
+  {Authorization: `Bearer ${SUPABASE_SERVICE_KEY}`}
+});
 
 export function AddNewItem() {
-  const navigation = useNavigation();
-  const insets = useSafeAreaInsets()
   const route = useRoute()
   const { barcodeValue } = route.params
   const [itemName, setItemName] = useState("")
-  const [itemMaterial, setItemMaterial] = useState(null)
+  const [itemMaterial, setItemMaterial] = useState([])
   const [materials, setMaterials] = useState([])
-  const [materialsList, setMaterialsList] = useState([])
+  // const [materialsList, setMaterialsList] = useState([])
   const [image, setImage] = useState(null)
   const [expanded, setExpanded] = useState(false)
   const [confirmVisible, setConfirmVisible] = useState(false)
   const [errorVisible, setErrorVisible] = useState(false)
-
+  const [takingPhoto, setTakingPhoto] = useState(false)
+  const [path,setPath] = useState("")
 
   const toggleDropdown = () => setExpanded(!expanded)
 
@@ -53,46 +58,49 @@ export function AddNewItem() {
       })
   }, [])
 
-  const placeholder = {
-    label: "Packaging material",
-    value: null,
-  }
-  const options = materialsList.map((material) => {
-    return { label: material, value: material }
-  })
-
   const handleSubmit = () => {
-    const filtered = materials.filter((material) => {
-      return material.material_name === itemMaterial
-    })
-
+    
     const obj = {
       item_name: itemName,
       material_id: itemMaterial[1],
       barcode: barcodeValue.toString(),
-      img_url:
-        "https://ecom-su-static-prod.wtrecom.com/images/products/11/LN_474469_BP_11.jpg",
+      img_url: ""
     }
+    
+    try {
+      console.log(path)
+      const { data } = supabase
+      .storage
+      .from('Photos')
+      .getPublicUrl(path)
+      console.log(data.publicUrl)
+      obj.img_url = data.publicUrl
+    }
+    catch (error) {
+      alert("Error fetching url:", error.message);
+    } 
+
+    console.log(obj)
 
     postNewItem(obj)
-      .then((response) => {
+      .then(({data}) => {
         setConfirmVisible(true)
+        console.log(data)
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log(error)
         setErrorVisible(true)
       })
   }
 
-  return (
+  return takingPhoto? <TakePicture setTakingPhoto={setTakingPhoto} setPath={setPath} supabase={supabase}></TakePicture>: (
     <SafeAreaProvider>
       <BaseLayout>
         <Surface
           elevation={3}
           style={{
-            // padding: 20,
             height: "100%",
             width: "100%",
-            // margin: 10,
             alignItems: "center",
             justifyContent: "center",
             borderRadius: 20,
@@ -130,7 +138,7 @@ export function AddNewItem() {
                         onPress={() => {
                           setItemMaterial([
                             material.material_name,
-                            material.material_id,
+                            material.material_id
                           ])
                           toggleDropdown()
                         }}
@@ -147,7 +155,7 @@ export function AddNewItem() {
             </Text>
             <Button
               mode="contained-tonal"
-              onPress={() => navigation.navigate("Take a Picture")}
+              onPress={() => setTakingPhoto(true)}
             >
               Take a picture
             </Button>

@@ -1,5 +1,4 @@
 import { StyleSheet, Text, View, Image } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Streak from "../components/StreakChart";
 import commitsData from "../components/data/streakData";
 import { ScrollView } from "react-native-gesture-handler";
@@ -7,6 +6,12 @@ import BaseLayout from "../components/BaseLayout";
 import { FollowersFollowing } from "../components/FollowersFollowing";
 import { Surface } from "react-native-paper";
 import { useUser } from "../context/user-context";
+import {
+  fetchFollowersByUserID,
+  fetchFollowingByUserID,
+} from "../../utils/api";
+import { useEffect, useState } from "react";
+import { LoadingPage } from "./LoadingPage";
 
 export function Profile() {
   const insets = useSafeAreaInsets();
