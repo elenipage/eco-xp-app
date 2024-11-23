@@ -8,7 +8,7 @@ import { singleFollowerLineChart } from "../components/data/lineChartData";
 import { useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { fetchUserByID } from "../../utils/api";
-import { LoadingPage } from "./LoadingPage";
+import { Loader } from "../components/Loader";
 
 export function OtherProfile() {
   const route = useRoute()
@@ -24,7 +24,7 @@ export function OtherProfile() {
     })
   }, [])
 
-  if (isLoading) {return <LoadingPage/>}
+  if (isLoading) {return <Loader/>}
 
   return (
     <ScrollView>

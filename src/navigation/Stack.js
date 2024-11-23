@@ -11,12 +11,12 @@ import { AddNewItem } from "../pages/AddNewItem";
 import Tabs from "./Tabs";
 import { Appbar, Tooltip, Avatar } from "react-native-paper";
 import { useXp } from "../context/Xp-context";
-import { LoadingPage } from "../pages/LoadingPage";
+import { Loader } from "../components/Loader";
 import { OtherProfile } from "../pages/OtherProfile";
 import { useEffect, useState } from "react";
 import { LoginPage } from "../pages/Login";
 import { useUser } from "../context/user-context";
-import TakePicture from "../components/TakePicture.js"
+import TakePicture from "../components/TakePicture.js";
 import { Scanner } from "../pages/Scanner";
 
 const Stack = createStackNavigator();
@@ -30,11 +30,7 @@ function HeaderDemo({ navigation, route, options, back }) {
   }, [xp]);
 
   if (user === null)
-    return (
-      <Appbar.Header
-        style={{ justifyContent: "space-between" }}
-      ></Appbar.Header>
-    );
+    return <Appbar.Header style={{ justifyContent: "space-between" }}></Appbar.Header>;
   else if (user) {
     return (
       <Appbar.Header style={{ justifyContent: "space-between" }}>
@@ -54,9 +50,7 @@ function HeaderDemo({ navigation, route, options, back }) {
             />
           </TouchableOpacity>
         )}
-        {back && back.title !== "Login" ? (
-          <Appbar.Content title={`${route.name}`} />
-        ) : null}
+        {back && back.title !== "Login" ? <Appbar.Content title={`${route.name}`} /> : null}
         <View
           style={{
             flexDirection: "row",
@@ -87,7 +81,10 @@ function HeaderDemo({ navigation, route, options, back }) {
                 alignItems: "center",
               }}
             >
-              <Appbar.Action icon="one-up" onPress={() => {}} />
+              <Appbar.Action
+                icon="one-up"
+                onPress={() => {}}
+              />
               <Text>{`${currentXp} XP`}</Text>
             </View>
           </Tooltip>
@@ -108,23 +105,55 @@ function RootStack() {
         header: (props) => <HeaderDemo {...props} />,
       }}
     >
-      <Stack.Screen name="Main" component={Tabs} />
-      <Stack.Screen name="Profile" component={Profile} />
-      <Stack.Screen name="Other Profile" component={OtherProfile} />
+      <Stack.Screen
+        name="Main"
+        component={Tabs}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+      />
+      <Stack.Screen
+        name="Other Profile"
+        component={OtherProfile}
+      />
       <Stack.Screen
         name="Quiz"
         component={Quiz}
         initialParams={{ xp: xp, setXp: setXp }}
       />
-      <Stack.Screen name="FAQ" component={FAQ} />
-      <Stack.Screen name="Info" component={InfoDropDownMenu} />
-      <Stack.Screen name="Item Confirmation" component={ItemConfirmation} />
-      <Stack.Screen name="Add a New Item" component={AddNewItem} />
-      <Stack.Screen name="Drop Down Menu Info" component={InfoDropDownMenu} />
-      <Stack.Screen name="Login" component={LoginPage} />
-      <Stack.Screen name="Take a Picture" component={TakePicture} />
-      <Stack.Screen name="Scanner" component={Scanner} />
-
+      <Stack.Screen
+        name="FAQ"
+        component={FAQ}
+      />
+      <Stack.Screen
+        name="Info"
+        component={InfoDropDownMenu}
+      />
+      <Stack.Screen
+        name="Item Confirmation"
+        component={ItemConfirmation}
+      />
+      <Stack.Screen
+        name="Add a New Item"
+        component={AddNewItem}
+      />
+      <Stack.Screen
+        name="Drop Down Menu Info"
+        component={InfoDropDownMenu}
+      />
+      <Stack.Screen
+        name="Login"
+        component={LoginPage}
+      />
+      <Stack.Screen
+        name="Take a Picture"
+        component={TakePicture}
+      />
+      <Stack.Screen
+        name="Scanner"
+        component={Scanner}
+      />
     </Stack.Navigator>
   );
 }

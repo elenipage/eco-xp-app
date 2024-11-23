@@ -1,13 +1,14 @@
-import { ScrollView } from "react-native";
+import { ScrollView, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import RecyclingTipsCarousel from "../components/RecyclingTips";
 import { FunFact } from "../components/FunFact";
 import StandardButton from "../components/StandardButton";
 import BaseLayout from "../components/BaseLayout";
 import { followersPreview } from "../components/data/leaderboardData";
+import { Loader } from "../components/Loader";
+import { useState } from "react";
 
 export function HomeScreen() {
-  const navigation = useNavigation();
   return (
     <ScrollView>
       <BaseLayout>
@@ -19,7 +20,6 @@ export function HomeScreen() {
         >
           Take a Quiz
         </StandardButton>
-        {/* (temporarily) allows me to navigate to the welcome page */}
       </BaseLayout>
     </ScrollView>
   );
