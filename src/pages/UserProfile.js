@@ -11,7 +11,7 @@ import {
   fetchFollowingByUserID,
 } from "../../utils/api";
 import { useEffect, useState } from "react";
-import { LoadingPage } from "./LoadingPage";
+import { Loader } from "../components/Loader";
 
 export function Profile() {
   const insets = useSafeAreaInsets();
