@@ -12,14 +12,16 @@ export default function BinDates() {
   const { user } = useUser();
   const postcode = user.postcode;
 
-  const [fontsLoaded] = useFonts({
-    Roboto_400Regular,
-    Roboto_700Bold,
-  });
+  // const [fontsLoaded] = useFonts({
+  //   Roboto_400Regular,
+  //   Roboto_700Bold,
+  // });
 
-  if (!fontsLoaded) {
-    return <Text>Loading fonts...</Text>;
-  }
+  // if (!fontsLoaded) {
+  //   return <Text>Loading fonts...</Text>;
+  // }
+
+  // Commented the above out for now as it was causing errors
 
   useEffect(() => {
     fetchBinDatesByUserPostcode(postcode)
@@ -34,9 +36,7 @@ export default function BinDates() {
   return (
     <SafeAreaView style={styles.container}>
       <View>
-        <Text style={styles.title}>
-          Please see your collection dates below:
-        </Text>
+        <Text style={styles.title}>Please see your collection dates below:</Text>
 
         <BinDateCard
           title="Garden Waste Collection:"
