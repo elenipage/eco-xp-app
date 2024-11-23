@@ -32,11 +32,13 @@
     "expo-linking": "~7.0.2",
     "expo-status-bar": "~2.0.0",
     "lottie-react-native": "^7.1.0",
+    "metro-react-native-babel-preset": "^0.77.0",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-hook-form": "^7.53.2",
     "react-native": "0.76.1",
     "react-native-chart-kit": "^6.12.0",
+    "react-native-dotenv": "^3.4.11",
     "react-native-dropdown-picker": "^5.4.6",
     "react-native-gesture-handler": "~2.20.2",
     "react-native-leaderboard": "^1.0.6",
@@ -48,12 +50,10 @@
     "react-native-screens": "~4.1.0",
     "react-native-svg": "^15.9.0",
     "react-native-swiper": "^1.6.0",
+    "react-native-vector-icons": "^10.2.0",
     "react-native-web": "~0.19.13",
     "react-navigation": "^5.0.0",
     "typescript": "^5.3.3"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.20.0"
   },
   "private": true
 }

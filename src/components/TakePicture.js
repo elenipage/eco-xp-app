@@ -3,26 +3,12 @@ import { StyleSheet, Text, View, SafeAreaView, Image } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 import { useEffect, useRef, useState } from 'react';
 import { Camera, CameraView } from 'expo-camera';
-import { useNavigation } from '@react-navigation/native';
-import { createClient } from '@supabase/supabase-js';  
 
-
-export default function TakePicture() {
+export default function TakePicture({setPath, setTakingPhoto, supabase}) {
 
     let cameraRef = useRef();
     const [hasCameraPermission, setHasCameraPermission] = useState();
     const [photo, setPhoto] = useState();
-    const [path,setPath] = useState("")
-
-
-    const supabaseUrl = 'https://xwjqudfimaqvqprwqqhn.supabase.co';  
-    const supabaseServiceKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3anF1ZGZpbWFxdnFwcndxcWhuIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczMjI3NTIzOCwiZXhwIjoyMDQ3ODUxMjM4fQ.47gQOB0-x51gixOJPkqH_HKogdF6tcHZZnJbbWgUPds';
-
-    const supabase = createClient(supabaseUrl, supabaseServiceKey, {headers: 
-        {
-            Authorization: `Bearer ${supabaseServiceKey}`,
-        }
-    });
 
     useEffect(() => {
         (async () => {
@@ -64,6 +50,8 @@ export default function TakePicture() {
 
     const uploadImage = async (photo) => {
 
+        console.log(supabase.supabaseUrl)
+
         try{
 
             if (!photo) {
@@ -89,14 +77,14 @@ export default function TakePicture() {
             } else {
                 console.log('Upload successful:', data);
                 setPath(data.fullPath)
+                setTakingPhoto(false)
             };
             
         
         } catch (error) {
             alert("Error uploading file:", error.message);
-        } finally {
-            setUploading(false)
-        }
+        } 
+
     }
 
     if (photo) {

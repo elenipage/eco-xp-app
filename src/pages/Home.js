@@ -20,6 +20,14 @@ export function HomeScreen() {
         >
           Take a Quiz
         </StandardButton>
+
+        {/* (temporarily) allows me to navigate to the welcome page */}
+        <StandardButton
+          buttonText={"BinDATES"}
+          tapFunction={() => navigation.navigate("Bin Dates")}
+        >
+          BIN DATES
+        </StandardButton>
       </BaseLayout>
     </ScrollView>
   );

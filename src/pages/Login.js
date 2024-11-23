@@ -14,7 +14,7 @@ export function LoginPage() {
   const navigation = useNavigation();
 
   function handleLogin() {
-    fetchUserByID(1)
+    fetchUserByID(2)
       .then((fetchedUser) => {
         setUser(fetchedUser);
         setXp(fetchedUser.xp);
