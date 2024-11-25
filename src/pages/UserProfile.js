@@ -5,16 +5,10 @@ import { ScrollView } from "react-native-gesture-handler";
 import BaseLayout from "../components/BaseLayout";
 import { FollowersFollowing } from "../components/FollowersFollowing";
 import { Surface } from "react-native-paper";
-import { useUser } from "../context/user-context";
-import {
-  fetchFollowersByUserID,
-  fetchFollowingByUserID,
-} from "../../utils/api";
-import { useEffect, useState } from "react";
-import { Loader } from "../components/Loader";
+import { useUser } from "../context/user-context"
+
 
 export function Profile() {
-  const insets = useSafeAreaInsets();
   const { user } = useUser();
   console.log(user);
   return (
