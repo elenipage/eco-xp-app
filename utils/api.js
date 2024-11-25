@@ -71,10 +71,10 @@ export function fetchBinDatesByUserPostcode(postcode) {
 }
 
 export function postLoggedItem(item_id, user_id) {
-  const logObject = { item_id: item_id, user_id: user_id}
-  return apiClient.post(`/logged-items`, logObject).then(({data}) => {
-    return data
-  })
+  const logObject = { item_id: item_id, user_id: user_id };
+  return apiClient.post(`/logged-items`, logObject).then(({ data }) => {
+    return data;
+  });
 }
 
 export function fetchLoggedItemsById(userID, start, end) {
@@ -91,7 +91,6 @@ export function fetchLoggedItemsById(userID, start, end) {
   if (end) {
     queryStr += `end=${end}`;
   }
-  console.log(queryStr);
   return apiClient.get(queryStr).then(({ data }) => {
     return data.loggedItems;
   });

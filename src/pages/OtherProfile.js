@@ -25,7 +25,26 @@ export function OtherProfile() {
   const [followerCount, setFollowerCount] = useState(0);
   const [followingCount, setFollowingCount] = useState(0);
   const [loadingProgress, setLoadingProgress] = useState(0);
-  const [otherUserXp, setotherUserXp] = useState(0)
+  const [loggedItems, setLoggedItems] = useState([]);
+
+  const today = new Date();
+  const dd = String(today.getDate()).padStart(2, "0");
+  const mm = String(today.getMonth() + 1).padStart(2, "0");
+  const yyyy = today.getFullYear();
+  const today_formatted = yyyy + "-" + mm + "-" + dd;
+  Date.prototype.subtractDays = function (d) {
+    this.setTime(this.getTime() - d * 24 * 60 * 60 * 1000);
+    return this;
+  };
+  let start = new Date();
+  start.subtractDays(1);
+  const dd_30 = String(start.getDate()).padStart(2, "0");
+  const mm_30 = String(start.getMonth() + 1).padStart(2, "0");
+  const yyyy_30 = today.getFullYear();
+  start = yyyy_30 + "-" + mm_30 + "-" + dd_30;
+  // fetchLoggedItemsById(user_id, start, today_formatted).then((response) => {
+  //   console.log(response, "response")
+  // });
 
   useEffect(() => {
     setIsLoading(true);
@@ -34,34 +53,33 @@ export function OtherProfile() {
       .then((data) => {
         setLoadingProgress(0.4);
         setOtherUser(data);
+        return fetchLoggedItemsById(user_id);
       })
-      .then(() => {
-        fetchLoggedItemsById(user_id).then((data) => {
-          const loggedItems = data;
-          console.log(loggedItems);
-        });
-      })
-      .then(() => {
+      .then((userLoggedItems) => {
+        setLoggedItems(userLoggedItems);
         setLoadingProgress(0.6);
-        fetchFollowersByUserID(user_id)
-          .then((followers) => {
-            setLoadingProgress(0.8);
-            setFollowerCount(followers.length);
-          })
-          .then(() => {
-            setLoadingProgress(1);
-            fetchFollowingByUserID(user_id).then((following) => {
-              setFollowingCount(following.length);
-              setIsLoading(false);
-            });
-          });
+        return fetchFollowersByUserID(user_id);
+      })
+      .then((followers) => {
+        setFollowerCount(followers.length);
+        setLoadingProgress(0.8);
+        return fetchFollowingByUserID(user_id);
+      })
+      .then((following) => {
+        setFollowingCount(following.length);
+        setLoadingProgress(1);
+        setIsLoading(false);
       });
-  }, []);
+  }, [user_id]);
   // start.subtractDays(7);
-
+  console.log(loggedItems);
   if (isLoading) {
     return <Loader loadingProgress={loadingProgress} />;
   }
+
+  const itemData = loggedItems.map((item) => {
+    console.log(item.xp, item.date);
+  });
 
   return (
     <ScrollView>

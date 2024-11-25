@@ -1,5 +1,5 @@
 
-function singleFollowerLineChart (user) {
+function singleFollowerLineChart(user) {
   const data = {
     labels: ["M", "T", "W", "T", "F", "S", "S"],
     datasets: [
