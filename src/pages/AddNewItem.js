@@ -1,15 +1,10 @@
-import { StyleSheet, Text, View, Image } from "react-native"
+import { StyleSheet, Text, View, Image, BackHandler, Alert } from "react-native"
 import {
   SafeAreaProvider,
 } from "react-native-safe-area-context"
 import React, { useEffect, useState } from "react"
-import { useRoute, useNavigation } from "@react-navigation/native"
-import {
-  Button,
-  Surface,
-  TextInput,
-  List,
-} from "react-native-paper"
+import { useNavigation, useRoute } from "@react-navigation/native"
+import { Button, Surface, TextInput, List} from "react-native-paper"
 import BaseLayout from "../../src/components/BaseLayout.js"
 import AddImage from "../components/AddImage.js"
 import { ScrollView } from "react-native-gesture-handler"
@@ -36,17 +31,16 @@ export function AddNewItem() {
   const [takingPhoto, setTakingPhoto] = useState(false)
   const [path,setPath] = useState("")
   const [photo, setPhoto] = useState(null);
-
   const toggleDropdown = () => setExpanded(!expanded)
 
   useEffect(() => {
-    console.log(path)
     fetchMaterials()
       .then(({ data }) => {
         setMaterials(data.materials)
       })
       .catch((err) => {
       })
+  
   }, [])
 
   const handleSubmit = () => {
@@ -67,6 +61,7 @@ export function AddNewItem() {
 
       postNewItem(obj)
       .then(({data}) => {
+        console.log(data.item)
         setConfirmVisible(true)
       })
       .catch((error) => {
@@ -101,7 +96,8 @@ export function AddNewItem() {
             ></Image>
             <TextInput
               style={styles.input}
-              label="Item name"
+              label="Item name" 
+              value={itemName || ""}
               onChangeText={(text) => setItemName(text)}
               borderColor={"red"}
             />
@@ -123,11 +119,11 @@ export function AddNewItem() {
                     return (
                       <List.Item
                         onPress={() => {
+                          toggleDropdown()
                           setItemMaterial([
                             material.material_name,
                             material.material_id
                           ])
-                          toggleDropdown()
                         }}
                         title={material.material_name}
                       />
@@ -138,7 +134,7 @@ export function AddNewItem() {
             </View>
 
             <Text editable={false} style={styles.input}>
-              Barcode: {barcodeValue}
+              Barcode: {barcodeValue}``
             </Text>
             {photo? <Image style={styles.icon} source={{uri: photo.uri}}></Image> : <View><Button mode="contained-tonal" onPress={() => setTakingPhoto(true)}>
               Take a picture
