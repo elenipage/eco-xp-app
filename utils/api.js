@@ -18,7 +18,7 @@ export function fetchMaterials() {
 }
 
 export function postNewItem(obj) {
-  return apiClient.post(`/itemsh`, obj);
+  return apiClient.post(`/items`, obj);
 }
 
 export function fetchItemByBarcode(scannedBarcode) {
