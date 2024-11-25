@@ -66,7 +66,7 @@ export function fetchFollowingByUserID(userID) {
 
 export function fetchBinDatesByUserPostcode(postcode) {
   return apiClient.get(`/postcodes/${postcode}`).then(({ data }) => {
-    return data;
+    return data.postcode;
   });
 }
 

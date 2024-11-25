@@ -8,6 +8,7 @@ import { followersPreview } from "../components/data/leaderboardData";
 import { Loader } from "../components/Loader";
 import { useState } from "react";
 import { useUser } from "../context/user-context";
+import BinDateCarousel from "../components/HomeBinDateCarousel";
 
 
 export function HomeScreen() {
@@ -20,6 +21,8 @@ export function HomeScreen() {
       <Text style={{width:"100%", fontSize:35}}>Hi {user.first_name}
         !
       </Text>
+
+      <BinDateCarousel />
         <FunFact />
         <RecyclingTipsCarousel />
         <StandardButton
