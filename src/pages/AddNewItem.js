@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View, Image } from "react-native"
 import {
   SafeAreaProvider,
-  useSafeAreaInsets,
 } from "react-native-safe-area-context"
 import React, { useEffect, useState } from "react"
 import { useRoute, useNavigation } from "@react-navigation/native"
@@ -10,8 +9,6 @@ import {
   Surface,
   TextInput,
   List,
-  Dialog,
-  Portal,
 } from "react-native-paper"
 import BaseLayout from "../../src/components/BaseLayout.js"
 import AddImage from "../components/AddImage.js"
@@ -23,11 +20,11 @@ import TakePicture from "../components/TakePicture.js"
 import { createClient } from '@supabase/supabase-js';  
 import {SUPABASE_URL, SUPABASE_SERVICE_KEY} from '@env'
 
-const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {headers: 
-  {Authorization: `Bearer ${SUPABASE_SERVICE_KEY}`}
-});
 
 export function AddNewItem() {
+  const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {headers: 
+    {Authorization: `Bearer ${SUPABASE_SERVICE_KEY}`}
+  });
   const route = useRoute()
   const { barcodeValue } = route.params
   const [itemName, setItemName] = useState("")
@@ -49,7 +46,6 @@ export function AddNewItem() {
         setMaterials(data.materials)
       })
       .catch((err) => {
-        console.log(err)
       })
   }, [])
 
@@ -72,10 +68,8 @@ export function AddNewItem() {
       postNewItem(obj)
       .then(({data}) => {
         setConfirmVisible(true)
-        console.log(data)
       })
       .catch((error) => {
-        console.log(error)
         setErrorVisible(true)
       })
 

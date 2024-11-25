@@ -39,12 +39,9 @@ export default function TakePicture({photo, setPhoto, setPath, setTakingPhoto, s
 
     const uploadImage = async (photo) => {
 
-        setIsLoading(true)
-
         try{
 
             if (!photo) {
-                console.error("No image selected");
                 return;
             };
 
@@ -64,6 +61,7 @@ export default function TakePicture({photo, setPhoto, setPath, setTakingPhoto, s
                 setIsLoading(false)
                 console.log('Upload successful:', data);
                 setPath(data.fullPath)
+
                 setTakingPhoto(false)
             };
             
