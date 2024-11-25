@@ -44,14 +44,8 @@ export function AddNewItem() {
     fetchMaterials()
       .then(({ data }) => {
         setMaterials(data.materials)
-
-        const materials = data.materials.map((material) => {
-          return material.material_name
-        })
-        setMaterialsList(materials)
       })
       .catch((err) => {
-        console.log(err)
       })
   }, [])
 
@@ -65,27 +59,22 @@ export function AddNewItem() {
     }
     
     try {
-      console.log(path)
       const { data } = supabase
       .storage
       .from('Photos')
       .getPublicUrl(path)
-      console.log(data.publicUrl)
       obj.img_url = data.publicUrl
     }
     catch (error) {
       alert("Error fetching url:", error.message);
     } 
 
-    console.log(obj)
 
     postNewItem(obj)
       .then(({data}) => {
         setConfirmVisible(true)
-        console.log(data)
       })
       .catch((error) => {
-        console.log(error)
         setErrorVisible(true)
       })
   }
