@@ -6,7 +6,8 @@ import BaseLayout from '../../src/components/BaseLayout.js'
 import React,{ useState, useRef, useEffect } from 'react';
 import { useUser } from '../context/user-context.js';
 import { useXp } from '../context/Xp-context.js';
-import { updateXpByID } from '../../utils/api.js';
+import { postLoggedItem, updateXpByID } from '../../utils/api.js';
+import { Loader } from '../components/Loader.js';
 
 
 export function ItemConfirmation() {
@@ -17,25 +18,33 @@ export function ItemConfirmation() {
   const confettiRef = useRef(null)
   const [isRecycled, setIsRecycled] = useState(false)
   const [isBinned, setIsBinned] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const { user } = useUser()
   const { setXp } = useXp()
 
+
   function handleRecycle () {
+    setIsLoading(true)
     updateXpByID(user.user_id, itemXP).then(() => {
       setXp((prevXp) => prevXp + itemXP);
     })
     .then(()=> {
-      return <Text>Congrats, you gained {itemXP} xp</Text>
+      return postLoggedItem(scannedItemData.item_id, user.user_id)
+    })
+    .then(() => {
+      setIsLoading(false)
+      setIsRecycled(true)
+      return
+    })
+    .catch((err) => {
     })
   }
 
   useEffect(()=> {
-    handleRecycle()
-  },[isRecycled])
-
-  useEffect(()=> {
     confettiRef.current?.play(0);
   },[isRecycled])
+
+  if (isLoading) {return <Loader/>}
   
   return (
     <SafeAreaProvider>
@@ -54,9 +63,8 @@ export function ItemConfirmation() {
           }}>
             <Image
               style={styles.item_img}
-              source={{
-                uri: scannedItemData.img ||"https://t4.ftcdn.net/jpg/01/05/29/71/360_F_105297184_FaBQJDmTsKQMfkrVwonZkejAzr0Rzbj4.jpg",
-              }}
+              source={{ uri: scannedItemData.img_url || "https://t4.ftcdn.net/jpg/01/05/29/71/360_F_105297184_FaBQJDmTsKQMfkrVwonZkejAzr0Rzbj4.jpg"}}
+              
               />
               <Text style={styles.titleText}>Item: {scannedItemData.item_name}</Text>
               <Text style={styles.titleText}>Material ID: {scannedItemData.item_id}</Text>
@@ -76,8 +84,8 @@ export function ItemConfirmation() {
             <View style={styles.container}>
               <Image style={styles.icon}
               source={require('../../assets/recycling-bin.png')} ></Image>
-              <Text style={styles.titleText}>You can recycle me!!</Text>
-              {!isRecycled && <Button onPress={() => {setIsRecycled(true)}} mode="contained-tonal">Recycle {scannedItemData.item_name} for {itemXP} XP</Button>}
+              {!isRecycled ? <Text style={styles.titleText}>You can recycle me!</Text> : <Text style={styles.titleText}>Recycled!</Text>}
+              {!isRecycled ? <Button onPress={() => {handleRecycle()}} mode="contained-tonal">Recycle {scannedItemData.item_name} for {itemXP} XP</Button> : <Text>Congrats, you gained {itemXP} xp</Text>}
             </View> : 
             <View style={styles.container}>
               <Image style={styles.icon}
@@ -88,14 +96,6 @@ export function ItemConfirmation() {
           </Surface>
         </View>
       </BaseLayout>
-      {/* <LottieView
-        ref={confettiRef}
-        source={require('../../assets/confetti.json')}
-        autoPlay={true}
-        loop={true}
-        style={styles.lottie}
-        resizeMode='cover'
-      /> */}
     </SafeAreaProvider>
   );
 }

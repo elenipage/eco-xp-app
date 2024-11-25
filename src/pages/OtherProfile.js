@@ -16,7 +16,6 @@ import { fetchFollowersByUserID, fetchFollowingByUserID, fetchUserByID } from ".
 export function OtherProfile() {
   const route = useRoute();
   const { user_id } = route.params;
-  console.log(user_id);
   const [otherUser, setOtherUser] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [followerCount, setFollowerCount] = useState(0);

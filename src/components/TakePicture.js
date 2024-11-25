@@ -50,12 +50,10 @@ export default function TakePicture({setPath, setTakingPhoto, supabase}) {
 
     const uploadImage = async (photo) => {
 
-        console.log(supabase.supabaseUrl)
 
         try{
 
             if (!photo) {
-                console.error("No image selected");
                 return;
             };
 
@@ -73,10 +71,8 @@ export default function TakePicture({setPath, setTakingPhoto, supabase}) {
                 });
 
             if (error) {
-                console.error('Upload failed:', error.message);
             } else {
-                console.log('Upload successful:', data);
-                setPath(data.fullPath)
+                setPath(data.path)
                 setTakingPhoto(false)
             };
             
