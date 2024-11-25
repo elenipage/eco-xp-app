@@ -10,7 +10,12 @@ import { useEffect, useState } from "react";
 
 import { Loader } from "../components/Loader";
 
-import { fetchFollowersByUserID, fetchFollowingByUserID, fetchUserByID } from "../../utils/api";
+import {
+  fetchFollowersByUserID,
+  fetchFollowingByUserID,
+  fetchUserByID,
+  fetchLoggedItemsById,
+} from "../../utils/api";
 
 export function OtherProfile() {
   const route = useRoute();
@@ -31,6 +36,12 @@ export function OtherProfile() {
         setOtherUser(data);
       })
       .then(() => {
+        fetchLoggedItemsById(user_id).then((data) => {
+          const loggedItems = data;
+          console.log(loggedItems);
+        });
+      })
+      .then(() => {
         setLoadingProgress(0.6);
         fetchFollowersByUserID(user_id)
           .then((followers) => {
@@ -46,7 +57,6 @@ export function OtherProfile() {
           });
       });
   }, []);
-  console.log(otherUser, "<< other user");
   // start.subtractDays(7);
 
   if (isLoading) {

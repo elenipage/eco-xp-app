@@ -76,3 +76,23 @@ export function postLoggedItem(item_id, user_id) {
     return data
   })
 }
+
+export function fetchLoggedItemsById(userID, start, end) {
+  let queryStr = `/${userID}/logged-items`;
+  if (start || end) {
+    queryStr += "?";
+  }
+  if (start) {
+    queryStr += `start=${start}`;
+  }
+  if (start && end) {
+    queryStr += `&`;
+  }
+  if (end) {
+    queryStr += `end=${end}`;
+  }
+  console.log(queryStr);
+  return apiClient.get(queryStr).then(({ data }) => {
+    return data.loggedItems;
+  });
+}
