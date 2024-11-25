@@ -82,6 +82,7 @@ export function LeaderboardPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const { user } = useUser();
+  
   useEffect(() => {
     setIsLoading(true);
     setLoadingProgress(0.1);
@@ -107,7 +108,7 @@ export function LeaderboardPage() {
           area: areaSorted,
         });
         setLoadingProgress(1)
-        // setTimeout(() => setIsLoading(false), 500)
+        setTimeout(() => setIsLoading(false), 500)
       });
   }, []);
 
