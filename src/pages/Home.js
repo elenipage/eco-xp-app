@@ -21,6 +21,7 @@ export function HomeScreen() {
       <Text style={{width:"100%", fontSize:35}}>Hi {user.first_name}
         !
       </Text>
+
       <BinDateCarousel />
         <FunFact />
         <StandardButton
