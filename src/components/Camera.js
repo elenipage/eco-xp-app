@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Button, TouchableOpacity, TextInput } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { BackHandler } from "react-native";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import { useNavigation } from "@react-navigation/native";
 import { fetchItemByBarcode } from "../../utils/api";
