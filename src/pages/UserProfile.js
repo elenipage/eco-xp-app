@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import Streak from "../components/StreakChart";
-import commitsData from "../components/data/streakData";
+import { streakData } from "../components/data/streakData";
 import { ScrollView } from "react-native-gesture-handler";
 import BaseLayout from "../components/BaseLayout";
 import { FollowersFollowing } from "../components/FollowersFollowing";
@@ -15,6 +15,7 @@ export function Profile() {
   const [followerCount, setFollowerCount] = useState(0)
   const [followingCount, setFollowingCount] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
+  const [logData, setLogData] = useState([])
 
   useEffect(() => {
     setIsLoading(true)
@@ -25,6 +26,12 @@ export function Profile() {
     .then(() => {
       fetchFollowingByUserID(user.user_id).then((following) => {
         setFollowingCount(following.length)
+        
+      })
+    })
+    .then(() => {
+      streakData().then((response) => {
+        setLogData(response)
         setIsLoading(false)
       })
     })
@@ -64,7 +71,7 @@ export function Profile() {
           <Text style={{width:"100%", fontSize:20, marginBottom:10}}>Hi {user.first_name}!</Text>
           <Text style={{width:"100%", fontSize:16, marginBottom:10}}>Your recycling contributions for November:</Text>
           <Surface style={{width:270 , justifyContent: "center", alignItems:"center", padding:10, borderRadius:10}}>
-          <Streak data={commitsData} />
+          <Streak data={logData} />
           </Surface>
         </Surface>
         <Surface style={{width:"100%", alignItems:"center", justifyContent: "center", padding:10, borderRadius:10}}>
