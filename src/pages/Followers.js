@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchFollowersByUserID } from "../../utils/api";
-import { LoadingPage } from "./LoadingPage";
+import { Loader } from "../components/Loader";
 import { List } from "react-native-paper";
 import { Avatar } from "react-native-paper";
 import { ScrollView } from "react-native-gesture-handler";
@@ -26,7 +26,7 @@ const { user } = useUser()
   }, []);
 
   if (isLoading) {
-    return <LoadingPage />;
+    return <Loader />;
   }
 
   return (

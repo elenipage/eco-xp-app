@@ -9,12 +9,11 @@ function BaseLayout(props) {
       style={{
         flex: 1,
         alignItems: "center",
-        justifyContent: "space-between",
         // height:"100%",
         // paddingLeft: 20,
         // paddingRight: 20,
         marginHorizontal: 20,
-        marginVertical: Platform.OS === "ios" ? insets.top : 20,
+        // marginVertical: Platform.OS === "ios" ? insets.top : 20,
         // paddingTop: Platform.OS === "ios" ? insets.top : 20,
         // paddingBottom: Platform.OS === "ios" ? insets.bottom : 20,
       }}
