@@ -30,17 +30,17 @@ export function AddNewItem() {
   const [itemName, setItemName] = useState("")
   const [itemMaterial, setItemMaterial] = useState([])
   const [materials, setMaterials] = useState([])
-  // const [materialsList, setMaterialsList] = useState([])
-  const [image, setImage] = useState(null)
   const [expanded, setExpanded] = useState(false)
   const [confirmVisible, setConfirmVisible] = useState(false)
   const [errorVisible, setErrorVisible] = useState(false)
   const [takingPhoto, setTakingPhoto] = useState(false)
   const [path,setPath] = useState("")
+  const [photo, setPhoto] = useState(null);
 
   const toggleDropdown = () => setExpanded(!expanded)
 
   useEffect(() => {
+    console.log(path)
     fetchMaterials()
       .then(({ data }) => {
         setMaterials(data.materials)
@@ -51,35 +51,36 @@ export function AddNewItem() {
 
   const handleSubmit = () => {
     
-    const obj = {
-      item_name: itemName,
-      material_id: itemMaterial[1],
-      barcode: barcodeValue.toString(),
-      img_url: ""
-    }
-    
     try {
+
       const { data } = supabase
       .storage
       .from('Photos')
       .getPublicUrl(path)
-      obj.img_url = data.publicUrl
-    }
-    catch (error) {
-      alert("Error fetching url:", error.message);
-    } 
 
+      const obj = {
+        item_name: itemName,
+        material_id: itemMaterial[1],
+        barcode: barcodeValue.toString(),
+        img_url: data.publicUrl
+      }
 
-    postNewItem(obj)
+      postNewItem(obj)
       .then(({data}) => {
         setConfirmVisible(true)
       })
       .catch((error) => {
         setErrorVisible(true)
       })
+
+    }
+    catch (error) {
+      alert("Error fetching url:", error.message);
+    } 
+    setPhoto(null)
   }
 
-  return takingPhoto? <TakePicture setTakingPhoto={setTakingPhoto} setPath={setPath} supabase={supabase}></TakePicture>: (
+  return takingPhoto? <TakePicture photo={photo} setPhoto={setPhoto} setTakingPhoto={setTakingPhoto} setPath={setPath} supabase={supabase}></TakePicture>: (
     <SafeAreaProvider>
       <BaseLayout>
         <Surface
@@ -139,15 +140,11 @@ export function AddNewItem() {
             <Text editable={false} style={styles.input}>
               Barcode: {barcodeValue}
             </Text>
-            <Button
-              mode="contained-tonal"
-              onPress={() => setTakingPhoto(true)}
-            >
+            {photo? <Image style={styles.icon} source={{uri: photo.uri}}></Image> : <View><Button mode="contained-tonal" onPress={() => setTakingPhoto(true)}>
               Take a picture
             </Button>
-            <View>
-              <AddImage image={image} setImage={setImage}></AddImage>
-            </View>
+              <AddImage supabase={supabase} setPath={setPath} photo={photo} setPhoto={setPhoto} />
+            </View> }
             <Button mode="contained-tonal" onPress={handleSubmit}>
               Submit
             </Button>
