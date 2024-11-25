@@ -18,7 +18,7 @@ export function fetchMaterials() {
 }
 
 export function postNewItem(obj) {
-  return apiClient.post(`/itemsh`, obj);
+  return apiClient.post(`/items`, obj);
 }
 
 export function fetchItemByBarcode(scannedBarcode) {
@@ -68,4 +68,11 @@ export function fetchBinDatesByUserPostcode(postcode) {
   return apiClient.get(`/postcodes/${postcode}`).then(({ data }) => {
     return data;
   });
+}
+
+export function postLoggedItem(item_id, user_id) {
+  const logObject = { item_id: item_id, user_id: user_id}
+  return apiClient.post(`/logged-items`, logObject).then(({data}) => {
+    return data
+  })
 }
