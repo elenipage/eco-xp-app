@@ -9,6 +9,8 @@ import { Loader } from "../components/Loader";
 import { useState } from "react";
 
 export function HomeScreen() {
+  const navigation = useNavigation();
+
   return (
     <ScrollView>
       <BaseLayout>
