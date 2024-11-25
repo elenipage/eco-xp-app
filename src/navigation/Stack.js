@@ -17,6 +17,8 @@ import { LoginPage } from "../pages/Login";
 import { useUser } from "../context/user-context";
 import { Followers } from "../pages/Followers";
 import { Following } from "../pages/Following";
+import TakePicture from "../components/TakePicture.js"
+import { Scanner } from "../pages/Scanner";
 
 const Stack = createStackNavigator();
 
@@ -123,6 +125,8 @@ function RootStack() {
       <Stack.Screen name="Login" component={LoginPage} />
       <Stack.Screen name="Followers" component={Followers} />
       <Stack.Screen name="Following" component={Following} />
+      <Stack.Screen name="Take a Picture" component={TakePicture} />
+      <Stack.Screen name="Scanner" component={Scanner} />
     </Stack.Navigator>
   );
 }
