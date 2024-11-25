@@ -5,8 +5,6 @@ import StandardButton from "../components/StandardButton";
 import ButtonContainer from "../components/ButtonContainer";
 import BaseLayout from "../components/BaseLayout";
 
-
-
 export function Help() {
   // const insets = useSafeAreaInsets();
   const navigation = useNavigation();
@@ -20,7 +18,7 @@ export function Help() {
             uri: "https://cdn-icons-png.flaticon.com/512/4718/4718001.png",
           }}
         />
-        
+
         <ButtonContainer>
           <StandardButton
             buttonText={"Info"}
@@ -47,15 +45,6 @@ export function Help() {
 
           <StandardButton
             buttonText={"Order a new bin"}
-            tapFunction={() => {
-              Linking.openURL(
-                "https://www.leeds.gov.uk/residents/bins-and-recycling/new-or-replacement-bin"
-              );
-            }}
-          />
-
-          <StandardButton
-            buttonText={"Test"}
             tapFunction={() => {
               Linking.openURL(
                 "https://www.leeds.gov.uk/residents/bins-and-recycling/new-or-replacement-bin"
