@@ -7,6 +7,7 @@ import { fetchUserByID } from "../../utils/api";
 import { useNavigation } from "@react-navigation/native";
 import { Button } from "react-native-paper";
 import { Loader } from "../components/Loader";
+import { LoginForm } from "../components/LoginForm";
 
 export function LoginPage() {
   const { user, setUser } = useUser();
@@ -33,7 +34,7 @@ export function LoginPage() {
 
   return (
     <BaseLayout>
-      <Button onPress={handleLogin}>Login</Button>
+      <LoginForm handleLogin={handleLogin} />
     </BaseLayout>
   );
 }
