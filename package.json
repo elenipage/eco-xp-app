@@ -55,5 +55,8 @@
     "react-navigation": "^5.0.0",
     "typescript": "^5.3.3"
   },
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "@babel/plugin-transform-private-methods": "^7.25.9"
+  }
 }

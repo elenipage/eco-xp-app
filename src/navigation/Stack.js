@@ -18,6 +18,8 @@ import { useUser } from "../context/user-context";
 import TakePicture from "../components/TakePicture.js";
 import { Scanner } from "../pages/Scanner";
 import BinDates from "../components/BinDates";
+import { Followers } from "../pages/Followers";
+import { Following } from "../pages/Following";
 
 const Stack = createStackNavigator();
 
@@ -122,16 +124,50 @@ function RootStack() {
         component={Quiz}
         initialParams={{ xp: xp, setXp: setXp }}
       />
-      <Stack.Screen name="FAQ" component={FAQ} />
-      <Stack.Screen name="Info" component={InfoDropDownMenu} />
-      <Stack.Screen name="Item Confirmation" component={ItemConfirmation} />
-      <Stack.Screen name="Add a New Item" component={AddNewItem} />
-      <Stack.Screen name="Drop Down Menu Info" component={InfoDropDownMenu} />
-      <Stack.Screen name="Login" component={LoginPage} />
-      <Stack.Screen name="Followers" component={Followers} />
-      <Stack.Screen name="Following" component={Following} />
-      <Stack.Screen name="Take a Picture" component={TakePicture} />
-      <Stack.Screen name="Scanner" component={Scanner} />
+      <Stack.Screen
+        name="FAQ"
+        component={FAQ}
+      />
+      <Stack.Screen
+        name="Info"
+        component={InfoDropDownMenu}
+      />
+      <Stack.Screen
+        name="Item Confirmation"
+        component={ItemConfirmation}
+      />
+      <Stack.Screen
+        name="Add a New Item"
+        component={AddNewItem}
+      />
+      <Stack.Screen
+        name="Drop Down Menu Info"
+        component={InfoDropDownMenu}
+      />
+      <Stack.Screen
+        name="Login"
+        component={LoginPage}
+      />
+      <Stack.Screen
+        name="Followers"
+        component={Followers}
+      />
+      <Stack.Screen
+        name="Following"
+        component={Following}
+      />
+      <Stack.Screen
+        name="Take a Picture"
+        component={TakePicture}
+      />
+      <Stack.Screen
+        name="Scanner"
+        component={Scanner}
+      />
+      <Stack.Screen
+        name="Bin Dates"
+        component={BinDates}
+      />
     </Stack.Navigator>
   );
 }
