@@ -18,8 +18,8 @@ export default function BinDates() {
 
   useEffect(() => {
     fetchBinDatesByUserPostcode(postcode)
-      .then(({ postcode }) => {
-        setData(postcode);
+      .then((data) => {
+        setData(data);
       })
       .catch((error) => {
         console.log("Error fetching bin dates:", error);
