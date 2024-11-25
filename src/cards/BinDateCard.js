@@ -2,7 +2,18 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-export default function BinDateCard({ title, date, icon, color, size }) {
+export default function BinDateCard({
+  title,
+  date,
+  icon,
+  color,
+  size,
+  fontsLoaded,
+}) {
+  if (!fontsLoaded) {
+    return <Text>Loading fonts...</Text>;
+  }
+
   return (
     <View style={styles.card}>
       <Text style={styles.title}>{title}</Text>
@@ -14,19 +25,32 @@ export default function BinDateCard({ title, date, icon, color, size }) {
 
 const styles = StyleSheet.create({
   card: {
-    padding: 10,
-    marginVertical: 5,
-    backgroundColor: "#E0E0E0",
-    borderRadius: 5,
+    padding: 15,
+    marginVertical: 15,
+    backgroundColor: "#B3F9D4",
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: "#1A3151",
+    shadowColor: "#1A3151",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 5,
+    width: "90%",
+    alignSelf: "center",
   },
+
   title: {
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: "Roboto_700Bold",
-    color: "red",
+    color: "#1A3151",
+    marginBottom: 5,
   },
+
   date: {
     fontSize: 14,
     fontFamily: "Roboto_400Regular",
-    color: "blue",
+    color: "#4B4B4B",
+    marginBottom: 10,
   },
 });

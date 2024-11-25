@@ -58,7 +58,9 @@ export function FAQ() {
   return (
     <ScrollView>
       <BaseLayout>
-        <Text style={{ fontSize: 24, fontWeight: "bold" }}>FAQ</Text>
+        <Text style={{ fontSize: 24, fontWeight: "bold", color: "#1A3151" }}>
+          FAQ
+        </Text>
         {recyclingFAQs.map((object, index) => (
           <FAQCard
             key={index}
@@ -68,6 +70,5 @@ export function FAQ() {
         ))}
       </BaseLayout>
     </ScrollView>
-    // </View>
   );
 }

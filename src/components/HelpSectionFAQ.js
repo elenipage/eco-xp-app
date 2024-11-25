@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
     color: "#2e3d49",
     marginBottom: 15,
     backgroundColor: "#F0F8E2",
+    color: "#1A3151",
   },
 
   answer: {
