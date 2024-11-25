@@ -12,7 +12,6 @@ import { Loader } from "../components/Loader";
 
 import { fetchFollowersByUserID, fetchFollowingByUserID, fetchUserByID } from "../../utils/api";
 
-
 export function OtherProfile() {
   const route = useRoute();
   const { user_id } = route.params;
@@ -20,19 +19,26 @@ export function OtherProfile() {
   const [isLoading, setIsLoading] = useState(true);
   const [followerCount, setFollowerCount] = useState(0);
   const [followingCount, setFollowingCount] = useState(0);
+  const [loadingProgress, setLoadingProgress] = useState(0);
+  const [otherUserXp, setotherUserXp] = useState(0)
 
   useEffect(() => {
     setIsLoading(true);
+    setLoadingProgress(0.2);
     fetchUserByID(user_id)
       .then((data) => {
+        setLoadingProgress(0.4);
         setOtherUser(data);
       })
       .then(() => {
+        setLoadingProgress(0.6);
         fetchFollowersByUserID(user_id)
           .then((followers) => {
+            setLoadingProgress(0.8);
             setFollowerCount(followers.length);
           })
           .then(() => {
+            setLoadingProgress(1);
             fetchFollowingByUserID(user_id).then((following) => {
               setFollowingCount(following.length);
               setIsLoading(false);
@@ -40,9 +46,12 @@ export function OtherProfile() {
           });
       });
   }, []);
+  console.log(otherUser, "<< other user");
+  // start.subtractDays(7);
 
-  if (isLoading) {return <Loader/>}
-
+  if (isLoading) {
+    return <Loader loadingProgress={loadingProgress} />;
+  }
 
   return (
     <ScrollView>
@@ -68,9 +77,7 @@ export function OtherProfile() {
             }}
           />
           <View style={{ width: "50%" }}>
-            <Text style={{ fontSize: 25, marginBottom: 10 }}>
-              {otherUser.username}
-            </Text>
+            <Text style={{ fontSize: 25, marginBottom: 10 }}>{otherUser.username}</Text>
             <FollowersFollowing
               user_id={user_id}
               followerCount={followerCount}
@@ -91,9 +98,7 @@ export function OtherProfile() {
           <Text style={{ width: "100%", fontSize: 20, marginBottom: 10 }}>
             {otherUser.first_name} - {otherUser.xp} XP
           </Text>
-          <Text style={{ width: "100%", fontSize: 16, marginBottom: 10 }}>
-            Weekly Progress
-          </Text>
+          <Text style={{ width: "100%", fontSize: 16, marginBottom: 10 }}>Weekly Progress</Text>
           <Surface
             style={{
               width: 320,
