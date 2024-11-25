@@ -7,8 +7,10 @@ import { ScrollView } from "react-native-gesture-handler";
 import { Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
+import { useUser } from "../context/user-context";
 
 export function Followers() {
+const { user } = useUser()
   const route = useRoute();
   const { user_id } = route.params;
   const navigation = useNavigation();
@@ -36,14 +38,13 @@ export function Followers() {
           }}
         >
           {followers.map((follower, index) => {
-            console.log(follower);
+            console.log("follower's id >>>", follower.user_id, "user >>>", user.user_id);
             return (
               <TouchableOpacity
                 key={index}
                 onPress={() => {
-                  navigation.navigate("Other Profile", {
-                    user_id: follower.user_id,
-                  });
+                    follower.user_id !== user.user_id ? navigation.navigate("Other Profile", {
+                        user_id: follower.user_id,}) : null
                 }}
               >
                 <List.Item
@@ -53,7 +54,7 @@ export function Followers() {
                     paddingLeft: 10,
                     borderRadius: 100,
                   }}
-                  title={follower.username}
+                  title={follower.user_id === user.user_id ? follower.username + " (you)" : follower.username}
                   left={() => (
                     <Avatar.Image
                       size={40}
