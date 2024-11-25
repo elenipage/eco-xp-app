@@ -14,10 +14,10 @@ export function streakData() {
   };
   let start = new Date();
   start.subtractDays(35);
-  const dd_30 = String(start.getDate()).padStart(2, "0");
-  const mm_30 = String(start.getMonth() + 1).padStart(2, "0");
-  const yyyy_30 = today.getFullYear();
-  start = yyyy_30 + "-" + mm_30 + "-" + dd_30;
+  const dd_35 = String(start.getDate()).padStart(2, "0");
+  const mm_35 = String(start.getMonth() + 1).padStart(2, "0");
+  const yyyy_35 = today.getFullYear();
+  start = yyyy_35 + "-" + mm_35 + "-" + dd_35;
 
   return fetchLoggedItemsById(user, start, today_formatted).then((response) => {
     const loggedItemCount = {}
@@ -33,6 +33,7 @@ export function streakData() {
     for(key in loggedItemCount){
         loggedItemArray.push({date: key, count : loggedItemCount[key]})
     }
+    console.log(loggedItemArray)
     return loggedItemArray
   });
 

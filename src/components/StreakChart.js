@@ -10,9 +10,11 @@ const screenWidth = Dimensions.get('window').width
 export default function Streak(props) {
     const {data} = props
     
-  useEffect(() => {
-    streakData()
-  }, [])
+  const today = new Date();
+  const dd = String(today.getDate()).padStart(2, "0");
+  const mm = String(today.getMonth() + 1).padStart(2, "0");
+  const yyyy = today.getFullYear();
+  const today_formatted = yyyy + "-" + mm + "-" + dd;
 
   const chartConfig = {
     backgroundGradientFrom: "#ffffff",
@@ -28,8 +30,8 @@ export default function Streak(props) {
     
   <ContributionGraph
   values={data}
-  endDate={new Date("2024-11-30")}
-  numDays={35}
+  endDate={today}
+  numDays={30}
   width={250}
   height={350}
   chartConfig={chartConfig}
