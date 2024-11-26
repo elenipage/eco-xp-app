@@ -71,8 +71,45 @@ export function fetchBinDatesByUserPostcode(postcode) {
 }
 
 export function postLoggedItem(item_id, user_id) {
-  const logObject = { item_id: item_id, user_id: user_id}
-  return apiClient.post(`/logged-items`, logObject).then(({data}) => {
-    return data
+  const logObject = { item_id: item_id, user_id: user_id };
+  return apiClient.post(`/logged-items`, logObject).then(({ data }) => {
+    return data;
+  });
+}
+
+export function fetchLoggedItemsById(userID, start, end) {
+  let queryStr = `/${userID}/logged-items`;
+  if (start || end) {
+    queryStr += "?";
+  }
+  if (start) {
+    queryStr += `start=${start}`;
+  }
+  if (start && end) {
+    queryStr += `&`;
+  }
+  if (end) {
+    queryStr += `end=${end}`;
+  }
+  return apiClient.get(queryStr).then(({ data }) => {
+    return data.loggedItems;
+  });
+}
+
+export function fetchLoggedItemsById(userID, start, end) {
+  let queryStr = `/${userID}/logged-items`
+  if (start || end ) {queryStr += "?"}
+  if (start) {queryStr += `start=${start}`}
+  if (start && end) {queryStr += `&`}
+  if (end) {queryStr += `end=${end}`}
+  return apiClient.get(queryStr).then(({data}) => {
+    return data.loggedItems
   })
+
+}
+
+export function fetchIsRecyclableByArea(prefix, material_id) {
+  return apiClient.get(`/recyclability/${prefix}/${material_id}`).then(({ data }) => {
+    return data.data;
+  });
 }

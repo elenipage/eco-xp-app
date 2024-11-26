@@ -27,18 +27,20 @@ function HeaderDemo({ navigation, route, options, back }) {
   const { user } = useUser();
   const { xp } = useXp();
   const [currentXp, setCurrentXp] = useState();
+
+
   useEffect(() => {
     setCurrentXp(xp);
   }, [xp]);
+
+  const previousTitle = back ? back.title : null;
 
   if (user === null)
     return <Appbar.Header style={{ justifyContent: "space-between" }}></Appbar.Header>;
   else if (user) {
     return (
       <Appbar.Header style={{ justifyContent: "space-between" }}>
-        {back && back.title !== "Login" ? (
-          <Appbar.BackAction onPress={navigation.goBack} />
-        ) : (
+        {previousTitle === "Login" || previousTitle === "Item Confirmation" || previousTitle === "Add a New Item" ? (
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("Profile");
@@ -51,8 +53,12 @@ function HeaderDemo({ navigation, route, options, back }) {
               }}
             />
           </TouchableOpacity>
+        ) : (
+          <Appbar.BackAction onPress={navigation.goBack} />
         )}
-        {back && back.title !== "Login" ? <Appbar.Content title={`${route.name}`} /> : null}
+        {previousTitle === "Login" || previousTitle === "Item Confirmation" || previousTitle === "Add a New Item" ? null : (
+          <Appbar.Content title={`${currentRouteName}`} />
+        )}
         <View
           style={{
             flexDirection: "row",
@@ -68,10 +74,7 @@ function HeaderDemo({ navigation, route, options, back }) {
                 alignItems: "center",
               }}
             >
-              <Appbar.Action
-                icon="fire-circle"
-                onPress={() => {}}
-              ></Appbar.Action>
+              <Appbar.Action icon="fire-circle" onPress={() => {}} />
               <Text>0</Text>
             </View>
           </Tooltip>
@@ -83,10 +86,7 @@ function HeaderDemo({ navigation, route, options, back }) {
                 alignItems: "center",
               }}
             >
-              <Appbar.Action
-                icon="one-up"
-                onPress={() => {}}
-              />
+              <Appbar.Action icon="one-up" onPress={() => {}} />
               <Text>{`${currentXp} XP`}</Text>
             </View>
           </Tooltip>
@@ -96,15 +96,15 @@ function HeaderDemo({ navigation, route, options, back }) {
   }
 }
 
+
 function RootStack() {
   const { xp, setXp } = useXp();
-  const navigation = useNavigation();
   return (
     <Stack.Navigator
       initialRouteName="Login"
       headerMode="screen"
       screenOptions={{
-        header: (props) => <HeaderDemo {...props} />,
+        header: (props) => <HeaderDemo {...props} />, // This throws an error (but still works)
       }}
     >
       <Stack.Screen

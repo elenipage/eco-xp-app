@@ -18,15 +18,22 @@ export function Stats() {
   const insets = useSafeAreaInsets();
   return (
     <ScrollView>
-      <View style={{flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        paddingTop: Platform.OS === "ios" ? insets.top : 0,
-        paddingBottom: Platform.OS === "ios" ? insets.bottom : 0,}}>
-        <Text style={{fontSize: 40}}>Stats</Text>
-        <SegButtons value={value} setValue={setValue} />
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          paddingTop: Platform.OS === "ios" ? insets.top : 0,
+          paddingBottom: Platform.OS === "ios" ? insets.bottom : 0,
+        }}
+      >
+        <Text style={{ fontSize: 40 }}>Stats</Text>
+        <SegButtons
+          value={value}
+          setValue={setValue}
+        />
         {value === "friends" ? (
-          <View style={{ alignItems: "center", justifyContent: "center"}}>
+          <View style={{ alignItems: "center", justifyContent: "center" }}>
             <Pie data={friendsPie} />
             <Surface
               elevation={1}
@@ -41,9 +48,7 @@ export function Stats() {
                 borderRadius: 20,
               }}
             >
-              <Text
-                style={{ textAlign: "center", marginBottom: 5, fontSize: 18 }}
-              >
+              <Text style={{ textAlign: "center", marginBottom: 5, fontSize: 18 }}>
                 The item you and your followers recycled most this month:
               </Text>
             </Surface>
@@ -60,14 +65,14 @@ export function Stats() {
                 borderRadius: 20,
               }}
             >
-              <Text
-                style={{ textAlign: "center", marginBottom: 5, fontSize: 18 }}
-              >
+              <Text style={{ textAlign: "center", marginBottom: 5, fontSize: 18 }}>
                 You and your friends recycled 50 bottles of water this week!
               </Text>
             </Surface>
             <View style={{ alignItems: "center", justifyContent: "center" }}>
-              <Text style={{ textAlign: "center", margin: 20, fontSize: 18 }}>Your follower's total XP this week:</Text>
+              <Text style={{ textAlign: "center", margin: 20, fontSize: 18 }}>
+                Your follower's total XP this week:
+              </Text>
               <Line data={followersLineChart} />
             </View>
           </View>
@@ -87,9 +92,7 @@ export function Stats() {
                 borderRadius: 20,
               }}
             >
-              <Text
-                style={{ textAlign: "center", marginBottom: 5, fontSize: 18 }}
-              >
+              <Text style={{ textAlign: "center", marginBottom: 5, fontSize: 18 }}>
                 The most recycled item in your postcode:
               </Text>
             </Surface>
@@ -106,15 +109,14 @@ export function Stats() {
                 borderRadius: 20,
               }}
             >
-              <Text
-                style={{ textAlign: "center", marginBottom: 5, fontSize: 18 }}
-              >
-                Within your postcode, you recycled enough glass to build 5
-                greenhouses!
+              <Text style={{ textAlign: "center", marginBottom: 5, fontSize: 18 }}>
+                Within your postcode, you recycled enough glass to build 5 greenhouses!
               </Text>
             </Surface>
             <View style={{ alignItems: "center", justifyContent: "center" }}>
-              <Text style={{ textAlign: "center", margin: 20, fontSize: 18 }}>Your postcode's total XP this week:</Text>
+              <Text style={{ textAlign: "center", margin: 20, fontSize: 18 }}>
+                Your postcode's total XP this week:
+              </Text>
               <Line data={postcodeLineChart} />
             </View>
           </View>
@@ -134,9 +136,7 @@ export function Stats() {
                 borderRadius: 20,
               }}
             >
-              <Text
-                style={{ textAlign: "center", marginBottom: 5, fontSize: 18 }}
-              >
+              <Text style={{ textAlign: "center", marginBottom: 5, fontSize: 18 }}>
                 The most recycled item in your city:
               </Text>
             </Surface>
@@ -153,16 +153,13 @@ export function Stats() {
                 borderRadius: 20,
               }}
             >
-              <Text
-                style={{ textAlign: "center", marginBottom: 5, fontSize: 18 }}
-              >
+              <Text style={{ textAlign: "center", marginBottom: 5, fontSize: 18 }}>
                 Together, your city recycled 2 tons of plastic this week!
               </Text>
             </Surface>
-        
-              <Text style={{margin:20, fontSize: 18}}>{`Your city's total XP this week:`}</Text>
-              <Line data={areaLineChart} />
-            
+
+            <Text style={{ margin: 20, fontSize: 18 }}>{`Your city's total XP this week:`}</Text>
+            <Line data={areaLineChart} />
           </View>
         )}
       </View>

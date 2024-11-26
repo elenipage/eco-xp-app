@@ -21,7 +21,7 @@ export function AddNewItem() {
     {Authorization: `Bearer ${SUPABASE_SERVICE_KEY}`}
   });
   const route = useRoute()
-  const { barcodeValue } = route.params
+  const { barcodeValue, setScannedBarcode } = route.params
   const [itemName, setItemName] = useState("")
   const [itemMaterial, setItemMaterial] = useState([])
   const [materials, setMaterials] = useState([])
@@ -34,6 +34,9 @@ export function AddNewItem() {
   const toggleDropdown = () => setExpanded(!expanded)
 
   useEffect(() => {
+
+    setScannedBarcode("")
+
     fetchMaterials()
       .then(({ data }) => {
         setMaterials(data.materials)
@@ -61,7 +64,6 @@ export function AddNewItem() {
 
       postNewItem(obj)
       .then(({data}) => {
-        console.log(data.item)
         setConfirmVisible(true)
       })
       .catch((error) => {
