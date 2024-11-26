@@ -26,6 +26,7 @@
     "@types/react": "~18.3.12",
     "axios": "^1.7.7",
     "base64-arraybuffer": "^1.0.2",
+    "date-fns": "^4.1.0",
     "expo": "~52.0.6",
     "expo-camera": "~16.0.6",
     "expo-file-system": "^18.0.4",
