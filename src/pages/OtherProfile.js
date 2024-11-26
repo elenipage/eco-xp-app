@@ -7,7 +7,7 @@ import Line from "../components/LineChart";
 import { singleFollowerLineChart } from "../components/data/lineChartData";
 import { useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-
+import { eachDayOfInterval, format } from "date-fns";
 import { Loader } from "../components/Loader";
 
 import {
@@ -37,13 +37,14 @@ export function OtherProfile() {
     return this;
   };
   let start = new Date();
-  start.subtractDays(1);
+  start.subtractDays(7);
   const dd_30 = String(start.getDate()).padStart(2, "0");
   const mm_30 = String(start.getMonth() + 1).padStart(2, "0");
   const yyyy_30 = today.getFullYear();
   start = yyyy_30 + "-" + mm_30 + "-" + dd_30;
   // fetchLoggedItemsById(user_id, start, today_formatted).then((response) => {
-  //   console.log(response, "response")
+  //   // console.log(response, "response")
+  //   setLoggedItems(response)
   // });
 
   useEffect(() => {
@@ -53,9 +54,11 @@ export function OtherProfile() {
       .then((data) => {
         setLoadingProgress(0.4);
         setOtherUser(data);
-        return fetchLoggedItemsById(user_id);
+        return fetchLoggedItemsById(user_id, start, today_formatted);
       })
       .then((userLoggedItems) => {
+
+        
         setLoggedItems(userLoggedItems);
         setLoadingProgress(0.6);
         return fetchFollowersByUserID(user_id);
@@ -71,15 +74,35 @@ export function OtherProfile() {
         setIsLoading(false);
       });
   }, [user_id]);
-  // start.subtractDays(7);
-  console.log(loggedItems);
+
+  const sortedLoggedItems = loggedItems.sort((item1, item2) => {
+    const date1 = new Date(item1.date);
+    const date2 = new Date(item2.date);
+    return date1 - date2;
+  });
+
+  const totalXpByDay = Object.values(
+    sortedLoggedItems.reduce((obj, item) => {
+      // const date = loggedItem.date.split("T")[0];
+      const key = item.xp + item.date;
+      console.log(obj[key]);
+      if (!obj[key]) {
+        obj[key] = Object.assign(item);
+      } else {
+        obj[key].xp += item.xp;
+      }
+      return obj;
+    }, {})
+  );
+  console.log("test", totalXpByDay);
+
+  // I have an array of objects which includes logged items from the past 7 days. Now, I want to plot the XP per day on to a line chart:
+  // - I need to make sure that if there are multiple logged items on one day that the XP is totalled before plotting the chart
+  // - Need to make sure that any days where no items are logged that the chart plots a 0 on that day
+
   if (isLoading) {
     return <Loader loadingProgress={loadingProgress} />;
   }
-
-  const itemData = loggedItems.map((item) => {
-    console.log(item.xp, item.date);
-  });
 
   return (
     <ScrollView>
