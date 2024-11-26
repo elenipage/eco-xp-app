@@ -57,7 +57,7 @@ function HeaderDemo({ navigation, route, options, back }) {
           <Appbar.BackAction onPress={navigation.goBack} />
         )}
         {previousTitle === "Login" || previousTitle === "Item Confirmation" || previousTitle === "Add a New Item" ? null : (
-          <Appbar.Content title={`${currentRouteName}`} />
+          <Appbar.Content title={`${route.name}`} />
         )}
         <View
           style={{

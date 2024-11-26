@@ -7,7 +7,6 @@ import Line from "../components/LineChart";
 import { singleFollowerLineChart } from "../components/data/lineChartData";
 import { useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-import { eachDayOfInterval, format } from "date-fns";
 import { Loader } from "../components/Loader";
 
 import {
