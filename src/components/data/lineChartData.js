@@ -1,5 +1,7 @@
 
-function singleFollowerLineChart(user) {
+
+function singleFollowerLineChart(props) {
+  const {user, loggedItemArray } = props
   const data = {
     labels: ["M", "T", "W", "T", "F", "S", "S"],
     datasets: [

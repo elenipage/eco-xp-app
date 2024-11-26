@@ -42,10 +42,6 @@ export function OtherProfile() {
   const mm_30 = String(start.getMonth() + 1).padStart(2, "0");
   const yyyy_30 = today.getFullYear();
   start = yyyy_30 + "-" + mm_30 + "-" + dd_30;
-  // fetchLoggedItemsById(user_id, start, today_formatted).then((response) => {
-  //   // console.log(response, "response")
-  //   setLoggedItems(response)
-  // });
 
   useEffect(() => {
     setIsLoading(true);
@@ -56,10 +52,30 @@ export function OtherProfile() {
         setOtherUser(data);
         return fetchLoggedItemsById(user_id, start, today_formatted);
       })
-      .then((userLoggedItems) => {
-        setLoggedItems(userLoggedItems);
-        setLoadingProgress(0.6);
+      .then((loggedItems) => {
+        const loggedItemCount = {};
+        const sortedLoggedItems = loggedItems.sort((item1, item2) => {
+          const date1 = new Date(item1.date);
+          const date2 = new Date(item2.date);
+          return date1 - date2;
+        });
+
+        sortedLoggedItems.forEach((loggedItem) => {
+          const date = loggedItem.date.split("T")[0];
+          if (!loggedItemCount[date]) {
+            loggedItemCount[date] = 1;
+          } else {
+            loggedItemCount[date]++;
+          }
+        });
+        const loggedItemArray = [];
+
+        for (key in loggedItemCount) {
+          loggedItemArray.push({ date: key, count: loggedItemCount[key] });
+        }
+        // return loggedItemArray
         return fetchFollowersByUserID(user_id);
+        // Need to get the loggedItemArray to be able to pass it to the line chart data but also need to return the fetchFollowersByUserId function
       })
       .then((followers) => {
         setFollowerCount(followers.length);
@@ -72,27 +88,6 @@ export function OtherProfile() {
         setIsLoading(false);
       });
   }, [user_id]);
-
-  const sortedLoggedItems = loggedItems.sort((item1, item2) => {
-    const date1 = new Date(item1.date);
-    const date2 = new Date(item2.date);
-    return date1 - date2;
-  });
-
-  const totalXpByDay = sortedLoggedItems.reduce((obj, sortedLoggedItem) => {
-    const date = sortedLoggedItem.date.split("T")[0];
-    // const key = sortedLoggedItem.xp + date;
-    const key = date
-    const value = sortedLoggedItem.xp
-
-    if (!obj[key]) {
-      obj[key] = Object.assign(sortedLoggedItem);
-    } else {
-      obj[key].xp += sortedLoggedItem.xp;
-    }
-    return obj
-  }, {});
-  console.log("test", totalXpByDay);
 
   // I have an array of objects which includes logged items from the past 7 days. Now, I want to plot the XP per day on to a line chart:
   // - I need to make sure that if there are multiple logged items on one day that the XP is totalled before plotting the chart
@@ -157,7 +152,7 @@ export function OtherProfile() {
               borderRadius: 10,
             }}
           >
-            <Line data={singleFollowerLineChart(otherUser)} />
+            <Line data={loggedItemArray} />
           </Surface>
         </Surface>
         <Surface
