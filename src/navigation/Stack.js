@@ -104,7 +104,7 @@ function RootStack() {
       initialRouteName="Login"
       headerMode="screen"
       screenOptions={{
-        header: (props) => <HeaderDemo {...props} />,
+        header: (props) => <HeaderDemo {...props} />, // This throws an error (but still works)
       }}
     >
       <Stack.Screen

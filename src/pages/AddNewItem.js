@@ -1,18 +1,10 @@
-import { StyleSheet, Text, View, Image } from "react-native"
+import { StyleSheet, Text, View, Image, BackHandler, Alert } from "react-native"
 import {
   SafeAreaProvider,
-  useSafeAreaInsets,
 } from "react-native-safe-area-context"
 import React, { useEffect, useState } from "react"
-import { useRoute, useNavigation } from "@react-navigation/native"
-import {
-  Button,
-  Surface,
-  TextInput,
-  List,
-  Dialog,
-  Portal,
-} from "react-native-paper"
+import { useNavigation, useRoute } from "@react-navigation/native"
+import { Button, Surface, TextInput, List} from "react-native-paper"
 import BaseLayout from "../../src/components/BaseLayout.js"
 import AddImage from "../components/AddImage.js"
 import { ScrollView } from "react-native-gesture-handler"
@@ -23,77 +15,70 @@ import TakePicture from "../components/TakePicture.js"
 import { createClient } from '@supabase/supabase-js';  
 import {SUPABASE_URL, SUPABASE_SERVICE_KEY} from '@env'
 
-const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {headers: 
-  {Authorization: `Bearer ${SUPABASE_SERVICE_KEY}`}
-});
 
 export function AddNewItem() {
+  const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {headers: 
+    {Authorization: `Bearer ${SUPABASE_SERVICE_KEY}`}
+  });
   const route = useRoute()
-  const { barcodeValue } = route.params
+  const { barcodeValue, setScannedBarcode } = route.params
   const [itemName, setItemName] = useState("")
   const [itemMaterial, setItemMaterial] = useState([])
   const [materials, setMaterials] = useState([])
-  // const [materialsList, setMaterialsList] = useState([])
-  const [image, setImage] = useState(null)
   const [expanded, setExpanded] = useState(false)
   const [confirmVisible, setConfirmVisible] = useState(false)
   const [errorVisible, setErrorVisible] = useState(false)
   const [takingPhoto, setTakingPhoto] = useState(false)
   const [path,setPath] = useState("")
-
+  const [photo, setPhoto] = useState(null);
   const toggleDropdown = () => setExpanded(!expanded)
 
   useEffect(() => {
+
+    setScannedBarcode("")
+
     fetchMaterials()
       .then(({ data }) => {
         setMaterials(data.materials)
-
-        const materials = data.materials.map((material) => {
-          return material.material_name
-        })
-        setMaterialsList(materials)
       })
       .catch((err) => {
-        console.log(err)
       })
+  
   }, [])
 
   const handleSubmit = () => {
     
-    const obj = {
-      item_name: itemName,
-      material_id: itemMaterial[1],
-      barcode: barcodeValue.toString(),
-      img_url: ""
-    }
-    
     try {
-      console.log(path)
+
       const { data } = supabase
       .storage
       .from('Photos')
       .getPublicUrl(path)
-      console.log(data.publicUrl)
-      obj.img_url = data.publicUrl
+
+      const obj = {
+        item_name: itemName,
+        material_id: itemMaterial[1],
+        barcode: barcodeValue.toString(),
+        img_url: data.publicUrl
+      }
+
+      postNewItem(obj)
+      .then(({data}) => {
+        console.log(data.item)
+        setConfirmVisible(true)
+      })
+      .catch((error) => {
+        setErrorVisible(true)
+      })
+
     }
     catch (error) {
       alert("Error fetching url:", error.message);
     } 
-
-    console.log(obj)
-
-    postNewItem(obj)
-      .then(({data}) => {
-        setConfirmVisible(true)
-        console.log(data)
-      })
-      .catch((error) => {
-        console.log(error)
-        setErrorVisible(true)
-      })
+    setPhoto(null)
   }
 
-  return takingPhoto? <TakePicture setTakingPhoto={setTakingPhoto} setPath={setPath} supabase={supabase}></TakePicture>: (
+  return takingPhoto? <TakePicture photo={photo} setPhoto={setPhoto} setTakingPhoto={setTakingPhoto} setPath={setPath} supabase={supabase}></TakePicture>: (
     <SafeAreaProvider>
       <BaseLayout>
         <Surface
@@ -114,7 +99,8 @@ export function AddNewItem() {
             ></Image>
             <TextInput
               style={styles.input}
-              label="Item name"
+              label="Item name" 
+              value={itemName || ""}
               onChangeText={(text) => setItemName(text)}
               borderColor={"red"}
             />
@@ -136,11 +122,11 @@ export function AddNewItem() {
                     return (
                       <List.Item
                         onPress={() => {
+                          toggleDropdown()
                           setItemMaterial([
                             material.material_name,
                             material.material_id
                           ])
-                          toggleDropdown()
                         }}
                         title={material.material_name}
                       />
@@ -151,17 +137,13 @@ export function AddNewItem() {
             </View>
 
             <Text editable={false} style={styles.input}>
-              Barcode: {barcodeValue}
+              Barcode: {barcodeValue}``
             </Text>
-            <Button
-              mode="contained-tonal"
-              onPress={() => setTakingPhoto(true)}
-            >
+            {photo? <Image style={styles.icon} source={{uri: photo.uri}}></Image> : <View><Button mode="contained-tonal" onPress={() => setTakingPhoto(true)}>
               Take a picture
             </Button>
-            <View>
-              <AddImage image={image} setImage={setImage}></AddImage>
-            </View>
+              <AddImage supabase={supabase} setPath={setPath} photo={photo} setPhoto={setPhoto} />
+            </View> }
             <Button mode="contained-tonal" onPress={handleSubmit}>
               Submit
             </Button>

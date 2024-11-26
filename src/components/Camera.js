@@ -1,8 +1,9 @@
 import { StyleSheet, Text, View, Button, TouchableOpacity, TextInput } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { BackHandler } from "react-native";
 import { CameraView, useCameraPermissions } from "expo-camera";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { fetchItemByBarcode } from "../../utils/api";
 import { Portal } from "react-native-paper";
 import ConfirmationDialogue from "./ConfirmationDialogue";
@@ -10,15 +11,22 @@ import ConfirmationDialogue from "./ConfirmationDialogue";
 export default function Camera() {
   const [permission, requestPermission] = useCameraPermissions();
   const [cameraActive, setCameraActive] = useState();
-  const [scannedBarcode, setScannedBarcode] = useState();
+  const [scannedBarcode, setScannedBarcode] = useState("");
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
   const lastScannedTimestampRef = useRef(0);
   const [scanned, setScanned] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
 
+  useEffect(() => {
+    setScannedBarcode("")
+    setScanned(false)
+  }, [])
+
   if (!permission) {
     return <View />;
   }
+
 
   if (!permission.granted) {
     return (
@@ -32,9 +40,14 @@ export default function Camera() {
     );
   }
 
-  return (
+  return isFocused? (
     <View style={styles.container}>
-      <CameraView
+      {scannedBarcode? <CameraView
+        style={styles.camera}
+        facing="back"
+      >
+      <View style={styles.buttonContainer}></View>
+      </CameraView> : <CameraView
         style={styles.camera}
         facing="back"
         onBarcodeScanned={({ data }) => {
@@ -47,6 +60,7 @@ export default function Camera() {
           setScannedBarcode(data);
           fetchItemByBarcode(data)
             .then((scannedItemData) => {
+              console.log(scannedItemData)
               navigation.navigate("Item Confirmation", { scannedItemData: scannedItemData });
             })
             .catch((error) => {
@@ -57,21 +71,22 @@ export default function Camera() {
             });
         }}
       >
-        <View style={styles.buttonContainer}></View>
-      </CameraView>
+      <View style={styles.buttonContainer}></View>
+      </CameraView>}
+      
       <ConfirmationDialogue
-        visible={showDialog}
-        onClose={() => {
-          setShowDialog(false);
-          setScanned(false);
-        }}
-        onConfirm={() => {
-          setShowDialog(false);
-          navigation.navigate("Add a New Item", { barcodeValue: scannedBarcode });
-        }}
+      visible={showDialog}
+      onClose={() => {
+        setShowDialog(false);
+        setScanned(false);
+      }}
+      onConfirm={() => {
+        setShowDialog(false);
+        navigation.navigate("Add a New Item", { barcodeValue: scannedBarcode, setScannedBarcode: setScannedBarcode });
+      }}
       />
     </View>
-  );
+  ) : null
 }
 
 const styles = StyleSheet.create({

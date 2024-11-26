@@ -1,21 +1,20 @@
+import { useEffect } from 'react';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import {
     ContributionGraph,
 } from "react-native-chart-kit";
+import { streakData } from './data/streakData';
 
 const screenWidth = Dimensions.get('window').width
 
 export default function Streak(props) {
     const {data} = props
     
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  });
+  const today = new Date();
+  const dd = String(today.getDate()).padStart(2, "0");
+  const mm = String(today.getMonth() + 1).padStart(2, "0");
+  const yyyy = today.getFullYear();
+  const today_formatted = yyyy + "-" + mm + "-" + dd;
 
   const chartConfig = {
     backgroundGradientFrom: "#ffffff",
@@ -31,8 +30,8 @@ export default function Streak(props) {
     
   <ContributionGraph
   values={data}
-  endDate={new Date("2024-11-30")}
-  numDays={35}
+  endDate={today}
+  numDays={30}
   width={250}
   height={350}
   chartConfig={chartConfig}

@@ -1,14 +1,16 @@
 import { Button } from 'react-native-paper'
 import { StyleSheet, Text, View, SafeAreaView, Image } from 'react-native';
-import * as FileSystem from 'expo-file-system';
 import { useEffect, useRef, useState } from 'react';
 import { Camera, CameraView } from 'expo-camera';
+import { Loader } from "../components/Loader";
+import { decode } from 'base64-arraybuffer'
 
-export default function TakePicture({setPath, setTakingPhoto, supabase}) {
+export default function TakePicture({photo, setPhoto, setPath, setTakingPhoto, supabase}) {
 
     let cameraRef = useRef();
     const [hasCameraPermission, setHasCameraPermission] = useState();
-    const [photo, setPhoto] = useState();
+    const [isLoading, setIsLoading] = useState(false)
+    const [loadingProgress, setLoadingProgress] = useState(0)
 
     useEffect(() => {
         (async () => {
@@ -35,52 +37,35 @@ export default function TakePicture({setPath, setTakingPhoto, supabase}) {
 
     };
 
-    const convertPhotoToArrayBuffer = async (uri) => {
-        const fileInfo = await FileSystem.readAsStringAsync(uri, {
-            encoding: FileSystem.EncodingType.Base64,
-        });
-        const binary = atob(fileInfo);  
-        const arrayBuffer = new ArrayBuffer(binary.length);
-        const view = new Uint8Array(arrayBuffer);
-        for (let i = 0; i < binary.length; i++) {
-            view[i] = binary.charCodeAt(i);
-        }
-        return arrayBuffer;
-    };
-
     const uploadImage = async (photo) => {
 
-        console.log(supabase.supabaseUrl)
+        setIsLoading(true)
 
         try{
 
             if (!photo) {
-                console.error("No image selected");
                 return;
             };
-
-            const photoUri = photo.uri
-
-            const arrayBuffer = await convertPhotoToArrayBuffer(photoUri);
 
             const { data, error } = await supabase
                 .storage
                 .from('Photos')
-                .upload(`image-${Date.now()}.png`, arrayBuffer, {
+                .upload(`image-${Date.now()}.png`, decode(photo.base64), {
                     contentType: 'image/png',
                     cacheControl: '3600',
                     upsert: false,
                 });
 
             if (error) {
+                setIsLoading(false)
                 console.error('Upload failed:', error.message);
             } else {
+                setIsLoading(false)
                 console.log('Upload successful:', data);
-                setPath(data.fullPath)
+                setPath(data.path)
                 setTakingPhoto(false)
             };
             
-        
         } catch (error) {
             alert("Error uploading file:", error.message);
         } 
@@ -88,7 +73,7 @@ export default function TakePicture({setPath, setTakingPhoto, supabase}) {
     }
 
     if (photo) {
-        return (
+        return isLoading? <Loader loadingProgress={loadingProgress}/> : (
             <SafeAreaView style={styles.container}>
             <Image style={styles.preview} source={{ uri: "data:image/jpg;base64," + photo.base64 }} />
             <Button mode="contained-tonal" title="upload" onPress={() => uploadImage(photo)}>Upload</Button>
