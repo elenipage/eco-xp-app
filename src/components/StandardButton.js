@@ -9,6 +9,7 @@ function StandardButton({ buttonText, tapFunction }) {
         // height: 60,
         width: "100%",
         borderRadius: 30,
+        marginBottom:10
       }}
       contentStyle={{
         height: 60,

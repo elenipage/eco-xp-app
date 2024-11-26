@@ -18,10 +18,9 @@ export function HomeScreen() {
   return (
     <ScrollView>
       <BaseLayout>
-      <Text style={{width:"100%", fontSize:35}}>Hi {user.first_name}
+      <Text style={{width:"100%", fontSize:35, marginVertical:20}}>Hi {user.first_name}
         !
       </Text>
-
       <BinDateCarousel />
         <FunFact />
         <StandardButton
