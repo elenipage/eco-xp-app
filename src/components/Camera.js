@@ -60,7 +60,6 @@ export default function Camera() {
           setScannedBarcode(data);
           fetchItemByBarcode(data)
             .then((scannedItemData) => {
-              console.log(scannedItemData)
               navigation.navigate("Item Confirmation", { scannedItemData: scannedItemData });
             })
             .catch((error) => {

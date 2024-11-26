@@ -38,7 +38,6 @@ const { user } = useUser()
           }}
         >
           {followers.map((follower, index) => {
-            console.log("follower's id >>>", follower.user_id, "user >>>", user.user_id);
             return (
               <TouchableOpacity
                 key={index}

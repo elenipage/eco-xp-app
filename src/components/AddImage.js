@@ -37,7 +37,6 @@ export default function AddImage ({photo, setPhoto, supabase, setPath}) {
                 setPhoto(result.assets[0])
                 setIsLoading(false)
                 setPath(data.path)
-                console.log('Upload successful:', data);
             };
         } catch {
             alert("Error uploading file:", error.message);

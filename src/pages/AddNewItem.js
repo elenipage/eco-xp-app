@@ -64,7 +64,6 @@ export function AddNewItem() {
 
       postNewItem(obj)
       .then(({data}) => {
-        console.log(data.item)
         setConfirmVisible(true)
       })
       .catch((error) => {

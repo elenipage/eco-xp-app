@@ -12,7 +12,6 @@ import {
 import { Loader } from "../components/Loader.js";
 import { useNavigation } from "@react-navigation/native";
 
-
 export function IsRecyclableButtons(props) {
   const {
     isBinned,
@@ -26,27 +25,27 @@ export function IsRecyclableButtons(props) {
   const { user } = useUser();
   const [isLoading, setIsLoading] = useState(true);
   const itemXP = 10;
-  const { setXp } = useXp()
+  const { setXp } = useXp();
   const postcode = user.postcode;
   const splitPostcode = postcode.split(" ");
   const prefix = splitPostcode[0].match(/[a-zA-Z]+/g);
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
-  function handleRecycle () {
-    setIsLoading(true)
-    updateXpByID(user.user_id, itemXP).then(() => {
-      setXp((prevXp) => prevXp + itemXP);
-    })
-    .then(()=> {
-      return postLoggedItem(scannedItemData.item_id, user.user_id)
-    })
-    .then(() => {
-      setIsLoading(false)
-      setIsRecycled(true)
-      return
-    })
-    .catch((err) => {
-    })
+  function handleRecycle() {
+    setIsLoading(true);
+    updateXpByID(user.user_id, itemXP)
+      .then(() => {
+        setXp((prevXp) => prevXp + itemXP);
+      })
+      .then(() => {
+        return postLoggedItem(scannedItemData.item_id, user.user_id);
+      })
+      .then(() => {
+        setIsLoading(false);
+        setIsRecycled(true);
+        return;
+      })
+      .catch((err) => {});
   }
 
   useEffect(() => {
@@ -97,12 +96,25 @@ export function IsRecyclableButtons(props) {
             </Button>
           ) : (
             <View>
-            <Text>Congrats, you gained {itemXP} xp</Text>
-            <View style={{flexDirection: "row"}}>
-            <Button>Scan another Item</Button>
-            <Button onPress={() => {navigation.popTo('Main')}}>Return to Home</Button>
+              <Text>Congrats, you gained {itemXP} xp</Text>
+              <View style={{ flexDirection: "row" }}>
+                <Button
+                  onPress={() => {
+                    navigation.popToTop();
+                    navigation.navigate("Main");
+                  }}
+                >
+                  Return to Home
+                </Button>
+                <Button
+                  onPress={() => {
+                    navigation.goBack();
+                  }}
+                >
+                  Scan Again
+                </Button>
+              </View>
             </View>
-            </View >
           )}
         </View>
       ) : (

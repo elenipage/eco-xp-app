@@ -33,7 +33,6 @@ export function streakData() {
     for(key in loggedItemCount){
         loggedItemArray.push({date: key, count : loggedItemCount[key]})
     }
-    console.log(loggedItemArray)
     return loggedItemArray
   });
 
