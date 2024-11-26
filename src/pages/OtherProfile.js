@@ -72,6 +72,7 @@ export function OtherProfile() {
 
         for (key in loggedItemCount) {
           loggedItemArray.push({ date: key, count: loggedItemCount[key] });
+          console.log(loggedItemArray);
         }
         // return loggedItemArray
         return fetchFollowersByUserID(user_id);
