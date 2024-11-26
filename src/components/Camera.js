@@ -3,7 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect, useRef, useState } from "react";
 import { BackHandler } from "react-native";
 import { CameraView, useCameraPermissions } from "expo-camera";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { fetchItemByBarcode } from "../../utils/api";
 import { Portal } from "react-native-paper";
 import ConfirmationDialogue from "./ConfirmationDialogue";
@@ -13,12 +13,14 @@ export default function Camera() {
   const [cameraActive, setCameraActive] = useState();
   const [scannedBarcode, setScannedBarcode] = useState("");
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
   const lastScannedTimestampRef = useRef(0);
   const [scanned, setScanned] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
 
   useEffect(() => {
     setScannedBarcode("")
+    setScanned(false)
   }, [])
 
   if (!permission) {
@@ -38,7 +40,7 @@ export default function Camera() {
     );
   }
 
-  return (
+  return isFocused? (
     <View style={styles.container}>
       {scannedBarcode? <CameraView
         style={styles.camera}
@@ -84,7 +86,7 @@ export default function Camera() {
       }}
       />
     </View>
-  );
+  ) : null
 }
 
 const styles = StyleSheet.create({
