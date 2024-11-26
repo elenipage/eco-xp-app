@@ -152,7 +152,7 @@ export function OtherProfile() {
               borderRadius: 10,
             }}
           >
-            <Line data={(user)} />
+            <Line data={singleFollowerLineChart(otherUser)} />
           </Surface>
         </Surface>
         <Surface
