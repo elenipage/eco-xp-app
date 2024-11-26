@@ -11,6 +11,7 @@ export default function AddImage ({photo, setPhoto, supabase, setPath}) {
     const [loadingProgress, setLoadingProgress] = useState(0)
 
     const pickImage = async () => {
+
         try {
             let result = await ImagePicker.launchImageLibraryAsync({
                 mediaTypes: ['images'],
@@ -44,6 +45,6 @@ export default function AddImage ({photo, setPhoto, supabase, setPath}) {
         }
     };
 
-    return <Button mode="contained-tonal" onPress={pickImage}>Pick image from camera roll</Button> 
+    return isLoading? <Loader loadingProgress={loadingProgress}/> : <Button mode="contained-tonal" onPress={pickImage}>Pick image from camera roll</Button> 
 
 }
