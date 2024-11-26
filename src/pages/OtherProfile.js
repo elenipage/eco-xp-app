@@ -57,8 +57,6 @@ export function OtherProfile() {
         return fetchLoggedItemsById(user_id, start, today_formatted);
       })
       .then((userLoggedItems) => {
-
-        
         setLoggedItems(userLoggedItems);
         setLoadingProgress(0.6);
         return fetchFollowersByUserID(user_id);
@@ -81,19 +79,19 @@ export function OtherProfile() {
     return date1 - date2;
   });
 
-  const totalXpByDay = Object.values(
-    sortedLoggedItems.reduce((obj, item) => {
-      // const date = loggedItem.date.split("T")[0];
-      const key = item.xp + item.date;
-      console.log(obj[key]);
-      if (!obj[key]) {
-        obj[key] = Object.assign(item);
-      } else {
-        obj[key].xp += item.xp;
-      }
-      return obj;
-    }, {})
-  );
+  const totalXpByDay = sortedLoggedItems.reduce((obj, sortedLoggedItem) => {
+    const date = sortedLoggedItem.date.split("T")[0];
+    // const key = sortedLoggedItem.xp + date;
+    const key = date
+    const value = sortedLoggedItem.xp
+
+    if (!obj[key]) {
+      obj[key] = Object.assign(sortedLoggedItem);
+    } else {
+      obj[key].xp += sortedLoggedItem.xp;
+    }
+    return obj
+  }, {});
   console.log("test", totalXpByDay);
 
   // I have an array of objects which includes logged items from the past 7 days. Now, I want to plot the XP per day on to a line chart:
