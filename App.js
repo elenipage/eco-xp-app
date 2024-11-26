@@ -6,12 +6,13 @@ import RootStack from "./src/navigation/Stack"
 import { XpProvider } from "./src/context/Xp-context"
 import { UserProvider } from "./src/context/user-context"
 import { LoadingProvider } from "./src/context/Loading-context";
+import { appTheme } from "./src/styles/theme"
 
 
 export default function App() {
   return (
     <SafeAreaProvider>
-      <PaperProvider>
+      <PaperProvider theme={appTheme}>
         <LoadingProvider>
           <UserProvider>
             <XpProvider>
