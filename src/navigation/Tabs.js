@@ -5,52 +5,76 @@ import { Scanner } from "../pages/Scanner";
 import { Help } from "../pages/Help";
 import { Stats } from "../pages/Stats";
 import { BottomNavigation } from "react-native-paper";
+import { createMaterialBottomTabNavigator } from "react-native-paper/react-navigation";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 function Tabs() {
-  const [index, setIndex] = React.useState(0);
-
-  const [routes] = React.useState([
-    {
-      key: "home",
-      focusedIcon: "home",
-      unfocusedIcon: "home-outline",
-    },
-    {
-      key: "stats",
-      focusedIcon: "chart-box",
-      unfocusedIcon: "chart-box-outline",
-    },
-    {
-      key: "scanner",
-      focusedIcon: "barcode-scan",
-    },
-    {
-      key: "leaderboard",
-      focusedIcon: "trophy",
-      unfocusedIcon: "trophy-outline",
-    },
-    {
-      key: "help",
-      focusedIcon: "help-circle",
-      unfocusedIcon: "help-circle-outline",
-    },
-  ]);
-
-  const renderScene = BottomNavigation.SceneMap({
-    home: HomeScreen,
-    stats: Stats,
-    scanner: Scanner,
-    leaderboard: LeaderboardPage,
-    help: Help,
-  });
+  const Tab = createMaterialBottomTabNavigator();
 
   return (
-    <BottomNavigation
-      navigationState={{ index, routes }}
-      onIndexChange={setIndex}
-      renderScene={renderScene}
+    <Tab.Navigator
+      initialRouteName="Home"
       labeled={false}
-    />
+      backBehavior={"Home"}
+    >
+      <Tab.Screen
+        options={{
+          tabBarIcon: ({ focused }) => {
+            let iconName;
+
+            iconName = focused ? "home" : "home-outline";
+
+            return <MaterialCommunityIcons name={iconName} size={25} />;
+          },
+        }}
+        name="Home"
+        component={HomeScreen}
+      />
+      <Tab.Screen
+        name="Stats"
+        component={Stats}
+        options={{
+          tabBarIcon: ({ focused }) => {
+            let iconName;
+
+            iconName = focused ? "chart-box" : "chart-box-outline";
+
+            return <MaterialCommunityIcons name={iconName} size={25} />;
+          },
+        }}
+      />
+      <Tab.Screen name="Scanner" component={Scanner} 
+      options={{
+        tabBarIcon: ({ focused }) => {
+          let iconName;
+
+          iconName = focused ? "barcode" : "barcode-outline";
+
+          return <Ionicons name={iconName} size={25} />;
+        },
+      }}/>
+      <Tab.Screen name="Leaderboard" component={LeaderboardPage} 
+      options={{
+        tabBarIcon: ({ focused }) => {
+          let iconName;
+
+          iconName = focused ? "trophy" : "trophy-outline";
+
+          return <MaterialCommunityIcons name={iconName} size={25} />;
+        },
+      }}
+      />
+      <Tab.Screen name="Help" component={Help} 
+      options={{
+        tabBarIcon: ({ focused, color, size}) => {
+          let iconName;
+
+          iconName = focused ? "help-circle" : "help-circle-outline";
+
+          return <MaterialCommunityIcons name={iconName} size={25} />;
+        },
+      }}/>
+    </Tab.Navigator>
   );
 }
 

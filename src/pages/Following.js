@@ -38,9 +38,6 @@ export function Following() {
           }}
         >
           {following.map((followee, index) => {
-            console.log(
-              following
-            );
             return (
               <TouchableOpacity
                 key={index}

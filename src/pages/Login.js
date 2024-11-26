@@ -14,13 +14,18 @@ export function LoginPage() {
   const { user, setUser } = useUser();
   const { setXp } = useXp();
   const navigation = useNavigation();
+  const [isLoading, setIsLoading] = useState(true)
 
   function handleLogin() {
+    setIsLoading(true)
     fetchUserByID(2)
       .then((fetchedUser) => {
         setUser(fetchedUser);
         setXp(fetchedUser.xp);
         return fetchedUser;
+      })
+      .then(()=> {
+        navigation.navigate("Main")
       })
       .catch((err) => {
         console.error("Error fetching user:", err);
@@ -28,10 +33,12 @@ export function LoginPage() {
   }
 
   useEffect(() => {
+    setIsLoading(true)
     if (user) {
       navigation.navigate("Main");
     }
-  }, [user]);
+    setIsLoading(false)
+  }, []);
 
   return (
     <BaseLayout>

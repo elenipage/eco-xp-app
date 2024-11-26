@@ -91,7 +91,6 @@ export function fetchLoggedItemsById(userID, start, end) {
 
 export function fetchIsRecyclableByArea(prefix, material_id) {
   return apiClient.get(`/recyclability/${prefix}/${material_id}`).then(({ data }) => {
-    console.log(data)
     return data.data;
   });
 }

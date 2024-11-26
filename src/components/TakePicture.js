@@ -61,7 +61,6 @@ export default function TakePicture({photo, setPhoto, setPath, setTakingPhoto, s
                 console.error('Upload failed:', error.message);
             } else {
                 setIsLoading(false)
-                console.log('Upload successful:', data);
                 setPath(data.path)
                 setTakingPhoto(false)
             };

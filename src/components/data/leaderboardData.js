@@ -8,7 +8,6 @@ function followingData(user) {
   const userID = user.user_id;
   return fetchFollowingByUserID(userID).then((following) => {
     return following.map((followee) => {
-        console.log(followee)
       return {
         id: followee.follower_user_id,
         username: followee.username,
