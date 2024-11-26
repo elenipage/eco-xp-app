@@ -1,12 +1,10 @@
 
-
-function singleFollowerLineChart(props) {
-  const {user, loggedItemArray } = props
+function singleFollowerLineChart(user) {
   const data = {
     labels: ["M", "T", "W", "T", "F", "S", "S"],
     datasets: [
       {
-        data: [20, 45, 28, 80, 99, 10],
+        data: [20, 45, 28, 80, 99, 10, 10],
         color: (opacity = 1) => `rgba(300, 300, 100, ${opacity})`,
         strokeWidth: 2 
       },

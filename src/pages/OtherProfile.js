@@ -152,7 +152,7 @@ export function OtherProfile() {
               borderRadius: 10,
             }}
           >
-            <Line data={loggedItemArray} />
+            <Line data={(user)} />
           </Surface>
         </Surface>
         <Surface
