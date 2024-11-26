@@ -136,7 +136,7 @@ export function AddNewItem() {
             </View>
 
             <Text editable={false} style={styles.input}>
-              Barcode: {barcodeValue}``
+              Barcode: {barcodeValue}
             </Text>
             {photo? <Image style={styles.icon} source={{uri: photo.uri}}></Image> : <View><Button mode="contained-tonal" onPress={() => setTakingPhoto(true)}>
               Take a picture
