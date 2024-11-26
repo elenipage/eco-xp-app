@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View, Image, BackHandler, Alert } from "react-native"
+import { StyleSheet, Text, View, Image, Keyboard } from "react-native"
 import {
   SafeAreaProvider,
 } from "react-native-safe-area-context"
-import React, { useEffect, useState } from "react"
-import { useNavigation, useRoute } from "@react-navigation/native"
+import React, { useEffect, useState, useRef} from "react"
+import { useRoute } from "@react-navigation/native"
 import { Button, Surface, TextInput, List} from "react-native-paper"
 import BaseLayout from "../../src/components/BaseLayout.js"
 import AddImage from "../components/AddImage.js"
@@ -31,20 +31,33 @@ export function AddNewItem() {
   const [takingPhoto, setTakingPhoto] = useState(false)
   const [path,setPath] = useState("")
   const [photo, setPhoto] = useState(null);
-  const toggleDropdown = () => setExpanded(!expanded)
+
+  const textInputRef = useRef(null); 
 
   useEffect(() => {
 
     setScannedBarcode("")
-
     fetchMaterials()
       .then(({ data }) => {
         setMaterials(data.materials)
       })
       .catch((err) => {
       })
-  
+
   }, [])
+
+  const toggleDropdown = () => {
+    if (textInputRef.current) {
+      textInputRef.current.blur(); 
+    }
+    Keyboard.dismiss(); 
+    setExpanded((prev) => !prev); 
+  };
+
+  const handleMaterialSelection = (material) => {
+    setItemMaterial([material.material_name, material.material_id]);
+    setExpanded(false); 
+  };
 
   const handleSubmit = () => {
     
@@ -75,7 +88,10 @@ export function AddNewItem() {
       alert("Error fetching url:", error.message);
     } 
     setPhoto(null)
+    
   }
+
+  const isFormValid = path && itemName && itemMaterial?.length > 0 && itemMaterial[0];
 
   return takingPhoto? <TakePicture photo={photo} setPhoto={setPhoto} setTakingPhoto={setTakingPhoto} setPath={setPath} supabase={supabase}></TakePicture>: (
     <SafeAreaProvider>
@@ -97,17 +113,16 @@ export function AddNewItem() {
               style={styles.icon}
             ></Image>
             <TextInput
-              style={styles.input}
-              label="Item name" 
-              value={itemName || ""}
-              onChangeText={(text) => setItemName(text)}
-              borderColor={"red"}
-            />
+            ref={textInputRef}
+            style={styles.input}
+            label="Item name"
+            value={itemName}
+            onChangeText={(text) => setItemName(text)}
+            borderColor={"red"}
+            />  
             <View style={styles.input}>
-              <Text>Packaging material:</Text>
-
               <List.Accordion
-                title={itemMaterial ? itemMaterial[0] : "Select a material"}
+                title={itemMaterial[0] ? itemMaterial[0] : "Select a material"}
                 left={(props) => <List.Icon {...props} icon="recycle" />}
                 expanded={expanded}
                 onPress={toggleDropdown}
@@ -120,13 +135,7 @@ export function AddNewItem() {
                   {materials.map((material) => {
                     return (
                       <List.Item
-                        onPress={() => {
-                          toggleDropdown()
-                          setItemMaterial([
-                            material.material_name,
-                            material.material_id
-                          ])
-                        }}
+                        onPress={() => handleMaterialSelection(material)}
                         title={material.material_name}
                       />
                     )
@@ -143,7 +152,7 @@ export function AddNewItem() {
             </Button>
               <AddImage supabase={supabase} setPath={setPath} photo={photo} setPhoto={setPhoto} />
             </View> }
-            <Button mode="contained-tonal" onPress={handleSubmit}>
+            <Button disabled={!isFormValid} mode="contained-tonal" onPress={handleSubmit}>
               Submit
             </Button>
             <ItemAddedConfirmation visible={confirmVisible} setConfirmVisible={setConfirmVisible}/>
