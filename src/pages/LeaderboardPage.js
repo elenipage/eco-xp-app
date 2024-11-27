@@ -37,8 +37,8 @@ function LeaderboardHeader(leaderBoard, user) {
           justifyContent: "center",
         }}
       >
-        <View style={{ width: 150, alignItems: "center", justifyContent: "center" }}>
-          <Text style={{ fontSize: 40 }}>
+        <View style={{ width: 150, alignItems: "center", justifyContent: "center", width: "40%"}}>
+          <Text style={{ fontSize: 30 }}>
             {userPosition}
             {userPosition === 1
               ? "st"
@@ -62,7 +62,7 @@ function LeaderboardHeader(leaderBoard, user) {
             uri: user.avatar_img_url,
           }}
         />
-        <View style={{ width: 150, alignItems: "center", justifyContent: "center" }}>
+        <View style={{ width: 150, alignItems: "center", justifyContent: "center", width: "40%"}}>
           <Text
             style={{
               fontSize: 30,
@@ -122,7 +122,7 @@ export function LeaderboardPage() {
         : value === "postcode"
         ? LeaderboardHeader(data.postcode, user)
         : LeaderboardHeader(data.area, user)}
-      <SegButtons
+      <SegButtons 
         value={value}
         setValue={setValue}
       />
