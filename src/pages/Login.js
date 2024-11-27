@@ -14,12 +14,15 @@ export function LoginPage() {
   const { user, setUser } = useUser();
   const { setXp } = useXp();
   const navigation = useNavigation();
+  const [isLoading, setIsLoading] = useState(false);
 
   function handleLogin() {
+    setIsLoading(true);
     fetchUserByID(2)
       .then((fetchedUser) => {
         setUser(fetchedUser);
         setXp(fetchedUser.xp);
+        setIsLoading(false);
         return fetchedUser;
       })
       .catch((err) => {
@@ -31,7 +34,9 @@ export function LoginPage() {
     if (user) {
       navigation.navigate("Main");
     }
-  }, [user]);
+  }, [isLoading]);
+
+  if (isLoading) return <Loader />;
 
   return (
     <BaseLayout>

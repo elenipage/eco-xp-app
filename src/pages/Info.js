@@ -1,17 +1,28 @@
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
-
 import RecyclingInfo from "../components/RecyclingInfo";
 import PlasticLifeCycle from "../components/PlasticLifeCycle";
 
 export function InfoDropDownMenu() {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
-  const [items, setItems] = useState([
+
+  const items = [
     { label: "What can I recycle?", value: "recycling" },
-    { label: "Life cycle of a plastic bottle", value: "plasticLifecycle" },
-  ]);
+    { label: "Life cycle of a plastic bottle", value: "plasticLifeCycle" },
+  ];
+
+  const renderContent = () => {
+    if (value === "recycling") return <RecyclingInfo />;
+    if (value === "plasticLifeCycle") return <PlasticLifeCycle />;
+    return (
+      <Image
+        style={styles.image}
+        source={require("../../assets/recycling-infographic.png")}
+      />
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -24,11 +35,11 @@ export function InfoDropDownMenu() {
         setItems={setItems}
         placeholder="Select an item"
         style={styles.dropdown}
+
         labelStyle={styles.labelStyle}
         showsVerticalScrollIndicator={false}
       />
-      {value === "recycling" && <RecyclingInfo />}
-      {value === "plasticLifecycle" && <PlasticLifeCycle />}
+      {renderContent()}
     </View>
   );
 }
@@ -39,16 +50,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#B3F9D4",
     padding: 20,
   },
-  dropdown: {
-    backgroundColor: "#FFFFFF",
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    marginBottom: 20,
+
+    padding: 16,
+    paddingTop: 30,
+    justifyContent: "flex-start",
   },
-  labelStyle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#333",
+  dropdown: {
+    marginBottom: 16,
+    backgroundColor: "#f0f0f0",
+  },
+  dropdownContainer: {
+    backgroundColor: "#fff",
   },
 });

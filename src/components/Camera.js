@@ -18,10 +18,6 @@ export default function Camera() {
   const [scanned, setScanned] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
 
-  useEffect(() => {
-    setScannedBarcode("")
-    setScanned(false)
-  }, [])
 
   if (!permission) {
     return <View />;
@@ -51,6 +47,7 @@ export default function Camera() {
         style={styles.camera}
         facing="back"
         onBarcodeScanned={({ data }) => {
+          console.log(data)
           const timestamp = Date.now();
 
           if (scanned || timestamp - lastScannedTimestampRef.current < 1000) {
@@ -60,8 +57,8 @@ export default function Camera() {
           setScannedBarcode(data);
           fetchItemByBarcode(data)
             .then((scannedItemData) => {
-              console.log(scannedItemData)
-              navigation.navigate("Item Confirmation", { scannedItemData: scannedItemData });
+              navigation.navigate("Item Confirmation", { scannedItemData: scannedItemData })
+              setScannedBarcode("");
             })
             .catch((error) => {
               if (error.response.status === 404) {
@@ -79,9 +76,11 @@ export default function Camera() {
       onClose={() => {
         setShowDialog(false);
         setScanned(false);
+        setScannedBarcode("")
       }}
       onConfirm={() => {
         setShowDialog(false);
+        setScanned(false);
         navigation.navigate("Add a New Item", { barcodeValue: scannedBarcode, setScannedBarcode: setScannedBarcode });
       }}
       />

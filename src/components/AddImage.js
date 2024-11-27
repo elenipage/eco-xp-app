@@ -1,16 +1,13 @@
 import { Button } from 'react-native-paper'
-import React, { useState } from 'react';
-import { Loader } from "../components/Loader";
+import React from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 import { decode } from 'base64-arraybuffer'
 
-export default function AddImage ({photo, setPhoto, supabase, setPath}) {
-
-    const [isLoading, setIsLoading] = useState(false)
-    const [loadingProgress, setLoadingProgress] = useState(0)
+export default function AddImage ({ setPhoto, supabase, setPath}) {
 
     const pickImage = async () => {
+
         try {
             let result = await ImagePicker.launchImageLibraryAsync({
                 mediaTypes: ['images'],
@@ -37,13 +34,12 @@ export default function AddImage ({photo, setPhoto, supabase, setPath}) {
                 setPhoto(result.assets[0])
                 setIsLoading(false)
                 setPath(data.path)
-                console.log('Upload successful:', data);
             };
         } catch {
             alert("Error uploading file:", error.message);
         }
     };
 
-    return <Button mode="contained-tonal" onPress={pickImage}>Pick image from camera roll</Button> 
+    return <Button style={{ marginBottom: 10 }} mode="contained-tonal" onPress={pickImage}>Pick image from camera roll</Button> 
 
 }
