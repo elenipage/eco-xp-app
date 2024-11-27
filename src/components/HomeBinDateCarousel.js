@@ -4,7 +4,7 @@ import { Surface } from "react-native-paper";
 import Swiper from "react-native-swiper";
 import { fetchBinDatesByUserPostcode } from "../../utils/api";
 import { useUser } from "../context/user-context";
-import BinDateCard from "../cards/BinDateCard";
+import BinDateCard from "./BinDateCard";
 import { useFonts } from "expo-font";
 import { Roboto_400Regular, Roboto_700Bold } from "@expo-google-fonts/roboto";
 import { useNavigation } from "@react-navigation/native";
@@ -31,44 +31,47 @@ function BinDateCarousel() {
   }, []);
 
   return (
-    <>
-      <Swiper
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
+    <Swiper
+      style={{
+        alignItems: "center",
+        justifyContent: "center",
+        height: 225
+      }}
+      showsButtons={false}
+    >
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("Bin Dates");
         }}
-        showsButtons={false}
-        height={"100%"}
       >
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("Bin Dates");
-          }}
-        >
-          <BinDateCard
-            title={"General Waste Bin Collection:"}
-            date={binData.waste_bin_collection}
-            icon="delete"
-            color="black"
-            size={24}
-            fontsLoaded={fontsLoaded}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => {
-            navigation.navigate("Bin Dates");
-          }}>
-          <BinDateCard
-            title="Recycling Bin Collection:"
-            date={binData.recycling_bin_collection}
-            icon="recycle"
-            color="green"
-            size={24}
-            fontsLoaded={fontsLoaded}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => {
-            navigation.navigate("Bin Dates");
-          }}>
+        <BinDateCard
+          title={"General Waste Bin Collection:"}
+          date={binData.waste_bin_collection}
+          icon="delete"
+          color="black"
+          size={24}
+          fontsLoaded={fontsLoaded}
+        />
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("Bin Dates");
+        }}
+      >
+        <BinDateCard
+          title="Recycling Bin Collection:"
+          date={binData.recycling_bin_collection}
+          icon="recycle"
+          color="green"
+          size={24}
+          fontsLoaded={fontsLoaded}
+        />
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("Bin Dates");
+        }}
+      >
         <BinDateCard
           title="Garden Waste Collection:"
           date={binData.garden_bin_collection}
@@ -77,9 +80,8 @@ function BinDateCarousel() {
           size={24}
           fontsLoaded={fontsLoaded}
         />
-        </TouchableOpacity>
-      </Swiper>
-    </>
+      </TouchableOpacity>
+    </Swiper>
   );
 }
 
