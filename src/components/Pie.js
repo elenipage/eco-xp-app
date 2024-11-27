@@ -1,7 +1,10 @@
 import { StyleSheet, Text, View, Dimensions } from "react-native";
 import { PieChart } from "react-native-chart-kit";
+import { useTheme } from "react-native-paper";
 
 export default function Pie(props) {
+  const { colors, fonts } = useTheme();
+
   const { data } = props;
   const styles = StyleSheet.create({
     container: {
@@ -23,17 +26,15 @@ export default function Pie(props) {
     useShadowColorFromDataset: false,
   };
   return (
-    <View style={styles.container}>
-      <PieChart
-        data={data}
-        width={Dimensions.get("window").width}
-        height={200}
-        chartConfig={chartConfig}
-        accessor={"count"}
-        backgroundColor={"transparent"}
-        paddingLeft={"0"}
-        center={[0, 0]}
-      />
-    </View>
+    <PieChart
+      data={data}
+      width={Dimensions.get("window").width}
+      height={200}
+      chartConfig={chartConfig}
+      accessor={"count"}
+      backgroundColor={colors.background}
+      paddingLeft={10}
+      center={[0, 0]}
+    />
   );
 }

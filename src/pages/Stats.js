@@ -1,4 +1,4 @@
-import { Platform, View, Text, ScrollView } from "react-native";
+import { Platform, View, Text, ScrollView, StyleSheet, Image } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import SegButtons from "../components/SegButtons";
 
@@ -20,96 +20,132 @@ export function Stats() {
     <ScrollView>
       <View
         style={{
-          flex: 1,
           alignItems: "center",
           justifyContent: "center",
           paddingTop: Platform.OS === "ios" ? insets.top : 0,
           paddingBottom: Platform.OS === "ios" ? insets.bottom : 0,
+          margin: 20,
         }}
       >
-        <Text style={{ fontSize: 40 }}>Stats</Text>
         <SegButtons
           value={value}
           setValue={setValue}
         />
         {value === "friends" ? (
-          <View style={{ alignItems: "center", justifyContent: "center" }}>
+          <View
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+            }}
+          >
             <Pie data={friendsPie} />
             <Surface
-              elevation={1}
-              style={{
-                marginTop: 15,
-                margin: 10,
-                padding: 8,
-                height: 100,
-                width: "80%",
-                alignItems: "center",
-                justifyContent: "center",
-                border: "hidden",
-                borderRadius: 20,
-              }}
+              elevation={2}
+              style={styles.infoCard}
             >
-              <Text style={{ textAlign: "center", marginBottom: 5, fontSize: 18 }}>
+              <Image
+                source={require("../../assets/cute-plastic-bottle.png")}
+                style={{
+                  width: "100%",
+                  height: 100,
+                  objectFit: "contain",
+                }}
+              />
+              <Text
+                style={{
+                  textAlign: "center",
+                  padding: 20,
+                  fontSize: 18,
+                }}
+              >
                 The item you and your followers recycled most this month:
               </Text>
             </Surface>
             <Surface
-              elevation={1}
-              style={{
-                margin: 5,
-                padding: 8,
-                height: 100,
-                width: "80%",
-                alignItems: "center",
-                justifyContent: "center",
-                border: "hidden",
-                borderRadius: 20,
-              }}
+              elevation={2}
+              style={styles.infoCard}
             >
-              <Text style={{ textAlign: "center", marginBottom: 5, fontSize: 18 }}>
+              <Image
+                source={require("../../assets/happy-bin.png")}
+                style={{
+                  width: "100%",
+                  height: 100,
+                  objectFit: "contain",
+                }}
+              />
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontSize: 18,
+                }}
+              >
                 You and your friends recycled 50 bottles of water this week!
               </Text>
             </Surface>
-            <View style={{ alignItems: "center", justifyContent: "center" }}>
-              <Text style={{ textAlign: "center", margin: 20, fontSize: 18 }}>
+
+            <View
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text
+                style={{
+                  textAlign: "center",
+                  margin: 20,
+                  fontSize: 18,
+                }}
+              >
                 Your follower's total XP this week:
               </Text>
+
               <Line data={followersLineChart} />
             </View>
           </View>
         ) : value === "postcode" ? (
-          <View style={{ alignItems: "center", justifyContent: "center" }}>
+          <View
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+            }}
+          >
             <Pie data={postcodePie} />
             <Surface
-              elevation={1}
-              style={{
-                margin: 5,
-                padding: 8,
-                height: 100,
-                width: "80%",
-                alignItems: "center",
-                justifyContent: "center",
-                border: "hidden",
-                borderRadius: 20,
-              }}
+              elevation={2}
+              style={styles.infoCard}
             >
-              <Text style={{ textAlign: "center", marginBottom: 5, fontSize: 18, width: "80%" }}>
+              <Image
+                source={require("../../assets/cute-plastic-bottle.png")}
+                style={{
+                  width: "100%",
+                  height: 100,
+                  objectFit: "contain",
+                }}
+              />
+              <Text
+                style={{
+                  textAlign: "center",
+                  padding: 20,
+                  fontSize: 18,
+                }}
+              >
                 The most recycled item in your postcode:
               </Text>
             </Surface>
             <Surface
-              elevation={1}
-              style={{
-                margin: 20,
-                padding: 8,
-                height: 100,
-                width: "80%",
-                alignItems: "center",
-                justifyContent: "center",
-                border: "hidden",
-                borderRadius: 20,
-              }}
+              elevation={2}
+              style={styles.infoCard}
             >
+              <Image
+                source={require("../../assets/happy-bin.png")}
+                style={{
+                  width: "100%",
+                  height: 100,
+                  objectFit: "contain",
+                }}
+              />
               <Text style={{ textAlign: "center", marginBottom: 5, fontSize: 18 }}>
                 Within your postcode, you recycled enough glass to build 5 greenhouses!
               </Text>
@@ -122,44 +158,65 @@ export function Stats() {
             </View>
           </View>
         ) : (
-          <View style={{ alignItems: "center", justifyContent: "center" }}>
+          <View
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+            }}
+          >
             <Pie data={areaPie} />
             <Surface
-              elevation={1}
-              style={{
-                margin: 20,
-                padding: 8,
-                height: 100,
-                width: "80%",
-                alignItems: "center",
-                justifyContent: "center",
-                border: "hidden",
-                borderRadius: 20,
-              }}
+              elevation={2}
+              style={styles.infoCard}
             >
-              <Text style={{ textAlign: "center", marginBottom: 5, fontSize: 18 }}>
+              <Image
+                source={require("../../assets/cute-plastic-bottle.png")}
+                style={{
+                  width: "100%",
+                  height: 100,
+                  objectFit: "contain",
+                }}
+              />
+              <Text
+                style={{
+                  textAlign: "center",
+                  padding: 20,
+                  fontSize: 18,
+                }}
+              >
                 The most recycled item in your city:
               </Text>
             </Surface>
             <Surface
-              elevation={1}
-              style={{
-                margin: 20,
-                padding: 8,
-                height: 100,
-                width: "80%",
-                alignItems: "center",
-                justifyContent: "center",
-                border: "hidden",
-                borderRadius: 20,
-              }}
+              elevation={2}
+              style={styles.infoCard}
             >
-              <Text style={{ textAlign: "center", marginBottom: 5, fontSize: 18 }}>
+              <Image
+                source={require("../../assets/happy-bin.png")}
+                style={{
+                  width: "100%",
+                  height: 100,
+                  objectFit: "contain",
+                }}
+              />
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontSize: 18,
+                }}
+              >
                 Together, your city recycled 2 tons of plastic this week!
               </Text>
             </Surface>
 
-            <Text style={{ margin: 20, fontSize: 18 }}>{`Your city's total XP this week:`}</Text>
+            <Text
+              style={{
+                textAlign: "center",
+                margin: 20,
+                fontSize: 18,
+              }}
+            >{`Your city's total XP this week:`}</Text>
             <Line data={areaLineChart} />
           </View>
         )}
@@ -167,3 +224,16 @@ export function Stats() {
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  infoCard: {
+    marginTop: 20,
+    padding: 20,
+    // height: 100,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    border: "hidden",
+    borderRadius: 20,
+  },
+});
