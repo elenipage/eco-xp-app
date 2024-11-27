@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
   segButton: {
     width: "95%",
     marginBottom: 10,
+    marginTop: 10,
   },
 });
 

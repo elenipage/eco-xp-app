@@ -38,7 +38,8 @@ export function Stats() {
             <Surface
               elevation={1}
               style={{
-                margin: 20,
+                marginTop: 15,
+                margin: 10,
                 padding: 8,
                 height: 100,
                 width: "80%",
@@ -55,7 +56,7 @@ export function Stats() {
             <Surface
               elevation={1}
               style={{
-                margin: 20,
+                margin: 5,
                 padding: 8,
                 height: 100,
                 width: "80%",
@@ -82,7 +83,7 @@ export function Stats() {
             <Surface
               elevation={1}
               style={{
-                margin: 20,
+                margin: 5,
                 padding: 8,
                 height: 100,
                 width: "80%",
@@ -92,7 +93,7 @@ export function Stats() {
                 borderRadius: 20,
               }}
             >
-              <Text style={{ textAlign: "center", marginBottom: 5, fontSize: 18 }}>
+              <Text style={{ textAlign: "center", marginBottom: 5, fontSize: 18, width: "80%" }}>
                 The most recycled item in your postcode:
               </Text>
             </Surface>

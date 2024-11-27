@@ -21,7 +21,7 @@ export function LeaderboardCard({ data }) {
     evenRowColor: "#edfcf9",
   };
   return (
-    <View style={{ flex: 1, width: "90%" }}>
+    <View style={{ flex: 1, width: "90%"}}>
       <Leaderboard {...props} />
     </View>
   );
