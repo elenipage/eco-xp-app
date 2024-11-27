@@ -1,42 +1,46 @@
-const { fetchLoggedItemsById } = require("../../../utils/api")
-const { getPreviousDate } = require("../../../utils/date")
+const { fetchLoggedItemsById } = require("../../../utils/api");
+const { getPreviousDate } = require("../../../utils/date");
 
 function singleFollowerLineChart() {
-  const dateLabels = []
+  const dateLabels = [];
 
-  for(let i = 0; i<7;i++){
-    dateLabels.push(getPreviousDate(i))
+  for (let i = 0; i < 7; i++) {
+    dateLabels.push(getPreviousDate(i));
   }
 
-  
-  return fetchLoggedItemsById(2, getPreviousDate(6), getPreviousDate(0))
-  .then((loggedItems) => {
-    
-    const xpByDay ={}
-    dateLabels.forEach(date => {
-      xpByDay[date] = 0
-    });
-    
-    loggedItems.forEach(loggedItem => {
-      const formattedDate = loggedItem.date.split("T")[0]
-      xpByDay[formattedDate] += loggedItem.xp
-    });
-    const loggedItemData = dateLabels.map((date) => xpByDay[date]);
+  return Promise.all([
+    fetchLoggedItemsById(2, getPreviousDate(6), getPreviousDate(0)),
+    fetchLoggedItemsById(3, getPreviousDate(6), getPreviousDate(0)),
+  ]).then((loggedItems) => {
+    const loggedItemXpArr = loggedItems.map((userLoggedItems) => {
+      const xpByDay = {};
+      dateLabels.forEach((date) => {
+        xpByDay[date] = 0;
+      });
 
+      userLoggedItems.forEach((loggedItem) => {
+        const formattedDate = loggedItem.date.split("T")[0];
+        xpByDay[formattedDate] += loggedItem.xp;
+      });
+      return (loggedItemData = dateLabels.map((date) => xpByDay[date]));
+    });
     return {
-      
       labels: dateLabels,
       datasets: [
         {
-          data: loggedItemData,
+          data: loggedItemXpArr[0],
           color: (opacity = 1) => `rgba(300, 300, 100, ${opacity})`,
           strokeWidth: 3,
         },
+        {
+          data: loggedItemXpArr[1],
+          color: (opacity = 1) => `rgba(57, 188, 217, ${opacity})`,
+          strokeWidth: 3,
+        },
       ],
-      legend: ["You"],
-    }
-  })
-
+      legend: ["You", "Other User"],
+    };
+  });
 }
 
 const followersLineChart = {
@@ -48,7 +52,7 @@ const followersLineChart = {
       strokeWidth: 2,
     },
   ],
-}
+};
 
 const postcodeLineChart = {
   labels: ["M", "T", "W", "T", "F", "S", "S"],
@@ -59,7 +63,7 @@ const postcodeLineChart = {
       strokeWidth: 2,
     },
   ],
-}
+};
 
 const areaLineChart = {
   labels: ["M", "T", "W", "T", "F", "S", "S"],
@@ -70,11 +74,11 @@ const areaLineChart = {
       strokeWidth: 2,
     },
   ],
-}
+};
 
 module.exports = {
   singleFollowerLineChart,
   postcodeLineChart,
   followersLineChart,
   areaLineChart,
-}
+};
