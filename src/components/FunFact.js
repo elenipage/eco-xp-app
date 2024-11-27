@@ -26,9 +26,10 @@ export function FunFact() {
     <Surface
     elevation={3}
       style={{
-        marginBottom:20,
+        // marginBottom:20,
         padding: 20,
-        height: 120,
+        // marginTop: 20,
+        // height: 120,
         // width: "80%",
         alignItems: "center",
         justifyContent: "center",
