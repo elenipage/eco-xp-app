@@ -45,6 +45,7 @@ function HeaderDemo({ navigation, route, options, back }) {
             onPress={() => {
               navigation.navigate("Profile");
             }}
+            style={{paddingLeft:10}}
           >
             <Avatar.Image
               size={40}
@@ -84,6 +85,7 @@ function HeaderDemo({ navigation, route, options, back }) {
                 flexDirection: "row",
                 justifyContent: "center",
                 alignItems: "center",
+                paddingRight: 10
               }}
             >
               <Appbar.Action icon="one-up" onPress={() => {}} />
