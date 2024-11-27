@@ -1,12 +1,13 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import quizzes from "../components/data/quizData";
 import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { ScrollView } from "react-native-gesture-handler";
 import BaseLayout from "../components/BaseLayout";
 import { updateXpByID } from "../../utils/api";
 import { useUser } from "../context/user-context";
-import { Button } from "react-native-paper";
+import { Button, Surface } from "react-native-paper";
+import { useTheme } from "react-native-paper";
+import { CardStyleInterpolators } from "@react-navigation/stack";
 
 export function Quiz({ route }) {
   const { xp, setXp } = route.params;
@@ -18,6 +19,74 @@ export function Quiz({ route }) {
   const [quizCompleted, setQuizCompleted] = useState(false);
   const navigation = useNavigation();
   const { user } = useUser();
+  const { colors, fonts, surface } = useTheme();
+
+  const styles = StyleSheet.create({
+    button: {
+      backgroundColor: colors.secondaryContainer,
+      padding: 20,
+      margin: 5,
+      alignItems: "center",
+      justifyContent: "center",
+      borderRadius: 20,
+    },
+    page: {
+      justifyContent: "center",
+      alignItems: "center",
+      height: "100%",
+      width: "100%",
+      backgroundColor: colors.background,
+    },
+    container: {
+      justifyContent: "space-evenly",
+      alignItems: "center",
+      paddingBottom: 15,
+      borderRadius: 35,
+      backgroundColor: colors.surfaceVariant,
+      marginHorizontal: 20,
+      marginBottom:20,
+      width: "90%",
+      height: "70%"
+    },
+    text: {
+      fontSize: fonts.headlineSmall.fontSize,
+      textAlign: "center",
+      color: "#3EAE6A",
+    },
+    feedback: {
+      fontSize: fonts.headlineSmall.fontSize,
+      fontWeight: "bold",
+      color: colors.onTertiaryContainer,
+      textAlign: "center",
+      marginBottom: 10,
+    },
+    correctAnswer: {
+      fontSize: 16,
+      fontStyle: "italic",
+      color: colors.onTertiaryContainer,
+      textAlign: "center",
+      marginBottom: 15,
+    },
+    quizCompleteText: {
+      fontSize: 28,
+      fontWeight: "bold",
+      textAlign: "center",
+    },
+    totalXpText: {
+      fontSize: 20,
+      textAlign: "center",
+    },
+    feedbackBox: {
+      padding: 20,
+      marginHorizontal: 20,
+      marginBottom: 20,
+      alignItems: "center",
+      justifyContent: "center",
+      borderRadius: 20,
+      minHeight: 250,
+      minWidth:250
+    },
+  });
 
   useEffect(() => {
     const randomQuiz = quizzes[Math.floor(Math.random() * quizzes.length)];
@@ -51,7 +120,7 @@ export function Quiz({ route }) {
 
   if (!selectedQuiz.length) {
     return (
-      <View style={styles.loadingContainer}>
+      <View>
         <Text>Loading quiz...</Text>
       </View>
     );
@@ -59,13 +128,15 @@ export function Quiz({ route }) {
 
   if (quizCompleted) {
     return (
-      <View style={styles.centeredContainer}>
+      <View style={styles.page}>
         <Image
           style={{
             width: 200,
             height: 200,
             marginBottom: 20,
             borderRadius: 70,
+            borderColor: colors.secondary,
+            borderWidth: 3
           }}
           source={{
             uri: "https://static.vecteezy.com/system/resources/previews/007/410/214/non_2x/team-business-holding-plants-cooperation-nature-on-earth-day-conservation-eco-friendly-ecology-esg-or-ecology-problem-concept-illustration-vector.jpg",
@@ -81,13 +152,17 @@ export function Quiz({ route }) {
   }
 
   return (
-    <ScrollView>
-      <BaseLayout>
-        <Text style={styles.text}>Question {currentQuestion.id}</Text>
-        <Text style={styles.text}>{currentQuestion.question}</Text>
+    <View style={styles.page}>
+      <View style={styles.container}>
+        <View>
+          <Surface style={surface}>
+          <Text style={styles.text}>Question {currentQuestion.id}:</Text>
+            <Text style={styles.text}>{currentQuestion.question}</Text>
+          </Surface>
+        </View>
 
         {feedback ? (
-          <View style={styles.centeredContainer}>
+          <View style={styles.feedbackBox}>
             <Text style={styles.feedback}>{feedback}</Text>
             {showAnswer && (
               <Text style={styles.correctAnswer}>
@@ -98,61 +173,32 @@ export function Quiz({ route }) {
                 }
               </Text>
             )}
-            <Button onPress={handleNext}>Next Question</Button> 
+            <Button
+              style={{ backgroundColor: colors.background }}
+              onPress={handleNext}
+            >
+              Next
+            </Button>
           </View>
         ) : (
-          currentQuestion.options.map((option) => (
-            <Button key={option.id} onPress={() =>
-              handleAnswer(option.isCorrect, currentQuestion.xpReward)
-            }>{option.id}. {option.text}</Button>
-          ))
+          <View style={{marginHorizontal: 20}}>
+            {currentQuestion.options.map((option) => (
+              <TouchableOpacity
+                key={option.id}
+                onPress={() =>
+                  handleAnswer(option.isCorrect, currentQuestion.xpReward)
+                }
+              >
+                <Surface style={styles.button}>
+                  <Text>
+                    {option.id}. {option.text}
+                  </Text>
+                </Surface>
+              </TouchableOpacity>
+            ))}
+          </View>
         )}
-      </BaseLayout>
-    </ScrollView>
+      </View>
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-  },
-  centeredContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 150,
-  },
-  text: {
-    fontSize: 18,
-    marginBottom: 20,
-    textAlign: "center",
-  },
-  feedback: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 10,
-    color: "blue",
-    textAlign: "center",
-  },
-  correctAnswer: {
-    fontSize: 16,
-    fontStyle: "italic",
-    color: "green",
-    marginBottom: 20,
-    textAlign: "center",
-  },
-  quizCompleteText: {
-    fontSize: 28,
-    fontWeight: "bold",
-    marginBottom: 20,
-    textAlign: "center",
-  },
-  totalXpText: {
-    fontSize: 20,
-    marginBottom: 20,
-    textAlign: "center",
-  },
-});
