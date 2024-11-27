@@ -17,10 +17,12 @@ export function InfoDropDownMenu() {
     if (value === "recycling") return <RecyclingInfo />;
     if (value === "plasticLifeCycle") return <PlasticLifeCycle />;
     return (
-      <Image
-        style={styles.image}
-        source={require("../../assets/recycling-infographic.png")}
-      />
+      <View style={styles.container}>
+        <Image
+          style={styles.image}
+          source={require("../../assets/recycling-infographic.jpg")}
+        />
+      </View>
     );
   };
 
@@ -32,10 +34,8 @@ export function InfoDropDownMenu() {
         items={items}
         setOpen={setOpen}
         setValue={setValue}
-        setItems={setItems}
         placeholder="Select an item"
         style={styles.dropdown}
-
         labelStyle={styles.labelStyle}
         showsVerticalScrollIndicator={false}
       />
@@ -50,11 +50,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#B3F9D4",
     padding: 20,
   },
+  image: {
+    height: 490,
+    width: "100%",
+    borderRadius: 12,
+  },
 
-  //   padding: 16,
-  //   paddingTop: 30,
-  //   justifyContent: "flex-start",
-  // },
   dropdown: {
     marginBottom: 16,
     backgroundColor: "#f0f0f0",

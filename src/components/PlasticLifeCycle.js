@@ -6,7 +6,9 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  Linking,
 } from "react-native";
+import { Button } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function PlasticLifeCycle() {
@@ -33,13 +35,13 @@ export default function PlasticLifeCycle() {
             rates, using biodegradable alternatives, and promoting reusable
             containers.
           </Text>
-          <Image
-            style={styles.image}
-            source={require("../../assets/plastic-bottle-lifecycle.jpg")}
-          />
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Learn More</Text>
-          </TouchableOpacity>
+          {/* <Image source={require('../../assets/plastic-bottle-lifecycle.jpg')} style={styles.image}/> */}
+          <Button mode="contained-tonal" onPress={() => {
+              Linking.openURL(
+                "https://www.rts.com/blog/the-life-cycle-of-a-plastic-water-bottle/"
+              );
+            }}>Learn more</Button>
+          
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -96,11 +98,12 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 15,
     backgroundColor: "#39BCD9",
+    color: "#FFFFFF",
     paddingVertical: 10,
     borderRadius: 12,
     alignItems: "center",
     shadowColor: "#1A3151",
-    shadowOffset: { width: 0, height: 2 },
+    // shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 5,
   },
