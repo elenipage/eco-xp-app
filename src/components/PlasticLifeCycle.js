@@ -8,22 +8,14 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useFonts } from "expo-font";
-import { Roboto_400Regular, Roboto_700Bold } from "@expo-google-fonts/roboto";
 
 export default function PlasticLifeCycle() {
-  const [fontsLoaded] = useFonts({
-    Roboto_400Regular,
-    Roboto_700Bold,
-  });
-
-  if (!fontsLoaded) {
-    return <Text>Loading fonts...</Text>;
-  }
-
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollContainer}>
+      <ScrollView
+        style={styles.scrollContainer}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.card}>
           <Text style={styles.header}>Life Cycle of a Plastic Bottle</Text>
           <Text style={styles.body}>
@@ -116,11 +108,5 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontFamily: "Roboto_700Bold",
     fontSize: 16,
-  },
-  background: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#B3F9D4",
   },
 });
