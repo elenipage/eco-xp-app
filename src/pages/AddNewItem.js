@@ -31,6 +31,8 @@ export function AddNewItem() {
   const [takingPhoto, setTakingPhoto] = useState(false)
   const [path,setPath] = useState("")
   const [photo, setPhoto] = useState(null);
+  const [isValid, setIsValid] = useState(false)
+  const [disabled, setDisabled] = useState(true)
 
   const { fonts, colors } = useTheme()
 
@@ -47,6 +49,16 @@ export function AddNewItem() {
       })
 
   }, [])
+
+
+  useEffect(()=> {
+    if(itemName.length > 0 && path.length > 0 && typeof itemMaterial[1] === 'number'){
+      setIsValid(true)
+    }
+    if(path.length > 0){
+      setDisabled(false)
+    }
+  },[itemName, itemMaterial, path])
 
   const toggleDropdown = () => {
     if (textInputRef.current) {
@@ -66,9 +78,9 @@ export function AddNewItem() {
     try {
 
       const { data } = supabase
-      .storage
-      .from('Photos')
-      .getPublicUrl(path)
+        .storage
+        .from('Photos')
+        .getPublicUrl(path)
 
       const obj = {
         item_name: itemName,
@@ -76,6 +88,8 @@ export function AddNewItem() {
         barcode: barcodeValue.toString(),
         img_url: data.publicUrl
       }
+
+      console.log(obj)
 
       postNewItem(obj)
       .then(({data}) => {
@@ -93,14 +107,13 @@ export function AddNewItem() {
     
   }
 
-  const isFormValid = path && itemName && itemMaterial?.length > 0 && itemMaterial[0];
-
   const styles = StyleSheet.create({
     container: {
       justifyContent: "center",
       alignItems: "center",
       flex: 1,
       width: "100%",
+      backgroundColor: colors.background
     },
     title: {
       fontSize: 24,
@@ -112,28 +125,29 @@ export function AddNewItem() {
       backgroundColor: colors.background,
       borderColor: "#ccc",
       padding: 5,
-      marginBottom: 18,
+      marginBottom: 10,
       width: "80%",
     },
     icon: {
+      borderWidth: 2,
       width: 100,
       height: 100,
       justifyContent: "center",
-      marginBottom: 10,
+      marginBottom: 20,
       padding: 0,
       borderRadius: 30,
     }
   })
 
-  return takingPhoto? <TakePicture photo={photo} setPhoto={setPhoto} setTakingPhoto={setTakingPhoto} setPath={setPath} supabase={supabase}></TakePicture>: (
+  return takingPhoto? <TakePicture photo={photo} setPhoto={setPhoto} setTakingPhoto={setTakingPhoto} setPath={setPath} supabase={supabase} /> : (
     <SafeAreaProvider>
       <BaseLayout>
           <View style={styles.container}>
             <Text style={styles.title}>Add an item</Text>
-            <Image
+            {photo? <Image style={styles.icon} source={{uri: photo.uri}}></Image> : <Image
               source={require("../../assets/household.png")}
               style={styles.icon}
-            />
+            />}
             <TextInput
               ref={textInputRef}
               style={styles.input}
@@ -178,7 +192,7 @@ export function AddNewItem() {
               Barcode: {barcodeValue}
             </Text>
             <Surface
-              elevation={3}
+              elevation={2}
               style={{
                 height: 190,
                 width: 260,
@@ -187,14 +201,16 @@ export function AddNewItem() {
                 borderRadius: 20,
               }}
             >
-            {photo? <Image style={styles.icon} source={{uri: photo.uri}}></Image> : <View><Button style={{ marginBottom: 10 }}mode="contained-tonal" onPress={() => setTakingPhoto(true)}>
+            <View>
+              <Button style={{ marginBottom: 10 }} disabled={!disabled} mode="contained-tonal" onPress={() => setTakingPhoto(true)}>
               Take a picture
-            </Button>
-              <AddImage supabase={supabase} setPath={setPath} photo={photo} setPhoto={setPhoto} />
-            </View> }
-            <Button style={{ marginBottom: 10 }} disabled={!isFormValid} mode="contained-tonal" onPress={handleSubmit}>
+              </Button>
+              <AddImage supabase={supabase} path={path} setPath={setPath} disabled={disabled} photo={photo} setPhoto={setPhoto}/>
+            </View> 
+            <Button disabled={!isValid} mode="contained-tonal" onPress={handleSubmit}>
               Submit
             </Button>
+            
             <ItemAddedConfirmation visible={confirmVisible} setConfirmVisible={setConfirmVisible}/>
             <ItemAddedError errorVisible={errorVisible} setErrorVisible={setErrorVisible}/>
           </Surface>

@@ -4,7 +4,7 @@ import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 import { decode } from 'base64-arraybuffer'
 
-export default function AddImage ({ setPhoto, supabase, setPath}) {
+export default function AddImage ({ setPhoto, supabase, setPath, disabled }) {
 
     const pickImage = async () => {
 
@@ -40,6 +40,6 @@ export default function AddImage ({ setPhoto, supabase, setPath}) {
         }
     };
 
-    return <Button style={{ marginBottom: 10 }} mode="contained-tonal" onPress={pickImage}>Pick image from camera roll</Button> 
+    return <Button style={{ marginBottom: 10 }} disabled={!disabled} mode="contained-tonal" onPress={pickImage}>Pick image from camera roll</Button> 
 
 }
