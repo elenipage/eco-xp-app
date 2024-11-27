@@ -8,7 +8,7 @@ function SegButtons(props) {
     <SegmentedButtons
       value={value}
       onValueChange={setValue}
-      style={styles.segButton}
+      // style={styles.segButton}
       buttons={[
         {
           value: "friends",
@@ -30,12 +30,12 @@ function SegButtons(props) {
   );
 }
 
-const styles = StyleSheet.create({
-  segButton: {
-    width: "95%",
-    marginBottom: 10,
-    marginTop: 10,
-  },
-});
+// const styles = StyleSheet.create({
+//   segButton: {
+//     width: "95%",
+//     marginBottom: 10,
+//     marginTop: 10,
+//   },
+// });
 
 export default SegButtons;
