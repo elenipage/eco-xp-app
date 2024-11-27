@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Image } from "react-native";
 import { useUser } from "../context/user-context";
 import { useEffect, useState } from "react";
 import { fetchBinDatesByUserPostcode } from "../../utils/api";
-import BinDateCard from "../cards/BinDateCard";
+import { BinDateCard } from "./BinDateCard";
 import { useTheme } from "react-native-paper";
 import BaseLayout from "./BaseLayout";
 import { ScrollView } from "react-native";
@@ -45,39 +45,36 @@ export default function BinDates() {
   }, [postcode]);
 
   return (
-    <BaseLayout>
-        <View style={styles.container}>
-          <Text style={styles.title}>
-            Please see your collection dates below:
-          </Text>
-          <BinDateCard
-            title="General Waste Bin Collection:"
-            date={data.waste_bin_collection}
-            icon="delete"
-            color="black"
-            size={24}
-          />
+    <>
+      <View style={styles.container}>
+        <Text style={styles.title}>Please see your collection dates below:</Text>
+        <BinDateCard
+          title="General Waste Bin Collection:"
+          date={data.waste_bin_collection}
+          icon="delete"
+          color="black"
+          size={24}
+        />
 
-          <BinDateCard
-            title="Recycling Bin Collection:"
-            date={data.recycling_bin_collection}
-            icon="recycle"
-            color="green"
-            size={24}
-          />
-          <BinDateCard
-            title="Garden Waste Collection:"
-            date={data.garden_bin_collection}
-            icon="leaf"
-            color="brown"
-            size={24}
-          />
-          <Image
+        <BinDateCard
+          title="Recycling Bin Collection:"
+          date={data.recycling_bin_collection}
+          icon="recycle"
+          color="green"
+          size={24}
+        />
+        <BinDateCard
+          title="Garden Waste Collection:"
+          date={data.garden_bin_collection}
+          icon="leaf"
+          color="brown"
+          size={24}
+        />
+        <Image
           style={styles.image}
           source={require("../../assets/three-bins.jpg")}
         />
-        </View>
-        
-    </BaseLayout>
+      </View>
+    </>
   );
 }

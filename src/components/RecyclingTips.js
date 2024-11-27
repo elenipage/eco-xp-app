@@ -2,8 +2,10 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Surface, card } from "react-native-paper";
 import Swiper from "react-native-swiper";
+import { useTheme } from "react-native-paper";
 
 function RecyclingTipsCarousel() {
+  const { colors, fonts } = useTheme()
   const recyclingTips = [
     "Rinse out plastic bottles, cans, and containers to remove food residue before recycling.",
     "Flatten cardboard boxes to save space in your recycling bin.",
@@ -28,13 +30,12 @@ function RecyclingTipsCarousel() {
   ];
 
   return (
-    <>
-      <Text style={styles.heading}>Recycling top tips</Text>
       <Swiper
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-        }}
+        // style={{
+        //   alignItems: "center",
+        //   justifyContent: "center",
+        //   overflow: "visible",
+        // }}
         showsButtons={false}
         loop={true}
         autoplay
@@ -45,32 +46,22 @@ function RecyclingTipsCarousel() {
         height={"100%"}
       >
         {recyclingTips.map((tip, index) => (
-          <Surface
+          <View
             key={index}
-            elevation={3}
             style={{
-              margin: 20,
+              // marginHorizontal: 20,
               padding: 20,
               height: 200,
               justifyContent: "center",
               borderRadius: 20,
+              backgroundColor: colors.surface
             }}
           >
-            <Text style={styles.text}>{tip}</Text>
-          </Surface>
+            <Text style={fonts.headlineSmall}>{tip}</Text>
+          </View>
         ))}
       </Swiper>
-    </>
   );
 }
-
-const styles = StyleSheet.create({
-  heading: {
-    fontSize: 25,
-  },
-  text: {
-    fontSize: 20,
-  },
-});
 
 export default RecyclingTipsCarousel;

@@ -15,17 +15,17 @@ export default function BinDateCard({
 
   const styles = StyleSheet.create({
     card: {
-      padding:10,
-      paddingBottom: 20,
-      marginVertical: 5,
-      marginBottom: 10,
+      // padding:10,
+      // paddingBottom: 20,
+      // marginVertical: 5,
+      margin: 20,
+      height: 200,
       backgroundColor: colors.surfaceVariant,
-      borderRadius: 10,
-      borderStyle: "hidden",
-      width: "95%",
+      borderRadius: 20,
+      width: "100%",
       alignSelf: "center",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     },
   
     title: {
@@ -41,11 +41,11 @@ export default function BinDateCard({
   });
 
   return (
-    <Surface style={styles.card}>
+    <View style={styles.card}>
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.date}>{date}</Text>
       <Icon style={{marginBottom:15}} name={icon} size={size} color={color} />
-    </Surface>
+    </View>
   );
 }
 
