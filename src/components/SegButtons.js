@@ -33,7 +33,7 @@ function SegButtons(props) {
 const styles = StyleSheet.create({
   segButton: {
     width: "95%",
-    
+    marginBottom: 10,
   },
 });
 
