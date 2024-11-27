@@ -16,7 +16,7 @@ import {
   fetchLoggedItemsById,
 } from "../../utils/api";
 
-export function OtherProfile() {
+export function OtherProfile(currentUserId, otherUserId) {
   const route = useRoute();
   const { user_id } = route.params;
   const [otherUser, setOtherUser] = useState({});
@@ -85,7 +85,7 @@ export function OtherProfile() {
         setFollowingCount(following.length);
       })
       .then(() => {
-        return singleFollowerLineChart();
+        return singleFollowerLineChart(user_id);
       })
       .then((data) => {
         setSingleFollowerLineChartData(data);

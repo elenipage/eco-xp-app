@@ -1,16 +1,16 @@
 const { fetchLoggedItemsById } = require("../../../utils/api");
 const { getPreviousDate } = require("../../../utils/date");
 
-function singleFollowerLineChart() {
+function singleFollowerLineChart(user_id) {
   const dateLabels = [];
 
-  for (let i = 0; i < 7; i++) {
+  for (let i = 6; i > -1; i--) {
     dateLabels.push(getPreviousDate(i));
   }
 
   return Promise.all([
     fetchLoggedItemsById(2, getPreviousDate(6), getPreviousDate(0)),
-    fetchLoggedItemsById(3, getPreviousDate(6), getPreviousDate(0)),
+    fetchLoggedItemsById(user_id, getPreviousDate(6), getPreviousDate(0)),
   ]).then((loggedItems) => {
     const loggedItemXpArr = loggedItems.map((userLoggedItems) => {
       const xpByDay = {};
