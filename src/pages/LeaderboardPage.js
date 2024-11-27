@@ -26,7 +26,6 @@ function LeaderboardHeader(leaderBoard, user) {
         width: "100%",
         alignItems: "center",
         justifyContent: "center",
-        marginBottom: 10,
       }}
     >
       <Text style={{ fontSize: 40, margin: 20 }}>Leaderboard</Text>
