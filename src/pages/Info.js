@@ -1,39 +1,27 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  Image,
-  FlatList,
-} from "react-native";
-import { useFonts } from "expo-font";
-import { Roboto_400Regular, Roboto_700Bold } from "@expo-google-fonts/roboto";
+import { StyleSheet, Text, View, Image } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
-
 import RecyclingInfo from "../components/RecyclingInfo";
 import PlasticLifeCycle from "../components/PlasticLifeCycle";
-
-// Get screen width using Dimensions API
-const { width } = Dimensions.get("window");
 
 export function InfoDropDownMenu() {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
-  const [items, setItems] = useState([
-    { label: "What can I recycle?", value: "What can I recycle?" },
-    {
-      label: "Life cycle of a plastic bottle",
-      value: "Life cycle of a plastic bottle",
-    },
-  ]);
+  const items = [
+    { label: "What can I recycle?", value: "recycling" },
+    { label: "Life cycle of a plastic bottle", value: "plasticLifeCycle" },
+  ];
 
-  let content = null;
-  if (value === "What can I recycle?") {
-    content = <RecyclingInfo />;
-  } else if (value === "Life cycle of a plastic bottle") {
-    content = <PlasticLifeCycle />;
-  }
+  const renderContent = () => {
+    if (value === "recycling") return <RecyclingInfo />;
+    if (value === "plasticLifeCycle") return <PlasticLifeCycle />;
+    return (
+      <Image
+        style={styles.image}
+        source={require("../../assets/recycling-infographic.png")}
+      />
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -44,39 +32,9 @@ export function InfoDropDownMenu() {
         setOpen={setOpen}
         setValue={setValue}
         placeholder="Select an item"
-        containerStyle={[styles.dropdownContainer, { width }]}
-        dropDownStyle={[styles.dropdown, { width }]}
-        labelStyle={styles.labelStyle}
-        renderItem={({ item }) => (
-          <View style={styles.dropdownItem}>
-            <Text style={styles.itemText}>• {item.label}</Text>
-          </View>
-        )}
+        style={styles.dropdown}
       />
-
-      <FlatList
-        data={content ? [content] : []}
-        renderItem={({ item }) => item}
-        keyExtractor={(item, index) => index.toString()}
-        style={styles.contentContainer}
-      />
-
-      {/* Render image only when value is null */}
-      {value === null && (
-        <FlatList
-          data={[
-            {
-              id: "1",
-              source: require("../../assets/recycling-infographic.png"),
-            },
-          ]}
-          renderItem={({ item }) => (
-            <Image style={styles.image} source={item.source} />
-          )}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={styles.imageContainer}
-        />
-      )}
+      {renderContent()}
     </View>
   );
 }
@@ -84,54 +42,15 @@ export function InfoDropDownMenu() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 16,
+    paddingTop: 30,
     justifyContent: "flex-start",
-    alignItems: "center",
-    padding: 20,
-    flexDirection: "column",
-    backgroundColor: "#B3F9D4",
   },
-
+  dropdown: {
+    marginBottom: 16,
+    backgroundColor: "#f0f0f0",
+  },
   dropdownContainer: {
-    paddingBottom: 20,
-  },
-
-  labelStyle: {
-    fontWeight: "700",
-    color: "#000",
-    fontSize: 16,
-    textAlign: "center",
-  },
-
-  dropdownItem: {
-    padding: 10,
-  },
-
-  itemText: {
-    fontSize: 16,
-    color: "#000",
-    fontWeight: "700",
-    fontFamily: "Roboto_700Bold",
-  },
-
-  contentContainer: {
-    flex: 1,
-    marginTop: 20,
-    paddingBottom: 20,
-  },
-
-  imageContainer: {
-    flexGrow: 1,
-    marginTop: 30,
-    alignItems: "center",
-    paddingBottom: 50,
-  },
-
-  image: {
-    width: width - 30,
-    maxHeight: 250,
-    marginVertical: 20,
-    marginHorizontal: 15,
-    borderRadius: 15,
-    resizeMode: "cover",
+    backgroundColor: "#fff",
   },
 });
