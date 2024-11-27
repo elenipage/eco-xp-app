@@ -11,7 +11,7 @@ export const appTheme = {
     ...DefaultTheme.colors,
     "primary": "#39BCD9",
   "onPrimary": "rgb(255, 255, 255)",
-  "primaryContainer": "rgb(90, 255, 220)",
+  "primaryContainer": "#4DDEFE",
   "onPrimaryContainer": "rgb(0, 50, 45)",
   "secondary": "#91E228",
   "onSecondary": "rgb(255, 255, 255)",
@@ -161,4 +161,11 @@ export const appTheme = {
   animation: {
     scale: 1.0,
   },
+  surface: {
+      padding: 20,
+      margin: 20,
+      alignItems: "center",
+      justifyContent: "center",
+      borderRadius:20
+    }
 };
