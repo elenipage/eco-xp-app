@@ -16,7 +16,7 @@ import {
   fetchLoggedItemsById,
 } from "../../utils/api";
 
-export function OtherProfile() {
+export function OtherProfile(currentUserId, otherUserId) {
   const route = useRoute();
   const { user_id } = route.params;
   const [otherUser, setOtherUser] = useState({});
@@ -24,7 +24,7 @@ export function OtherProfile() {
   const [followerCount, setFollowerCount] = useState(0);
   const [followingCount, setFollowingCount] = useState(0);
   const [loadingProgress, setLoadingProgress] = useState(0);
-  const [loggedItems, setLoggedItems] = useState([]);
+  const [singleFollowerLineChartData, setSingleFollowerLineChartData] = useState(null);
 
   const today = new Date();
   const dd = String(today.getDate()).padStart(2, "0");
@@ -83,14 +83,16 @@ export function OtherProfile() {
       })
       .then((following) => {
         setFollowingCount(following.length);
+      })
+      .then(() => {
+        return singleFollowerLineChart(user_id);
+      })
+      .then((data) => {
+        setSingleFollowerLineChartData(data);
         setLoadingProgress(1);
         setIsLoading(false);
       });
   }, [user_id]);
-
-  // I have an array of objects which includes logged items from the past 7 days. Now, I want to plot the XP per day on to a line chart:
-  // - I need to make sure that if there are multiple logged items on one day that the XP is totalled before plotting the chart
-  // - Need to make sure that any days where no items are logged that the chart plots a 0 on that day
 
   if (isLoading) {
     return <Loader loadingProgress={loadingProgress} />;
@@ -151,7 +153,7 @@ export function OtherProfile() {
               borderRadius: 10,
             }}
           >
-            <Line data={singleFollowerLineChart(otherUser)} />
+            {singleFollowerLineChartData ? <Line data={singleFollowerLineChartData} /> : null}
           </Surface>
         </Surface>
         <Surface
