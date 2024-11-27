@@ -39,8 +39,6 @@ export function LoginPage() {
   if (isLoading) return <Loader />;
 
   return (
-    <BaseLayout>
       <LoginForm handleLogin={handleLogin} />
-    </BaseLayout>
   );
 }

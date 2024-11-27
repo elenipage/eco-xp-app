@@ -36,7 +36,7 @@ function HeaderDemo({ navigation, route, options, back }) {
   const previousTitle = back ? back.title : null;
 
   if (user === null)
-    return <Appbar.Header style={{ justifyContent: "space-between" }}></Appbar.Header>;
+    return <Appbar.Header style={{ justifyContent: "space-between" }}><Appbar.Content title={`${route.name}`} /></Appbar.Header>;
   else if (user) {
     return (
       <Appbar.Header style={{ justifyContent: "space-between" }}>
