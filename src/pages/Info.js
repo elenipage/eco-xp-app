@@ -51,10 +51,10 @@ const styles = StyleSheet.create({
     padding: 20,
   },
 
-    padding: 16,
-    paddingTop: 30,
-    justifyContent: "flex-start",
-  },
+  //   padding: 16,
+  //   paddingTop: 30,
+  //   justifyContent: "flex-start",
+  // },
   dropdown: {
     marginBottom: 16,
     backgroundColor: "#f0f0f0",
