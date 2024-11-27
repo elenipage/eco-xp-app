@@ -46,6 +46,7 @@ export default function Camera() {
       </CameraView> : <CameraView
         style={styles.camera}
         facing="back"
+        barcodeScannerSettings={{barcodeTypes:["code128","ean13"]}}
         onBarcodeScanned={({ data }) => {
           console.log(data)
           const timestamp = Date.now();
