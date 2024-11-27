@@ -1,6 +1,5 @@
-import { StyleSheet, Image, Text, View } from "react-native";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import { Surface, Button } from "react-native-paper";
+import { StyleSheet, Image } from "react-native";
+import { Surface, Button, View, Text } from "react-native-paper";
 import React, { useState, useRef, useEffect } from "react";
 import { useUser } from "../context/user-context.js";
 import { useXp } from "../context/Xp-context.js";
@@ -81,9 +80,9 @@ export function IsRecyclableButtons(props) {
             source={require("../../assets/recycling-bin.png")}
           ></Image>
           {!isRecycled ? (
-            <Text style={styles.titleText}>You can recycle me!</Text>
+            <Text variant="headlineMedium">You can recycle me!</Text>
           ) : (
-            <Text style={styles.titleText}>Recycled!</Text>
+            <Text variant="headlineSmall">Recycled!</Text>
           )}
           {!isRecycled ? (
             <Button
@@ -96,7 +95,7 @@ export function IsRecyclableButtons(props) {
             </Button>
           ) : (
             <View>
-              <Text>Congrats, you gained {itemXP} xp</Text>
+              <Text variant="bodySmall">Congrats, you gained {itemXP} xp</Text>
               <View style={{ flexDirection: "row" }}>
                 <Button
                   onPress={() => {
@@ -123,9 +122,9 @@ export function IsRecyclableButtons(props) {
             style={styles.icon}
             source={require("../../assets/dustbin.png")}
           ></Image>
-          <Text style={styles.titleText}>This item is not recyclable</Text>
+          <Text variant="headlineMedium">This item is not recyclable</Text>
           {isBinned ? (
-            <Text>You binned {scannedItemData.item_name}</Text>
+            <Text variant="bodySmall">You binned {scannedItemData.item_name}</Text>
           ) : (
             <Button onPress={() => setIsBinned(true)} mode="contained-tonal">
               Bin item: {scannedItemData.item_name}

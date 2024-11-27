@@ -17,8 +17,8 @@ export default function PlasticLifeCycle() {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.card}>
-          <Text style={styles.header}>Life Cycle of a Plastic Bottle</Text>
-          <Text style={styles.body}>
+          <Text variant="headlineMedium">Life Cycle of a Plastic Bottle</Text>
+          <Text variant="bodySmall">
             The life cycle of a plastic bottle typically begins with the
             extraction of raw materials like crude oil and natural gas, which
             are refined into petrochemicals. These chemicals are processed into
@@ -38,7 +38,7 @@ export default function PlasticLifeCycle() {
             source={require("../../assets/plastic-bottle-lifecycle.jpg")}
           />
           <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Learn More</Text>
+            <Text variant="bodySmall">Learn More</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

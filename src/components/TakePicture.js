@@ -1,5 +1,5 @@
-import { Button } from 'react-native-paper'
-import { StyleSheet, Text, View, SafeAreaView, Image } from 'react-native';
+import { Button, Text } from 'react-native-paper'
+import { StyleSheet, View, SafeAreaView, Image } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
 import { Camera, CameraView } from 'expo-camera';
 import { Loader } from "../components/Loader";
@@ -20,9 +20,9 @@ export default function TakePicture({photo, setPhoto, setPath, setTakingPhoto, s
     }, []);
 
     if (hasCameraPermission === undefined) {
-        return <Text>Requesting permissions...</Text>
+        return <Text variant='bodySmall'>Requesting permissions...</Text>
     } else if (!hasCameraPermission) {
-        return <Text>Permission for camera not granted. Please change this in settings.</Text>
+        return <Text variant='bodySmall'>Permission for camera not granted. Please change this in settings.</Text>
     }
 
     let takePic = async () => {

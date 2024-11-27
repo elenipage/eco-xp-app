@@ -1,6 +1,5 @@
 import { View, StyleSheet } from "react-native";
 import { Button, Dialog, Portal, Text } from "react-native-paper";
-import { useXp } from "../context/Xp-context";
 
 function ConfirmationDialogue(props) {
   const { onClose, onConfirm, visible } = props;
@@ -15,7 +14,7 @@ function ConfirmationDialogue(props) {
           <Dialog.Icon icon="recycle" />
           <Dialog.Title style={styles.title}>This item does not exist!</Dialog.Title>
           <Dialog.Content>
-            <Text>Would you like to upload it?</Text>
+            <Text variant="bodySmall">Would you like to upload it?</Text>
           </Dialog.Content>
           <Dialog.Actions>
             <Button onPress={onClose}>No, thank you</Button>

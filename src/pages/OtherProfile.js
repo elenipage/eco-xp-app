@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import BaseLayout from "../components/BaseLayout";
 import { FollowersFollowing } from "../components/FollowersFollowing";
-import { Surface } from "react-native-paper";
+import { Surface, Text } from "react-native-paper";
 import Line from "../components/LineChart";
 import { singleFollowerLineChart } from "../components/data/lineChartData";
 import { useRoute } from "@react-navigation/native";
@@ -24,7 +24,8 @@ export function OtherProfile(currentUserId, otherUserId) {
   const [followerCount, setFollowerCount] = useState(0);
   const [followingCount, setFollowingCount] = useState(0);
   const [loadingProgress, setLoadingProgress] = useState(0);
-  const [singleFollowerLineChartData, setSingleFollowerLineChartData] = useState(null);
+  const [singleFollowerLineChartData, setSingleFollowerLineChartData] =
+    useState(null);
 
   const today = new Date();
   const dd = String(today.getDate()).padStart(2, "0");
@@ -122,7 +123,9 @@ export function OtherProfile(currentUserId, otherUserId) {
             }}
           />
           <View style={{ width: "50%" }}>
-            <Text style={{ fontSize: 25, marginBottom: 10 }}>{otherUser.username}</Text>
+            <Text variant="bodySmall">
+              {otherUser.username}
+            </Text>
             <FollowersFollowing
               user_id={user_id}
               followerCount={followerCount}
@@ -140,10 +143,12 @@ export function OtherProfile(currentUserId, otherUserId) {
             marginBottom: 20,
           }}
         >
-          <Text style={{ width: "100%", fontSize: 20, marginBottom: 10 }}>
+          <Text variant="bodySmall">
             {otherUser.first_name} - {otherUser.xp} XP
           </Text>
-          <Text style={{ width: "100%", fontSize: 16, marginBottom: 10 }}>Weekly Progress</Text>
+          <Text variant="bodySmall">
+            Weekly Progress
+          </Text>
           <Surface
             style={{
               width: 320,
@@ -153,7 +158,9 @@ export function OtherProfile(currentUserId, otherUserId) {
               borderRadius: 10,
             }}
           >
-            {singleFollowerLineChartData ? <Line data={singleFollowerLineChartData} /> : null}
+            {singleFollowerLineChartData ? (
+              <Line data={singleFollowerLineChartData} />
+            ) : null}
           </Surface>
         </Surface>
         <Surface
@@ -165,7 +172,7 @@ export function OtherProfile(currentUserId, otherUserId) {
             borderRadius: 10,
           }}
         >
-          <Text style={{ width: "100%", fontSize: 20, marginBottom: 10 }}>
+          <Text variant="bodySmall">
             {otherUser.first_name}'s Most Recycled Item:
           </Text>
           <Image

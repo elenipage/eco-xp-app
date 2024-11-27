@@ -1,8 +1,12 @@
 import React from "react";
-import { Text, View, Image } from "react-native";
+import { View, Image } from "react-native";
 import { useState, useEffect } from "react";
-import { postcodeData, areaData, followingData } from "../components/data/leaderboardData";
-import { Surface } from "react-native-paper";
+import {
+  postcodeData,
+  areaData,
+  followingData,
+} from "../components/data/leaderboardData";
+import { Surface, Text } from "react-native-paper";
 import { useUser } from "../context/user-context";
 import { Loader } from "../components/Loader";
 import TestLayout from "../styles/TestLayout";
@@ -29,7 +33,7 @@ function LeaderboardHeader(leaderBoard, user) {
         marginBottom: 10,
       }}
     >
-      <Text style={{ fontSize: 40, margin: 20 }}>Leaderboard</Text>
+      <Text variant="headlineLarge">Leaderboard</Text>
       <View
         style={{
           flexDirection: "row",
@@ -37,8 +41,10 @@ function LeaderboardHeader(leaderBoard, user) {
           justifyContent: "center",
         }}
       >
-        <View style={{ width: 150, alignItems: "center", justifyContent: "center" }}>
-          <Text style={{ fontSize: 40 }}>
+        <View
+          style={{ width: 150, alignItems: "center", justifyContent: "center" }}
+        >
+          <Text variant="headlineLarge">
             {userPosition}
             {userPosition === 1
               ? "st"
@@ -62,11 +68,11 @@ function LeaderboardHeader(leaderBoard, user) {
             uri: user.avatar_img_url,
           }}
         />
-        <View style={{ width: 150, alignItems: "center", justifyContent: "center" }}>
+        <View
+          style={{ width: 150, alignItems: "center", justifyContent: "center" }}
+        >
           <Text
-            style={{
-              fontSize: 30,
-            }}
+            variant="bodyLarge"
           >
             {user.xp} XP
           </Text>
@@ -82,7 +88,7 @@ export function LeaderboardPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const { user } = useUser();
-  
+
   useEffect(() => {
     setIsLoading(true);
     setLoadingProgress(0.1);
@@ -97,7 +103,7 @@ export function LeaderboardPage() {
         const followersSorted = followingResult.sort((b, a) => a.xp - b.xp);
         const postcodeSorted = postcodeResult.sort((b, a) => a.xp - b.xp);
         const areaSorted = areaResult.sort((b, a) => a.xp - b.xp);
-        setLoadingProgress(0.6)
+        setLoadingProgress(0.6);
         return Promise.all([followersSorted, postcodeSorted, areaSorted]);
       })
       .then(([followersSorted, postcodeSorted, areaSorted]) => {
@@ -106,8 +112,8 @@ export function LeaderboardPage() {
           postcode: postcodeSorted,
           area: areaSorted,
         });
-        setLoadingProgress(1)
-        setTimeout(() => setIsLoading(false), 500)
+        setLoadingProgress(1);
+        setTimeout(() => setIsLoading(false), 500);
       });
   }, []);
 
@@ -122,10 +128,7 @@ export function LeaderboardPage() {
         : value === "postcode"
         ? LeaderboardHeader(data.postcode, user)
         : LeaderboardHeader(data.area, user)}
-      <SegButtons
-        value={value}
-        setValue={setValue}
-      />
+      <SegButtons value={value} setValue={setValue} />
 
       {value === "friends" ? (
         <LeaderboardCard data={data.friends} />

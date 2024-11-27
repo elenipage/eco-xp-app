@@ -1,6 +1,7 @@
 import React from "react";
-import { StyleSheet, Text, SectionList, TouchableOpacity } from "react-native";
+import { StyleSheet, SectionList, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Text } from "react-native-paper";
 
 export default function RecyclingInfo() {
   const recyclingData = [
@@ -19,16 +20,16 @@ export default function RecyclingInfo() {
     <SafeAreaView style={styles.container}>
       <SectionList
         sections={recyclingData}
-        renderItem={({ item }) => <Text style={styles.item}>• {item}</Text>}
+        renderItem={({ item }) => <Text variant="bodySmall">• {item}</Text>}
         renderSectionHeader={({ section: { title } }) => (
-          <Text style={styles.header}>{title}</Text>
+          <Text variant="bodySmall">{title}</Text>
         )}
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false} // removes scroll on right side
       />
       ˚
       <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Learn More</Text>
+        <Text variant="bodySmall">Learn More</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );

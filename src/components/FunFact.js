@@ -24,20 +24,24 @@ export function FunFact() {
 
   return (
     <Surface
-    elevation={3}
+      elevation={3}
       style={{
-        marginBottom:20,
+        marginBottom: 20,
         padding: 20,
         height: 120,
         // width: "80%",
         alignItems: "center",
         justifyContent: "center",
         // border:"hidden",
-        borderRadius:20
+        borderRadius: 20,
       }}
     >
-      <Text style={{ textAlign: "center", marginBottom:5, fontSize:18 }}>Fun Fact!</Text>
-      <Text style={{ textAlign: "center", fontSize:16 }}>{recyclingFacts[randomNum]}</Text>
+      <Text variant="bodySmall">
+        Fun Fact!
+      </Text>
+      <Text variant="bodyLarge">
+        {recyclingFacts[randomNum]}
+      </Text>
     </Surface>
   );
 }

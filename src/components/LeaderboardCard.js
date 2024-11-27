@@ -1,5 +1,5 @@
 import Leaderboard from "react-native-leaderboard";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useUser } from "../context/user-context";
 

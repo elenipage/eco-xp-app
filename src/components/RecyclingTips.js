@@ -1,6 +1,6 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Surface, card } from "react-native-paper";
+import { StyleSheet, View } from "react-native";
+import { Surface, card, Text } from "react-native-paper";
 import Swiper from "react-native-swiper";
 
 function RecyclingTipsCarousel() {
@@ -29,7 +29,7 @@ function RecyclingTipsCarousel() {
 
   return (
     <>
-      <Text style={styles.heading}>Recycling top tips</Text>
+      <Text variant="headlineSmall">Recycling top tips</Text>
       <Swiper
         style={{
           alignItems: "center",
@@ -56,7 +56,7 @@ function RecyclingTipsCarousel() {
               borderRadius: 20,
             }}
           >
-            <Text style={styles.text}>{tip}</Text>
+            <Text variant="bodySmall">{tip}</Text>
           </Surface>
         ))}
       </Swiper>

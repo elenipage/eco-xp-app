@@ -1,35 +1,20 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import { Surface } from "react-native-paper";
-import { useFonts } from "expo-font";
-import { Roboto_400Regular, Roboto_700Bold } from "@expo-google-fonts/roboto";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import { Surface, Text } from "react-native-paper";
 
 function FAQCard({ FAQQuestion, FAQAnswer }) {
-  const [isPressed, setIsPressed] = useState(false);
-
-  const [fontsLoaded] = useFonts({
-    Roboto_400Regular,
-    Roboto_700Bold,
-  });
-
-  if (!fontsLoaded) {
-    return <Text>Loading fonts...</Text>;
-  }
 
   return (
     <TouchableOpacity
-      onPressIn={() => setIsPressed(true)}
-      onPressOut={() => setIsPressed(false)}
-      style={[styles.cardContainer, isPressed && styles.pressedCard]}
+      style={styles.cardContainer}
     >
       <Surface
-        elevation={3}
-        style={[styles.card, isPressed && styles.pressedCard]}
+        style={styles.card}
       >
-        <Text style={[styles.question, isPressed && styles.pressedText]}>
+        <Text variant="bodySmall">
           {FAQQuestion}
         </Text>
-        <Text style={[styles.answer, isPressed && styles.pressedText]}>
+        <Text variant="bodySmall">
           {FAQAnswer}
         </Text>
       </Surface>
@@ -66,21 +51,10 @@ const styles = StyleSheet.create({
 
   answer: {
     fontSize: 16,
-
     fontFamily: "Roboto_400Regular",
     color: "#4a4a4a",
     marginTop: 5,
     backgroundColor: "#F0F8E2",
-  },
-
-  pressedCard: {
-    backgroundColor: "#e8f7ff",
-    transform: [{ scale: 0.95 }],
-    elevation: 10,
-  },
-
-  pressedText: {
-    color: "#2e3d49",
   },
 });
 

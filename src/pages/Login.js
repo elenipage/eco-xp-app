@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import BaseLayout from "../components/BaseLayout";
-import StandardButton from "../components/StandardButton";
 import { useUser } from "../context/user-context";
 import { useXp } from "../context/Xp-context";
-import { fetchLoggedItemsById, fetchUserByID } from "../../utils/api";
+import { fetchUserByID } from "../../utils/api";
 import { useNavigation } from "@react-navigation/native";
 import { Button } from "react-native-paper";
 import { Loader } from "../components/Loader";
-import { streakData } from "../components/data/streakData";
 import { LoginForm } from "../components/LoginForm";
 
 export function LoginPage() {

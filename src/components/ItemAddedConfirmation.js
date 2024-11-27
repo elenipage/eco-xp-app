@@ -1,6 +1,5 @@
 import { View, StyleSheet } from "react-native";
 import { Button, Dialog, Portal, Text } from "react-native-paper";
-import { useXp } from "../context/Xp-context";
 import { useNavigation } from "@react-navigation/native";
 
 function ItemAddedConfirmation(props) {
@@ -17,7 +16,7 @@ function ItemAddedConfirmation(props) {
           <Dialog.Icon icon="check-outline" />
           <Dialog.Title style={styles.title}>Item Added!</Dialog.Title>
           <Dialog.Content>
-            <Text>Would you like to scan another?</Text>
+            <Text variant="bodySmall">Would you like to scan another?</Text>
           </Dialog.Content>
           <Dialog.Actions>
             <Button onPress={()=>{

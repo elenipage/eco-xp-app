@@ -1,15 +1,14 @@
 import * as React from "react";
-import { useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Profile } from "../pages/UserProfile";
 import { Quiz } from "../pages/Quiz";
-import { Text, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { FAQ } from "../pages/FAQ";
 import { InfoDropDownMenu } from "../pages/Info";
 import { ItemConfirmation } from "../pages/ItemConfirmation";
 import { AddNewItem } from "../pages/AddNewItem";
 import Tabs from "./Tabs";
-import { Appbar, Tooltip, Avatar } from "react-native-paper";
+import { Appbar, Tooltip, Avatar, Text } from "react-native-paper";
 import { useXp } from "../context/Xp-context";
 import { OtherProfile } from "../pages/OtherProfile";
 import { useEffect, useState } from "react";
@@ -36,11 +35,11 @@ function HeaderDemo({ navigation, route, options, back }) {
   const previousTitle = back ? back.title : null;
 
   if (user === null)
-    return <Appbar.Header style={{ justifyContent: "space-between" }}></Appbar.Header>;
+    return <Appbar.Header style={{ justifyContent: "space-between" }}><Appbar.Content title={`${route.name}`} /></Appbar.Header>;
   else if (user) {
     return (
       <Appbar.Header style={{ justifyContent: "space-between" }}>
-        {previousTitle === "Login" || previousTitle === "Item Confirmation" || previousTitle === "Add a New Item" ? (
+        {previousTitle === "Login" || previousTitle === "Item Confirmation" || previousTitle === "Add a New Item" || previousTitle === "Quiz" ? (
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("Profile");
@@ -56,7 +55,7 @@ function HeaderDemo({ navigation, route, options, back }) {
         ) : (
           <Appbar.BackAction onPress={navigation.goBack} />
         )}
-        {previousTitle === "Login" || previousTitle === "Item Confirmation" || previousTitle === "Add a New Item" ? null : (
+        {previousTitle === "Login" || previousTitle === "Item Confirmation" || previousTitle === "Add a New Item" || previousTitle === "Quiz" ? null : (
           <Appbar.Content title={`${route.name}`} />
         )}
         <View
@@ -75,7 +74,7 @@ function HeaderDemo({ navigation, route, options, back }) {
               }}
             >
               <Appbar.Action icon="fire-circle" onPress={() => {}} />
-              <Text>0</Text>
+              <Text variant="bodyMedium">0</Text>
             </View>
           </Tooltip>
           <Tooltip title="XP">
@@ -87,7 +86,7 @@ function HeaderDemo({ navigation, route, options, back }) {
               }}
             >
               <Appbar.Action icon="one-up" onPress={() => {}} />
-              <Text>{`${currentXp} XP`}</Text>
+              <Text variant="bodyMedium">{`${currentXp} XP`}</Text>
             </View>
           </Tooltip>
         </View>

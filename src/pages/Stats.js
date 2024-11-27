@@ -1,11 +1,10 @@
-import { Platform, View, Text, ScrollView } from "react-native";
+import { Platform, View, ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import SegButtons from "../components/SegButtons";
-
 import { useState } from "react";
 import Pie from "../components/Pie";
 import { friendsPie, postcodePie, areaPie } from "../components/data/pie-data";
-import { Surface } from "react-native-paper";
+import { Surface, Text } from "react-native-paper";
 import Line from "../components/LineChart";
 import {
   followersLineChart,
@@ -27,11 +26,8 @@ export function Stats() {
           paddingBottom: Platform.OS === "ios" ? insets.bottom : 0,
         }}
       >
-        <Text style={{ fontSize: 40 }}>Stats</Text>
-        <SegButtons
-          value={value}
-          setValue={setValue}
-        />
+        <Text variant="headlineMedium">Stats</Text>
+        <SegButtons value={value} setValue={setValue} />
         {value === "friends" ? (
           <View style={{ alignItems: "center", justifyContent: "center" }}>
             <Pie data={friendsPie} />
@@ -48,7 +44,9 @@ export function Stats() {
                 borderRadius: 20,
               }}
             >
-              <Text style={{ textAlign: "center", marginBottom: 5, fontSize: 18 }}>
+              <Text
+                variant="bodySmall"
+              >
                 The item you and your followers recycled most this month:
               </Text>
             </Surface>
@@ -65,12 +63,14 @@ export function Stats() {
                 borderRadius: 20,
               }}
             >
-              <Text style={{ textAlign: "center", marginBottom: 5, fontSize: 18 }}>
+              <Text
+                variant="bodySmall"
+              >
                 You and your friends recycled 50 bottles of water this week!
               </Text>
             </Surface>
             <View style={{ alignItems: "center", justifyContent: "center" }}>
-              <Text style={{ textAlign: "center", margin: 20, fontSize: 18 }}>
+              <Text variant="bodySmall">
                 Your follower's total XP this week:
               </Text>
               <Line data={followersLineChart} />
@@ -92,7 +92,9 @@ export function Stats() {
                 borderRadius: 20,
               }}
             >
-              <Text style={{ textAlign: "center", marginBottom: 5, fontSize: 18 }}>
+              <Text
+                variant="bodySmall"
+              >
                 The most recycled item in your postcode:
               </Text>
             </Surface>
@@ -109,12 +111,15 @@ export function Stats() {
                 borderRadius: 20,
               }}
             >
-              <Text style={{ textAlign: "center", marginBottom: 5, fontSize: 18 }}>
-                Within your postcode, you recycled enough glass to build 5 greenhouses!
+              <Text
+                variant="bodySmall"
+              >
+                Within your postcode, you recycled enough glass to build 5
+                greenhouses!
               </Text>
             </Surface>
             <View style={{ alignItems: "center", justifyContent: "center" }}>
-              <Text style={{ textAlign: "center", margin: 20, fontSize: 18 }}>
+              <Text variant="bodySmall">
                 Your postcode's total XP this week:
               </Text>
               <Line data={postcodeLineChart} />
@@ -136,7 +141,9 @@ export function Stats() {
                 borderRadius: 20,
               }}
             >
-              <Text style={{ textAlign: "center", marginBottom: 5, fontSize: 18 }}>
+              <Text
+                variant="bodySmall"
+              >
                 The most recycled item in your city:
               </Text>
             </Surface>
@@ -153,12 +160,16 @@ export function Stats() {
                 borderRadius: 20,
               }}
             >
-              <Text style={{ textAlign: "center", marginBottom: 5, fontSize: 18 }}>
+              <Text
+                variant="bodySmall"
+              >
                 Together, your city recycled 2 tons of plastic this week!
               </Text>
             </Surface>
 
-            <Text style={{ margin: 20, fontSize: 18 }}>{`Your city's total XP this week:`}</Text>
+            <Text
+              variant="bodySmall"
+            >{`Your city's total XP this week:`}</Text>
             <Line data={areaLineChart} />
           </View>
         )}

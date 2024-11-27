@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { Surface } from "react-native-paper";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Swiper from "react-native-swiper";
 import { fetchBinDatesByUserPostcode } from "../../utils/api";
 import { useUser } from "../context/user-context";

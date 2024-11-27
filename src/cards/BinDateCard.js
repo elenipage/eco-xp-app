@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
+import { Text } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Surface, useTheme } from "react-native-paper";
 
@@ -42,8 +43,8 @@ export default function BinDateCard({
 
   return (
     <Surface style={styles.card}>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.date}>{date}</Text>
+      <Text variant="titleLarge">{title}</Text>
+      <Text variant="labelLarge">{date}</Text>
       <Icon style={{marginBottom:15}} name={icon} size={size} color={color} />
     </Surface>
   );

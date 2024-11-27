@@ -1,13 +1,12 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
 import quizzes from "../components/data/quizData";
 import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import BaseLayout from "../components/BaseLayout";
 import { updateXpByID } from "../../utils/api";
 import { useUser } from "../context/user-context";
 import { Button, Surface } from "react-native-paper";
-import { useTheme } from "react-native-paper";
-import { CardStyleInterpolators } from "@react-navigation/stack";
+import { useTheme, Text } from "react-native-paper";
+
 
 export function Quiz({ route }) {
   const { xp, setXp } = route.params;
@@ -44,9 +43,9 @@ export function Quiz({ route }) {
       borderRadius: 35,
       backgroundColor: colors.surfaceVariant,
       marginHorizontal: 20,
-      marginBottom:20,
+      marginBottom: 20,
       width: "90%",
-      height: "70%"
+      height: "70%",
     },
     text: {
       fontSize: fonts.headlineSmall.fontSize,
@@ -84,7 +83,7 @@ export function Quiz({ route }) {
       justifyContent: "center",
       borderRadius: 20,
       minHeight: 250,
-      minWidth:250
+      minWidth: 250,
     },
   });
 
@@ -136,14 +135,14 @@ export function Quiz({ route }) {
             marginBottom: 20,
             borderRadius: 70,
             borderColor: colors.secondary,
-            borderWidth: 3
+            borderWidth: 3,
           }}
           source={{
             uri: "https://static.vecteezy.com/system/resources/previews/007/410/214/non_2x/team-business-holding-plants-cooperation-nature-on-earth-day-conservation-eco-friendly-ecology-esg-or-ecology-problem-concept-illustration-vector.jpg",
           }}
         />
-        <Text style={styles.quizCompleteText}>Quiz Complete!</Text>
-        <Text style={styles.totalXpText}>Total XP: {localXp}</Text>
+        <Text variant="bodySmall">Quiz Complete!</Text>
+        <Text variant="bodySmall">Total XP: {localXp}</Text>
         <Button onPress={() => navigation.navigate("Main")}>
           Return to Home
         </Button>
@@ -156,16 +155,16 @@ export function Quiz({ route }) {
       <View style={styles.container}>
         <View>
           <Surface style={surface}>
-          <Text style={styles.text}>Question {currentQuestion.id}:</Text>
-            <Text style={styles.text}>{currentQuestion.question}</Text>
+            <Text variant="bodySmall">Question {currentQuestion.id}:</Text>
+            <Text variant="bodySmall">{currentQuestion.question}</Text>
           </Surface>
         </View>
 
         {feedback ? (
           <View style={styles.feedbackBox}>
-            <Text style={styles.feedback}>{feedback}</Text>
+            <Text variant="bodySmall">{feedback}</Text>
             {showAnswer && (
-              <Text style={styles.correctAnswer}>
+              <Text variant="bodySmall">
                 The correct answer is:{" "}
                 {
                   currentQuestion.options.find((option) => option.isCorrect)
@@ -181,7 +180,7 @@ export function Quiz({ route }) {
             </Button>
           </View>
         ) : (
-          <View style={{marginHorizontal: 20}}>
+          <View style={{ marginHorizontal: 20 }}>
             {currentQuestion.options.map((option) => (
               <TouchableOpacity
                 key={option.id}

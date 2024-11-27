@@ -1,7 +1,7 @@
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { ProgressBar, ActivityIndicator } from "react-native-paper";
+import { ProgressBar, Text } from "react-native-paper";
 
 export function Loader(props) {
   const { loadingProgress } = props;
@@ -16,12 +16,7 @@ export function Loader(props) {
           color="#026928"
           style={styles.itemMargins}
         />
-        {/* <ActivityIndicator
-          size="large"
-          style={styles.itemMargins}
-        /> */}
-
-        <Text>Loading, please wait</Text>
+        <Text variant="bodySmall">Loading, please wait</Text>
       </View>
     </>
   );

@@ -4,7 +4,8 @@ import { Loader } from "../components/Loader";
 import { List } from "react-native-paper";
 import { Avatar } from "react-native-paper";
 import { ScrollView } from "react-native-gesture-handler";
-import { Text, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
+import { Text } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import { useUser } from "../context/user-context";
@@ -65,7 +66,7 @@ export function Following() {
                       }}
                     />
                   )}
-                  right={() => <Text>{followee.xp} XP</Text>}
+                  right={() => <Text variant="bodyMedium">{followee.xp} XP</Text>}
                 />
               </TouchableOpacity>
             );

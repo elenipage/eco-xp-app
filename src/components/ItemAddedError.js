@@ -1,6 +1,5 @@
 import { View, StyleSheet } from "react-native";
 import { Button, Dialog, Portal, Text } from "react-native-paper";
-import { useXp } from "../context/Xp-context";
 import { useNavigation } from "@react-navigation/native";
 
 function ItemAddedError(props) {
@@ -18,7 +17,7 @@ function ItemAddedError(props) {
           <Dialog.Icon icon="close-circle" color="red" size={75} />
           <Dialog.Title style={styles.title}>Error!</Dialog.Title>
           <Dialog.Content>
-            <Text>There has been an error adding your item, please try again later</Text>
+            <Text variant="bodySmall">There has been an error adding your item, please try again later</Text>
           </Dialog.Content>
           <Dialog.Actions>
             <Button onPress={()=>{

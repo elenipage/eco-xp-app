@@ -1,9 +1,7 @@
-import { useEffect } from 'react';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { Dimensions } from 'react-native';
 import {
     ContributionGraph,
 } from "react-native-chart-kit";
-import { streakData } from './data/streakData';
 
 const screenWidth = Dimensions.get('window').width
 

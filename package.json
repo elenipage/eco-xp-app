@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo-google-fonts/fredoka": "^0.2.3",
     "@expo-google-fonts/roboto": "^0.2.3",
     "@expo/metro-runtime": "~4.0.0",
     "@expo/vector-icons": "^14.0.4",
@@ -30,6 +31,7 @@
     "expo": "~52.0.6",
     "expo-camera": "~16.0.6",
     "expo-file-system": "^18.0.4",
+    "expo-font": "~13.0.1",
     "expo-image-picker": "^16.0.2",
     "expo-linking": "~7.0.2",
     "expo-status-bar": "~2.0.0",

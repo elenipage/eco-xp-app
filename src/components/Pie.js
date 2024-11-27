@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Dimensions } from "react-native";
+import { StyleSheet, View, Dimensions } from "react-native";
 import { PieChart } from "react-native-chart-kit";
 
 export default function Pie(props) {

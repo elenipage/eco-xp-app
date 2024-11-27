@@ -1,4 +1,5 @@
-import { Text, View, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
+import { Text } from "react-native-paper";
 import { FAQCard } from "../components/HelpSectionFAQ";
 import BaseLayout from "../components/BaseLayout";
 
@@ -58,7 +59,7 @@ export function FAQ() {
   return (
     <ScrollView>
       <BaseLayout>
-        <Text style={{ fontSize: 24, fontWeight: "bold", color: "#1A3151" }}>
+        <Text variant="bodyLarge">
           FAQ
         </Text>
         {recyclingFAQs.map((object, index) => (
