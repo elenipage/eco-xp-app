@@ -1,18 +1,20 @@
-import { StyleSheet, Image, Text, View } from "react-native";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import { Surface, Button } from "react-native-paper";
-import React, { useState, useRef, useEffect } from "react";
-import { useUser } from "../context/user-context.js";
-import { useXp } from "../context/Xp-context.js";
+import { StyleSheet, Image, Text, View } from "react-native"
+import { SafeAreaProvider } from "react-native-safe-area-context"
+import { Surface, Button, useTheme } from "react-native-paper"
+import React, { useState, useRef, useEffect } from "react"
+import { useUser } from "../context/user-context.js"
+import { useXp } from "../context/Xp-context.js"
 import {
   fetchIsRecyclableByArea,
   postLoggedItem,
   updateXpByID,
-} from "../../utils/api.js";
-import { Loader } from "../components/Loader.js";
-import { useNavigation } from "@react-navigation/native";
+} from "../../utils/api.js"
+import { Loader } from "../components/Loader.js"
+import { useNavigation } from "@react-navigation/native"
+import StandardButton from "./StandardButton.js"
 
 export function IsRecyclableButtons(props) {
+  const { fonts } = useTheme()
   const {
     isBinned,
     setIsBinned,
@@ -21,44 +23,41 @@ export function IsRecyclableButtons(props) {
     isRecyclable,
     setIsRecyclable,
     scannedItemData,
-  } = props;
-  const { user } = useUser();
-  const [isLoading, setIsLoading] = useState(true);
-  const itemXP = 10;
-  const { setXp } = useXp();
-  const postcode = user.postcode;
-  const splitPostcode = postcode.split(" ");
-  const prefix = splitPostcode[0].match(/[a-zA-Z]+/g);
-  const navigation = useNavigation();
+    setIsLoading
+  } = props
+  const { user } = useUser()
+  const itemXP = 10
+  const { setXp } = useXp()
+  const postcode = user.postcode
+  const splitPostcode = postcode.split(" ")
+  const prefix = splitPostcode[0].match(/[a-zA-Z]+/g)
+  const navigation = useNavigation()
 
   function handleRecycle() {
-    setIsLoading(true);
+    setIsLoading(true)
     updateXpByID(user.user_id, itemXP)
       .then(() => {
-        setXp((prevXp) => prevXp + itemXP);
+        setXp((prevXp) => prevXp + itemXP)
       })
       .then(() => {
-        return postLoggedItem(scannedItemData.item_id, user.user_id);
+        return postLoggedItem(scannedItemData.item_id, user.user_id)
       })
       .then(() => {
-        setIsLoading(false);
-        setIsRecycled(true);
-        return;
+        setIsLoading(false)
+        setIsRecycled(true)
+        return
       })
-      .catch((err) => {});
+      .catch((err) => {})
   }
 
   useEffect(() => {
-    setIsLoading(true);
     fetchIsRecyclableByArea(prefix, scannedItemData.material_id).then(
       (data) => {
-        setIsRecyclable(data.is_recyclable);
-        setIsLoading(false);
+        setIsRecyclable(data.is_recyclable)
       }
-    );
-  }, []);
+    )
+  }, [])
 
-  if (isLoading) return <Loader />;
 
   return (
     <Surface
@@ -81,38 +80,28 @@ export function IsRecyclableButtons(props) {
             source={require("../../assets/recycling-bin.png")}
           ></Image>
           {!isRecycled ? (
-            <Text style={styles.titleText}>You can recycle me!</Text>
+            <Text style={fonts.headlineMedium}>You can recycle me!</Text>
           ) : (
-            <Text style={styles.titleText}>Recycled!</Text>
+            <Text style={fonts.headlineMedium}>Recycled!</Text>
           )}
           {!isRecycled ? (
-            <Button
-              onPress={() => {
-                handleRecycle();
-              }}
-              mode="contained-tonal"
-            >
-              Recycle {scannedItemData.item_name} for {itemXP} XP
-            </Button>
+            <StandardButton buttonText={`Recycle ${scannedItemData.item_name} for ${itemXP} XP`}
+            tapFunction={() => {
+              handleRecycle()
+            }} />
           ) : (
-            <View>
-              <Text>Congrats, you gained {itemXP} xp</Text>
-              <View style={{ flexDirection: "row" }}>
-                <Button
-                  onPress={() => {
-                    navigation.popToTop();
-                    navigation.navigate("Main");
-                  }}
-                >
-                  Return to Home
-                </Button>
-                <Button
-                  onPress={() => {
-                    navigation.goBack();
-                  }}
-                >
-                  Scan Again
-                </Button>
+            <View style={{width:"100%"}}>
+              <Text style={fonts.headlineSmall}>Congrats, you gained {itemXP} xp</Text>
+              <View style={{}}>
+                <StandardButton buttonText={"Return to Home"}
+                tapFunction={() => {
+                  navigation.popToTop()
+                  navigation.navigate("Main")
+                }} />
+                <StandardButton buttonText={"Scan Again"}
+                tapFunction={() => {
+                  navigation.goBack()
+                }} />
               </View>
             </View>
           )}
@@ -134,7 +123,7 @@ export function IsRecyclableButtons(props) {
         </View>
       )}
     </Surface>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -142,6 +131,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flex: 1,
+    width:"100%",
+    // backgroundColor:"red"
   },
   icon: {
     width: 100,
@@ -175,4 +166,4 @@ const styles = StyleSheet.create({
     zIndex: 1000,
     pointerEvents: "none",
   },
-});
+})
