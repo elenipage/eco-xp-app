@@ -12,12 +12,14 @@ export default function TakePicture({photo, setPhoto, setPath, setTakingPhoto, s
     const [isLoading, setIsLoading] = useState(false)
     const [loadingProgress, setLoadingProgress] = useState(0)
 
+
     useEffect(() => {
         (async () => {
             const cameraPermission = await Camera.requestCameraPermissionsAsync();
             setHasCameraPermission(cameraPermission.status === "granted");
         })();
     }, []);
+
 
     if (hasCameraPermission === undefined) {
         return <Text>Requesting permissions...</Text>
@@ -27,16 +29,16 @@ export default function TakePicture({photo, setPhoto, setPath, setTakingPhoto, s
 
     let takePic = async () => {
     let options = {
-        quality: 1,
+        quality: 0.01,
         base64: true,
-        exif: false
+        exif: false,
     };
 
     let newPhoto = await cameraRef.current.takePictureAsync(options);
     setPhoto(newPhoto);
+    
 
     };
-
     const uploadImage = async (photo) => {
 
         setIsLoading(true)

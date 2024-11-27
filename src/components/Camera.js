@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   TextInput,
   Image,
-  Vibration
+  Vibration,
 } from "react-native"
 import { StatusBar } from "expo-status-bar"
 import { useEffect, useRef, useState } from "react"
@@ -16,8 +16,10 @@ import { useNavigation, useIsFocused } from "@react-navigation/native"
 import { fetchItemByBarcode } from "../../utils/api"
 import { Portal } from "react-native-paper"
 import ConfirmationDialogue from "./ConfirmationDialogue"
+import StandardButton from "./StandardButton"
 
 export default function Camera() {
+  const cameraref = useRef()
   const [permission, requestPermission] = useCameraPermissions()
   const [cameraActive, setCameraActive] = useState()
   const [scannedBarcode, setScannedBarcode] = useState("")
@@ -26,6 +28,14 @@ export default function Camera() {
   const lastScannedTimestampRef = useRef(0)
   const [scanned, setScanned] = useState(false)
   const [showDialog, setShowDialog] = useState(false)
+  const [torch, setTorch] = useState(false)
+
+
+  const setTorchFunc = () =>{ torch? setTorch(false):setTorch(true)}
+
+  useEffect(() => {
+    setTorch(false)
+  }, [isFocused]);
 
   if (!permission) {
     return <View />
@@ -52,10 +62,11 @@ export default function Camera() {
         <CameraView
           style={styles.camera}
           facing="back"
+          ref={cameraref}
+          enableTorch={torch}
           barcodeScannerSettings={{ barcodeTypes: ["code128", "ean13"] }}
           onBarcodeScanned={({ data }) => {
             Vibration.vibrate()
-            console.log(data)
             const timestamp = Date.now()
 
             if (scanned || timestamp - lastScannedTimestampRef.current < 1000) {
@@ -82,6 +93,13 @@ export default function Camera() {
             style={styles.image}
             source={require("../../assets/barcode-overlay.png")}
           />
+
+          
+          <TouchableOpacity style={{backgroundColor:"#91E228",width:100,height:100,top:"85%",borderRadius:100, alignItems:"center",justifyContent:"center"}} onPress={()=>{
+            setTorchFunc()
+          }}><Text style={{fontSize:50}}>🔦</Text>
+
+          </TouchableOpacity>
         </CameraView>
       )}
 
@@ -116,17 +134,6 @@ const styles = StyleSheet.create({
   },
   camera: {
     flex: 1,
-  },
-  buttonContainer: {
-    flex: 1,
-    flexDirection: "row",
-    backgroundColor: "transparent",
-    margin: 64,
-  },
-  button: {
-    flex: 1,
-    alignSelf: "flex-end",
-    alignItems: "center",
   },
   text: {
     fontSize: 24,

@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import RecyclingInfo from "../components/RecyclingInfo";
 import PlasticLifeCycle from "../components/PlasticLifeCycle";
+import { useTheme } from "react-native-paper";
 
 export function InfoDropDownMenu() {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
+  const { fonts, colors } = useTheme()
 
   const items = [
     { label: "What can I recycle?", value: "recycling" },
@@ -17,15 +19,27 @@ export function InfoDropDownMenu() {
     if (value === "recycling") return <RecyclingInfo />;
     if (value === "plasticLifeCycle") return <PlasticLifeCycle />;
     return (
-      <View style={styles.container}>
-        <Image
-          style={styles.image}
-          source={require("../../assets/recycling-infographic.jpg")}
-        />
-      </View>
+      <Image
+        style={styles.image}
+        source={require("../../assets/recycling-infographic.jpg")}
+      />
     );
   };
 
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.backgroundColor,
+      paddingLeft: 10,
+      paddingRight: 10,
+    },
+    image: {
+      height: "100%",
+      width: "100%",
+      borderRadius: 12,
+    },
+  });
+  
   return (
     <View style={styles.container}>
       <DropDownPicker
@@ -35,7 +49,7 @@ export function InfoDropDownMenu() {
         setOpen={setOpen}
         setValue={setValue}
         placeholder="Select an item"
-        style={styles.dropdown}
+        style={{borderWidth: 1}}
         labelStyle={styles.labelStyle}
         showsVerticalScrollIndicator={false}
       />
@@ -44,23 +58,3 @@ export function InfoDropDownMenu() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#B3F9D4",
-    padding: 20,
-  },
-  image: {
-    height: 490,
-    width: "100%",
-    borderRadius: 12,
-  },
-
-  dropdown: {
-    marginBottom: 16,
-    backgroundColor: "#f0f0f0",
-  },
-  dropdownContainer: {
-    backgroundColor: "#fff",
-  },
-});
