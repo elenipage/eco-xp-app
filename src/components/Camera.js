@@ -1,89 +1,105 @@
-import { StyleSheet, Text, View, Button, TouchableOpacity, TextInput } from "react-native";
-import { StatusBar } from "expo-status-bar";
-import { useEffect, useRef, useState } from "react";
-import { BackHandler } from "react-native";
-import { CameraView, useCameraPermissions } from "expo-camera";
-import { useNavigation, useIsFocused } from "@react-navigation/native";
-import { fetchItemByBarcode } from "../../utils/api";
-import { Portal } from "react-native-paper";
-import ConfirmationDialogue from "./ConfirmationDialogue";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TouchableOpacity,
+  TextInput,
+  Image,
+  Vibration
+} from "react-native"
+import { StatusBar } from "expo-status-bar"
+import { useEffect, useRef, useState } from "react"
+import { BackHandler } from "react-native"
+import { CameraView, useCameraPermissions } from "expo-camera"
+import { useNavigation, useIsFocused } from "@react-navigation/native"
+import { fetchItemByBarcode } from "../../utils/api"
+import { Portal } from "react-native-paper"
+import ConfirmationDialogue from "./ConfirmationDialogue"
 
 export default function Camera() {
-  const [permission, requestPermission] = useCameraPermissions();
-  const [cameraActive, setCameraActive] = useState();
-  const [scannedBarcode, setScannedBarcode] = useState("");
-  const navigation = useNavigation();
-  const isFocused = useIsFocused();
-  const lastScannedTimestampRef = useRef(0);
-  const [scanned, setScanned] = useState(false);
-  const [showDialog, setShowDialog] = useState(false);
-
+  const [permission, requestPermission] = useCameraPermissions()
+  const [cameraActive, setCameraActive] = useState()
+  const [scannedBarcode, setScannedBarcode] = useState("")
+  const navigation = useNavigation()
+  const isFocused = useIsFocused()
+  const lastScannedTimestampRef = useRef(0)
+  const [scanned, setScanned] = useState(false)
+  const [showDialog, setShowDialog] = useState(false)
 
   if (!permission) {
-    return <View />;
+    return <View />
   }
-
 
   if (!permission.granted) {
     return (
       <View style={styles.container}>
-        <Text style={styles.message}>We need your permission to show the camera</Text>
-        <Button
-          onPress={requestPermission}
-          title="grant permission"
-        />
+        <Text style={styles.message}>
+          We need your permission to show the camera
+        </Text>
+        <Button onPress={requestPermission} title="grant permission" />
       </View>
-    );
+    )
   }
 
-  return isFocused? (
+  return isFocused ? (
     <View style={styles.container}>
-      {scannedBarcode? <CameraView
-        style={styles.camera}
-        facing="back"
-      >
-      <View style={styles.buttonContainer}></View>
-      </CameraView> : <CameraView
-        style={styles.camera}
-        facing="back"
-        barcodeScannerSettings={{barcodeTypes:["code128","ean13"]}}
-        onBarcodeScanned={({ data }) => {
-          console.log(data)
-          const timestamp = Date.now();
+      {scannedBarcode ? (
+        <CameraView style={styles.camera} facing="back">
+          <View style={styles.buttonContainer}></View>
+        </CameraView>
+      ) : (
+        <CameraView
+          style={styles.camera}
+          facing="back"
+          barcodeScannerSettings={{ barcodeTypes: ["code128", "ean13"] }}
+          onBarcodeScanned={({ data }) => {
+            Vibration.vibrate()
+            console.log(data)
+            const timestamp = Date.now()
 
-          if (scanned || timestamp - lastScannedTimestampRef.current < 1000) {
-            return;
-          }
-          lastScannedTimestampRef.current = timestamp;
-          setScannedBarcode(data);
-          fetchItemByBarcode(data)
-            .then((scannedItemData) => {
-              navigation.navigate("Item Confirmation", { scannedItemData: scannedItemData })
-              setScannedBarcode("");
-            })
-            .catch((error) => {
-              if (error.response.status === 404) {
-                setShowDialog(true);
-                // navigation.navigate("Add a New Item", { barcodeValue: data });
-              }
-            });
-        }}
-      >
-      <View style={styles.buttonContainer}></View>
-      </CameraView>}
-      
+            if (scanned || timestamp - lastScannedTimestampRef.current < 1000) {
+              return
+            }
+            lastScannedTimestampRef.current = timestamp
+            setScannedBarcode(data)
+            fetchItemByBarcode(data)
+              .then((scannedItemData) => {
+                navigation.navigate("Item Confirmation", {
+                  scannedItemData: scannedItemData,
+                })
+                setScannedBarcode("")
+              })
+              .catch((error) => {
+                if (error.response.status === 404) {
+                  setShowDialog(true)
+                  // navigation.navigate("Add a New Item", { barcodeValue: data });
+                }
+              })
+          }}
+        >
+          <Image
+            style={styles.image}
+            source={require("../../assets/barcode-overlay.png")}
+          />
+        </CameraView>
+      )}
+
       <ConfirmationDialogue
-      visible={showDialog}
-      onClose={() => {
-        setShowDialog(false);
-        setScanned(false);
-        setScannedBarcode("")
-      }}
-      onConfirm={() => {
-        setShowDialog(false);
-        setScanned(false);
-        navigation.navigate("Add a New Item", { barcodeValue: scannedBarcode, setScannedBarcode: setScannedBarcode });
-      }}
+        visible={showDialog}
+        onClose={() => {
+          setShowDialog(false)
+          setScanned(false)
+          setScannedBarcode("")
+        }}
+        onConfirm={() => {
+          setShowDialog(false)
+          setScanned(false)
+          navigation.navigate("Add a New Item", {
+            barcodeValue: scannedBarcode,
+            setScannedBarcode: setScannedBarcode,
+          })
+        }}
       />
     </View>
   ) : null
@@ -117,4 +133,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "white",
   },
-});
+  image: {
+    width: "70%",
+    height: "50%",
+    objectFit: "contain",
+    position: "absolute",
+    left: "16%",
+    top: "25%",
+  },
+})
