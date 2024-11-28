@@ -1,10 +1,13 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import { Surface } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
+import { useTheme } from "react-native-paper";
 
 export function FollowersFollowing(props) {
   const navigation = useNavigation();
   const { user_id, followerCount, followingCount } = props;
+  const { colors } = useTheme()
+
   return (
     <View
       style={{
@@ -19,6 +22,7 @@ export function FollowersFollowing(props) {
           justifyContent: "center",
           padding: 10,
           borderRadius: 10,
+          backgroundColor: colors.surface
         }}
       >
         <TouchableOpacity
@@ -36,6 +40,7 @@ export function FollowersFollowing(props) {
           justifyContent: "center",
           padding: 10,
           borderRadius: 10,
+          backgroundColor: colors.surface
         }}
       >
         <TouchableOpacity

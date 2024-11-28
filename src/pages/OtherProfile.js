@@ -8,6 +8,7 @@ import { singleFollowerLineChart } from "../components/data/lineChartData";
 import { useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { Loader } from "../components/Loader";
+import { useTheme } from "react-native-paper";
 
 import {
   fetchFollowersByUserID,
@@ -24,7 +25,9 @@ export function OtherProfile(currentUserId, otherUserId) {
   const [followerCount, setFollowerCount] = useState(0);
   const [followingCount, setFollowingCount] = useState(0);
   const [loadingProgress, setLoadingProgress] = useState(0);
-  const [singleFollowerLineChartData, setSingleFollowerLineChartData] = useState(null);
+  const [singleFollowerLineChartData, setSingleFollowerLineChartData] =
+    useState(null);
+  const { colors } = useTheme()
 
   const today = new Date();
   const dd = String(today.getDate()).padStart(2, "0");
@@ -72,9 +75,7 @@ export function OtherProfile(currentUserId, otherUserId) {
         for (key in loggedItemCount) {
           loggedItemArray.push({ date: key, count: loggedItemCount[key] });
         }
-        // return loggedItemArray
         return fetchFollowersByUserID(user_id);
-        // Need to get the loggedItemArray to be able to pass it to the line chart data but also need to return the fetchFollowersByUserId function
       })
       .then((followers) => {
         setFollowerCount(followers.length);
@@ -107,6 +108,7 @@ export function OtherProfile(currentUserId, otherUserId) {
             width: "100%",
             alignItems: "center",
             justifyContent: "space-evenly",
+            paddingTop: 20,
           }}
         >
           <Image
@@ -122,7 +124,9 @@ export function OtherProfile(currentUserId, otherUserId) {
             }}
           />
           <View style={{ width: "50%" }}>
-            <Text style={{ fontSize: 25, marginBottom: 10 }}>{otherUser.username}</Text>
+            <Text style={{ fontSize: 25, marginBottom: 10 }}>
+              {otherUser.username}
+            </Text>
             <FollowersFollowing
               user_id={user_id}
               followerCount={followerCount}
@@ -138,23 +142,31 @@ export function OtherProfile(currentUserId, otherUserId) {
             padding: 10,
             borderRadius: 10,
             marginBottom: 20,
+            backgroundColor: colors.surface
           }}
         >
           <Text style={{ width: "100%", fontSize: 20, marginBottom: 10 }}>
             {otherUser.first_name} - {otherUser.xp} XP
           </Text>
-          <Text style={{ width: "100%", fontSize: 16, marginBottom: 10 }}>Weekly Progress</Text>
-          <Surface
+          <Text style={{ width: "100%", fontSize: 16, marginBottom: 10 }}>
+            Weekly Progress
+          </Text>
+          <View
             style={{
-              width: 320,
+              width: 330,
               justifyContent: "center",
               alignItems: "center",
               padding: 10,
-              borderRadius: 10,
+              borderRadius: 20,
+              backgroundColor: "white",
+              borderWidth: 4,
+              borderColor: colors.secondary,
             }}
           >
-            {singleFollowerLineChartData ? <Line data={singleFollowerLineChartData} /> : null}
-          </Surface>
+            {singleFollowerLineChartData ? (
+              <Line data={singleFollowerLineChartData} />
+            ) : null}
+          </View>
         </Surface>
         <Surface
           style={{
@@ -163,6 +175,8 @@ export function OtherProfile(currentUserId, otherUserId) {
             justifyContent: "center",
             padding: 10,
             borderRadius: 10,
+            marginBottom: 25,
+            backgroundColor: colors.surface
           }}
         >
           <Text style={{ width: "100%", fontSize: 20, marginBottom: 10 }}>
@@ -174,7 +188,8 @@ export function OtherProfile(currentUserId, otherUserId) {
               height: 150,
               marginBottom: 20,
               borderRadius: 100,
-              border: "5px solid #6DA99A",
+              borderWidth: 4,
+              borderColor: colors.primary,
             }}
             source={{
               uri: "https://assets.sainsburys-groceries.co.uk/gol/7964615/1/640x640.jpg",

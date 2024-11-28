@@ -1,14 +1,14 @@
 import React from "react";
-import { SegmentedButtons } from "react-native-paper";
-import { StyleSheet } from "react-native";
+import { SegmentedButtons, useTheme } from "react-native-paper";
 
 function SegButtons(props) {
   const { value, setValue } = props
+  const { colors } = useTheme()
   return (
     <SegmentedButtons
+    style={{backgroundColor: colors.background, borderRadius: 100}}
       value={value}
       onValueChange={setValue}
-      // style={styles.segButton}
       buttons={[
         {
           value: "friends",
@@ -29,13 +29,5 @@ function SegButtons(props) {
     />
   );
 }
-
-// const styles = StyleSheet.create({
-//   segButton: {
-//     width: "95%",
-//     marginBottom: 10,
-//     marginTop: 10,
-//   },
-// });
 
 export default SegButtons;
