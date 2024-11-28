@@ -1,16 +1,11 @@
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, View, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import RecyclingTipsCarousel from "../components/RecyclingTips";
 import { FunFact } from "../components/FunFact";
 import StandardButton from "../components/StandardButton";
-import BaseLayout from "../components/BaseLayout";
-import { followersPreview } from "../components/data/leaderboardData";
-import { Loader } from "../components/Loader";
-import { useState } from "react";
 import { useUser } from "../context/user-context";
 import BinDateCarousel from "../components/HomeBinDateCarousel";
-import { Surface } from "react-native-paper";
-import { useTheme } from "react-native-paper";
+import { Surface, useTheme } from "react-native-paper";
 
 export function HomeScreen() {
   const navigation = useNavigation();
@@ -24,13 +19,10 @@ export function HomeScreen() {
           margin: 20,
         }}
       >
-        <View>
-          <Text style={fonts.displaySmall}>Hi {user.first_name}!</Text>
-        </View>
+        <Text style={fonts.displaySmall}>Hi {user.first_name}!</Text>
         <Surface
           style={{
             backgroundColor: colors.surface,
-            marginVertical: 20,
             padding: 20,
             borderRadius: 20,
             justifyContent: "space-between",
@@ -38,22 +30,28 @@ export function HomeScreen() {
         >
           <FunFact />
           <BinDateCarousel />
-        </Surface>
-        <StandardButton
-          buttonText={"Take a Quiz!"}
-          tapFunction={() => navigation.navigate("Quiz")}
-        />
-        <View>
-          <View
+          <Image
+            source={require("../../assets/happy-arrows.webp")}
             style={{
-              marginBottom: 20,
+              width: "100%",
+              height: 100,
+              objectFit: "contain",
             }}
-          >
-            <Text style={fonts.displaySmall}>Recycling top tips</Text>
+          />
+          <View>
+            <StandardButton
+              buttonText={"Take a Quiz!"}
+              tapFunction={() => navigation.navigate("Quiz")}
+            />
           </View>
 
-          <RecyclingTipsCarousel />
-        </View>
+          <View>
+            <Text style={{ fontSize: fonts.titleLarge.fontSize, textAlign: "center" }}>
+              Recycling top tips
+            </Text>
+            <RecyclingTipsCarousel />
+          </View>
+        </Surface>
       </View>
     </ScrollView>
   );
