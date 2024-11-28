@@ -86,7 +86,7 @@ export function OtherProfile(currentUserId, otherUserId) {
         setFollowingCount(following.length);
       })
       .then(() => {
-        return singleFollowerLineChart(user_id, otherUser.first_name);
+        return singleFollowerLineChart(user_id);
       })
       .then((data) => {
         setSingleFollowerLineChartData(data);
