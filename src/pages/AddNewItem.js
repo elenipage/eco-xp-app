@@ -159,7 +159,7 @@ export function AddNewItem() {
               <List.Accordion
                 style={{backgroundColor: colors.background}}
                 title={itemMaterial[0] ? itemMaterial[0] : "Select a material"}
-                left={(props) => <List.Icon {...props} icon="recycle" />}
+                left={({key, ...props}) => <List.Icon {...props} icon="recycle" />}
                 expanded={expanded}
                 onPress={toggleDropdown}
               >
@@ -173,6 +173,7 @@ export function AddNewItem() {
                       <List.Item
                         onPress={() => handleMaterialSelection(material)}
                         title={material.material_name}
+                        key={material.material_id}
                       />
                     )
                   })}

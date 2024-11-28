@@ -54,7 +54,7 @@ export function LoginForm({ handleLogin }) {
           style={styles.image}
           source={require("../../assets/bin-and-earth.png")}
         />
-        <Surface style={surface}>
+        <Surface style={{...surface, marginHorizontal: 45}}>
         <Text style={styles.h1}>EcoXp</Text>
         <Text style={styles.h2}>Level up for a cleaner world!</Text>
         <TextInput
