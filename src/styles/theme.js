@@ -166,6 +166,7 @@ export const appTheme = {
       margin: 20,
       alignItems: "center",
       justifyContent: "center",
-      borderRadius:20
+      borderRadius:20,
+      backgroundColor: "rgb(235, 245, 235)"
     }
 };

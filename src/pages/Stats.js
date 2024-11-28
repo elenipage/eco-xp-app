@@ -1,7 +1,5 @@
-import { Platform, View, Text, ScrollView, StyleSheet, Image } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { View, Text, ScrollView, StyleSheet, Image } from "react-native";
 import SegButtons from "../components/SegButtons";
-
 import { useState } from "react";
 import Pie from "../components/Pie";
 import { friendsPie, postcodePie, areaPie } from "../components/data/pie-data";
@@ -12,23 +10,49 @@ import {
   postcodeLineChart,
   areaLineChart,
 } from "../components/data/lineChartData";
+import { useTheme } from "react-native-paper";
 
 export function Stats() {
   const [value, setValue] = useState("friends");
+  const { colors, fonts, surface } = useTheme();
+
+  const styles = StyleSheet.create({
+    infoCard: {
+      marginTop: 20,
+      padding: 20,
+      // height: 100,
+      width: "100%",
+      alignItems: "center",
+      justifyContent: "center",
+      border: "hidden",
+      borderRadius: 20,
+      backgroundColor: colors.surface
+    },
+  });
+
   return (
     <ScrollView>
+      <Surface
+        style={{
+          width: "100%",
+          alignItems: "center",
+          justifyContent: "center",
+          paddingVertical: 10,
+          paddingHorizontal: 10,
+          backgroundColor: colors.surface
+        }}
+      >
+        <Text style={{...fonts.displayMedium, marginBottom: 10, color: colors.onSurface}}>Stats</Text>
+        <SegButtons value={value} setValue={setValue} />
+      </Surface>
       <View
         style={{
           alignItems: "center",
           justifyContent: "center",
-          paddingTop: 0,
+          marginTop: 10,
           margin: 20,
         }}
       >
-        <SegButtons
-          value={value}
-          setValue={setValue}
-        />
         {value === "friends" ? (
           <View
             style={{
@@ -38,10 +62,7 @@ export function Stats() {
             }}
           >
             <Pie data={friendsPie} />
-            <Surface
-              elevation={2}
-              style={styles.infoCard}
-            >
+            <Surface elevation={2} style={styles.infoCard}>
               <Image
                 source={require("../../assets/cute-plastic-bottle.png")}
                 style={{
@@ -60,10 +81,7 @@ export function Stats() {
                 The item you and your followers recycled most this month:
               </Text>
             </Surface>
-            <Surface
-              elevation={2}
-              style={styles.infoCard}
-            >
+            <Surface elevation={2} style={styles.infoCard}>
               <Image
                 source={require("../../assets/happy-bin.png")}
                 style={{
@@ -110,10 +128,7 @@ export function Stats() {
             }}
           >
             <Pie data={postcodePie} />
-            <Surface
-              elevation={2}
-              style={styles.infoCard}
-            >
+            <Surface elevation={2} style={styles.infoCard}>
               <Image
                 source={require("../../assets/cute-plastic-bottle.png")}
                 style={{
@@ -132,10 +147,7 @@ export function Stats() {
                 The most recycled item in your postcode:
               </Text>
             </Surface>
-            <Surface
-              elevation={2}
-              style={styles.infoCard}
-            >
+            <Surface elevation={2} style={styles.infoCard}>
               <Image
                 source={require("../../assets/happy-bin.png")}
                 style={{
@@ -144,8 +156,11 @@ export function Stats() {
                   objectFit: "contain",
                 }}
               />
-              <Text style={{ textAlign: "center", marginBottom: 5, fontSize: 18 }}>
-                Within your postcode, you recycled enough glass to build 5 greenhouses!
+              <Text
+                style={{ textAlign: "center", marginBottom: 5, fontSize: 18 }}
+              >
+                Within your postcode, you recycled enough glass to build 5
+                greenhouses!
               </Text>
             </Surface>
             <View style={{ alignItems: "center", justifyContent: "center" }}>
@@ -164,10 +179,7 @@ export function Stats() {
             }}
           >
             <Pie data={areaPie} />
-            <Surface
-              elevation={2}
-              style={styles.infoCard}
-            >
+            <Surface elevation={2} style={styles.infoCard}>
               <Image
                 source={require("../../assets/cute-plastic-bottle.png")}
                 style={{
@@ -186,10 +198,7 @@ export function Stats() {
                 The most recycled item in your city:
               </Text>
             </Surface>
-            <Surface
-              elevation={2}
-              style={styles.infoCard}
-            >
+            <Surface elevation={2} style={styles.infoCard}>
               <Image
                 source={require("../../assets/happy-bin.png")}
                 style={{
@@ -223,15 +232,4 @@ export function Stats() {
   );
 }
 
-const styles = StyleSheet.create({
-  infoCard: {
-    marginTop: 20,
-    padding: 20,
-    // height: 100,
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-    border: "hidden",
-    borderRadius: 20,
-  },
-});
+

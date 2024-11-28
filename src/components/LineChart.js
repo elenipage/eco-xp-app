@@ -12,7 +12,7 @@ export default function Line(props) {
     backgroundGradientTo: "#ffffff",
     decimalPlaces: 0,
     color: (opacity = 1) => `rgba(72, 61, 139, ${opacity})`,
-    labelColor: (opacity = 1) => `rgba(72, 61, 139, ${opacity})`,
+    labelColor: (opacity = 1) => `rgba(57, 188, 217, ${opacity})`,
     style: {
       borderRadius: 16,
     },
@@ -32,7 +32,7 @@ export default function Line(props) {
       chartConfig={chartConfig}
       bezier
       fromZero={true}
-      yAxisSuffix=" xp"
+      yAxisSuffix="xp"
     />
   );
 }
