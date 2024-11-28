@@ -8,7 +8,7 @@ import { useTheme } from "react-native-paper";
 export function InfoDropDownMenu() {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
-  const { fonts, colors } = useTheme()
+  const { fonts, colors } = useTheme();
 
   const items = [
     { label: "What can I recycle?", value: "recycling" },
@@ -39,7 +39,7 @@ export function InfoDropDownMenu() {
       borderRadius: 12,
     },
   });
-  
+
   return (
     <View style={styles.container}>
       <DropDownPicker
@@ -49,7 +49,7 @@ export function InfoDropDownMenu() {
         setOpen={setOpen}
         setValue={setValue}
         placeholder="Select an item"
-        style={{borderWidth: 1}}
+        style={{ borderWidth: 1 }}
         labelStyle={styles.labelStyle}
         showsVerticalScrollIndicator={false}
       />
@@ -57,4 +57,3 @@ export function InfoDropDownMenu() {
     </View>
   );
 }
-
