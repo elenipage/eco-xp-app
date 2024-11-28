@@ -49,7 +49,6 @@ function RecyclingTipsCarousel() {
           <View
             key={index}
             style={{
-              // marginHorizontal: 20,
               padding: 20,
               height: 200,
               justifyContent: "center",
@@ -57,7 +56,7 @@ function RecyclingTipsCarousel() {
               backgroundColor: colors.surface
             }}
           >
-            <Text style={fonts.headlineSmall}>{tip}</Text>
+            <Text style={{fontSize: fonts.headlineSmall.fontSize, textAlign: "center"}}>{tip}</Text>
           </View>
         ))}
       </Swiper>
