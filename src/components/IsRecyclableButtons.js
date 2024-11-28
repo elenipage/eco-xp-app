@@ -131,7 +131,7 @@ export function IsRecyclableButtons(props) {
           )}
           {!isRecycled ? (
             <StandardButton
-              buttonText={`+${itemXP} XP`}
+              buttonText={`recycle for +${itemXP} XP`}
               tapFunction={() => {
                 handleRecycle();
               }}

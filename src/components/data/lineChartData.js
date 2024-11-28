@@ -1,7 +1,7 @@
 const { fetchLoggedItemsById } = require("../../../utils/api");
 const { getPreviousDate } = require("../../../utils/date");
 
-function singleFollowerLineChart(user_id, user_name) {
+function singleFollowerLineChart(user_id) {
   const dateLabels = [];
 
   for (let i = 6; i > -1; i--) {
@@ -42,7 +42,7 @@ function singleFollowerLineChart(user_id, user_name) {
           strokeWidth: 3,
         },
       ],
-      legend: ["You", user_name],
+      legend: ["You", "Jimmy"],
     };
   });
 }
