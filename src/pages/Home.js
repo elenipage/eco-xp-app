@@ -19,7 +19,7 @@ export function HomeScreen() {
           margin: 20,
         }}
       >
-        <Text style={fonts.displaySmall}>Hi {user.first_name}!</Text>
+        <Text style={{...fonts.displaySmall, marginBottom:20}}>Hi {user.first_name}!</Text>
         <Surface
           style={{
             backgroundColor: colors.surface,
@@ -36,18 +36,19 @@ export function HomeScreen() {
               width: "100%",
               height: 100,
               objectFit: "contain",
+              marginVertical: 10
             }}
           />
           <View>
             <StandardButton
-              buttonText={"Take a Quiz!"}
+              buttonText={"Take a Quiz! +XP"}
               tapFunction={() => navigation.navigate("Quiz")}
             />
           </View>
 
-          <View>
+          <View style={{marginTop: 10}}>
             <Text style={{ fontSize: fonts.titleLarge.fontSize, textAlign: "center" }}>
-              Recycling top tips
+              Recycling top tips:
             </Text>
             <RecyclingTipsCarousel />
           </View>
