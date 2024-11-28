@@ -45,7 +45,6 @@ export function HomeScreen() {
               tapFunction={() => navigation.navigate("Quiz")}
             />
           </View>
-
           <View style={{marginTop: 10}}>
             <Text style={{ fontSize: fonts.titleLarge.fontSize, textAlign: "center" }}>
               Recycling top tips:
