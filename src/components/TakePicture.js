@@ -29,7 +29,7 @@ export default function TakePicture({photo, setPhoto, setPath, setTakingPhoto, s
 
     let takePic = async () => {
     let options = {
-        quality: 0.01,
+        quality: 0.5,
         base64: true,
         exif: false,
     };
