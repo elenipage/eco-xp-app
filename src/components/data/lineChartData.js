@@ -24,8 +24,12 @@ function singleFollowerLineChart(user_id) {
       });
       return (loggedItemData = dateLabels.map((date) => xpByDay[date]));
     });
+    const dateLabelsFormatted = dateLabels.map((dateLabel)=>{
+      const date_array = dateLabel.split("-")
+      return date_array[2] + "-" + date_array[1]
+    })
     return {
-      labels: dateLabels,
+      labels: dateLabelsFormatted,
       datasets: [
         {
           data: loggedItemXpArr[0],
