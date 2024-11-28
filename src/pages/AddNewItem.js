@@ -14,6 +14,7 @@ import { fetchMaterials, postNewItem } from "../../utils/api.js"
 import TakePicture from "../components/TakePicture.js"
 import { createClient } from '@supabase/supabase-js';  
 import {SUPABASE_URL, SUPABASE_SERVICE_KEY} from '@env'
+import { useXp } from "../context/Xp-context.js"
 
 
 export function AddNewItem() {
@@ -33,6 +34,7 @@ export function AddNewItem() {
   const [photo, setPhoto] = useState(null);
   const [isValid, setIsValid] = useState(false)
   const [disabled, setDisabled] = useState(true)
+  const { xp, setXp } = useXp()
 
   const { fonts, colors } = useTheme()
 
@@ -93,6 +95,7 @@ export function AddNewItem() {
 
       postNewItem(obj)
       .then(({data}) => {
+        setXp(xp + 10)
         setConfirmVisible(true)
       })
       .catch((error) => {
