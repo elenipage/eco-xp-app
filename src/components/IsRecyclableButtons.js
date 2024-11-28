@@ -71,6 +71,7 @@ export function IsRecyclableButtons(props) {
       height: 75,
       objectFit: "contain",
       alignSelf: "center",
+      marginBottom: 10
     },
     item_img: {
       width: "100%",
@@ -130,7 +131,7 @@ export function IsRecyclableButtons(props) {
           )}
           {!isRecycled ? (
             <StandardButton
-              buttonText={`Recycle ${scannedItemData.item_name} for ${itemXP} XP`}
+              buttonText={`+${itemXP} XP`}
               tapFunction={() => {
                 handleRecycle();
               }}
