@@ -1,17 +1,21 @@
-import { Image, ScrollView, Linking, Dimensions, Platform, StyleSheet } from "react-native";
+import { Image, ScrollView, Linking, Dimensions, View, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-// import { useSafeAreaInsets } from "react-native-safe-area-context";
 import StandardButton from "../components/StandardButton";
 import ButtonContainer from "../components/ButtonContainer";
-import BaseLayout from "../components/BaseLayout";
+import { useTheme } from "react-native-paper";
 
 export function Help() {
-  // const insets = useSafeAreaInsets();
+
   const navigation = useNavigation();
+  const { colors } = useTheme()
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-      <BaseLayout>
+      <View style={{flex: 1,
+        alignItems: "center",
+        backgroundColor: colors.background,
+        paddingHorizontal: 20,
+        paddingTop: 20}}>
         <Image
           style={styles.imageStyling}
           source={{
@@ -52,8 +56,7 @@ export function Help() {
             }}
           />
         </ButtonContainer>
-      </BaseLayout>
-      {/* </View> */}
+      </View>
     </ScrollView>
   );
 }
