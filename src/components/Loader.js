@@ -6,7 +6,7 @@ import { useTheme } from "react-native-paper";
 
 export function Loader(props) {
   const { loadingProgress } = props;
-  const { colors } = useTheme()
+  const { colors,fonts } = useTheme()
 
   const styles = StyleSheet.create({
     itemMargins: {
@@ -28,15 +28,15 @@ export function Loader(props) {
         <MaterialCommunityIcons
           name="recycle"
           size={100}
-          color="#026928"
-          style={styles.itemMargins}
+          color="#91E228"
+          // style={}
         />
         {/* <ActivityIndicator
           size="large"
           style={styles.itemMargins}
         /> */}
 
-        <Text>Loading, please wait</Text>
+        <Text style={fonts.headlineSmall}>Loading, please wait</Text>
       </View>
     </>
   );
