@@ -19,7 +19,7 @@ export function ItemConfirmation() {
   const [isBinned, setIsBinned] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useUser();
-  const { surface, fonts } = useTheme();
+  const { surface, fonts, colors } = useTheme();
 
   const confettiRef = useRef(null);
   const [modalVisible, setModalVisible] = useState(false);
@@ -29,62 +29,61 @@ export function ItemConfirmation() {
   }
 
   return (
-    <SafeAreaProvider>
-      <BaseLayout>
-        <View style={styles.container}>
-          <Surface style={surface}>
-            <Image
-              style={styles.item_img}
-              source={{
-                uri:
-                  scannedItemData.img_url ||
-                  "https://t4.ftcdn.net/jpg/01/05/29/71/360_F_105297184_FaBQJDmTsKQMfkrVwonZkejAzr0Rzbj4.jpg",
-              }}
+    <View style={{height:"100%", width: "100%", backgroundColor: colors.background, paddingHorizontal: 10, alignItems: "center", justifyContent: "center"}}>
+      <View style={styles.container}>
+        <Surface style={surface}>
+          <Image
+            style={styles.item_img}
+            source={{
+              uri:
+                scannedItemData.img_url ||
+                "https://t4.ftcdn.net/jpg/01/05/29/71/360_F_105297184_FaBQJDmTsKQMfkrVwonZkejAzr0Rzbj4.jpg",
+            }}
+          />
+          <Text style={{...fonts.titleLarge, marginVertical: 20}}>{scannedItemData.item_name}</Text>
+          <IsRecyclableButtons
+            setModalVisible={setModalVisible}
+            isRecycled={isRecycled}
+            setIsRecycled={setIsRecycled}
+            isBinned={isBinned}
+            setIsBinned={setIsBinned}
+            scannedItemData={scannedItemData}
+            isRecyclable={isRecyclable}
+            setIsRecyclable={setIsRecyclable}
+            setIsLoading={setIsLoading}
+            isLoading={isLoading}
+          />
+        </Surface>
+        <View style={styles.animationContainer}>
+          <Modal
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <LottieView
+              ref={confettiRef}
+              autoPlay={true}
+              loop={false}
+              style={styles.lottie}
+              source={require("../../assets/confetti.json")}
             />
-            <Text style={fonts.titleLarge}>{scannedItemData.item_name}</Text>
-            <IsRecyclableButtons
-              setModalVisible={setModalVisible}
-              isRecycled={isRecycled}
-              setIsRecycled={setIsRecycled}
-              isBinned={isBinned}
-              setIsBinned={setIsBinned}
-              scannedItemData={scannedItemData}
-              isRecyclable={isRecyclable}
-              setIsRecyclable={setIsRecyclable}
-              setIsLoading={setIsLoading}
-              isLoading={isLoading}
-            />
-          </Surface>
-          <View style={styles.animationContainer}>
-            <Modal
-              transparent={true}
-              visible={modalVisible}
-              onRequestClose={() => {
-                setModalVisible(!modalVisible);
-              }}
-            >
-              <LottieView
-                ref={confettiRef}
-                autoPlay={true}
-                loop={false}
-                style={styles.lottie}
-                source={require("../../assets/confetti.json")}
-              />
-            </Modal>
-          </View>
+          </Modal>
         </View>
-      </BaseLayout>
-    </SafeAreaProvider>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  // container: {
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  //   flex: 1,
-  //   width: "100%",
-  // },
+  container: {
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+    width: "100%",
+    height: "100%",
+  },
   icon: {
     width: 50,
     height: 50,
@@ -92,7 +91,7 @@ const styles = StyleSheet.create({
   },
   item_img: {
     width: "100%",
-    height: 200,
+    height: 250,
     borderRadius: 10,
     justifyContent: "center",
   },
