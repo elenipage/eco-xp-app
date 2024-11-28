@@ -46,18 +46,18 @@ function RecyclingTipsCarousel() {
         height={"100%"}
       >
         {recyclingTips.map((tip, index) => (
-          <View
+          <Surface
             key={index}
             style={{
+              margin: 10,
               padding: 20,
-              height: 200,
+              height: 160,
               justifyContent: "center",
               borderRadius: 20,
-              backgroundColor: colors.surface
             }}
           >
-            <Text style={{fontSize: fonts.headlineSmall.fontSize, textAlign: "center"}}>{tip}</Text>
-          </View>
+            <Text style={{fontSize: fonts.titleMedium.fontSize, textAlign: "center"}}>{tip}</Text>
+          </Surface>
         ))}
       </Swiper>
   );

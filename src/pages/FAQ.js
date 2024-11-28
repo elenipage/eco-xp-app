@@ -7,12 +7,7 @@ export function FAQ() {
   return (
     <ScrollView>
       <BaseLayout>
-        <Text style={{ fontSize: 24, fontWeight: "bold", color: "#1A3151" }}>
-          FAQ
-        </Text>
-      
           <FAQCard />
-        
       </BaseLayout>
     </ScrollView>
   );

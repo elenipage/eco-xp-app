@@ -28,7 +28,7 @@ export default function Line(props) {
       data={data}
       width={300}
       height={300}
-      verticalLabelRotation={30}
+      verticalLabelRotation={90}
       chartConfig={chartConfig}
       bezier
       fromZero={true}

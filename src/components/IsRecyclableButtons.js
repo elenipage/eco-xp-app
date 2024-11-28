@@ -21,17 +21,22 @@ export function IsRecyclableButtons(props) {
     setIsRecyclable,
     scannedItemData,
     setIsLoading,
-  } = props;
-  const { user } = useUser();
-  const itemXP = 10;
-  const { setXp } = useXp();
-  const postcode = user.postcode;
-  const splitPostcode = postcode.split(" ");
-  const prefix = splitPostcode[0].match(/[a-zA-Z]+/g);
-  const navigation = useNavigation();
+    setModalVisible,
+  } = props
+  const { user } = useUser()
+  const itemXP = 10
+  const { setXp } = useXp()
+  const postcode = user.postcode
+  const splitPostcode = postcode.split(" ")
+  const prefix = splitPostcode[0].match(/[a-zA-Z]+/g)
+  const navigation = useNavigation()
 
   function handleRecycle() {
-    setIsLoading(true);
+    // setIsLoading(true)
+    setModalVisible(true)
+    setTimeout(() => {
+      setModalVisible(false);
+    }, 1200);
     updateXpByID(user.user_id, itemXP)
       .then(() => {
         setXp((prevXp) => prevXp + itemXP);

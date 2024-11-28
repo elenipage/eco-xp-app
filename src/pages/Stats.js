@@ -18,9 +18,8 @@ export function Stats() {
 
   const styles = StyleSheet.create({
     infoCard: {
-      marginTop: 20,
+      marginVertical: 10,
       padding: 20,
-      // height: 100,
       width: "100%",
       alignItems: "center",
       justifyContent: "center",
@@ -63,24 +62,57 @@ export function Stats() {
           >
             <Pie data={friendsPie} />
             <Surface elevation={2} style={styles.infoCard}>
-              <Image
-                source={require("../../assets/cute-plastic-bottle.png")}
-                style={{
-                  width: "100%",
-                  height: 100,
-                  objectFit: "contain",
-                }}
-              />
+            
               <Text
                 style={{
                   textAlign: "center",
-                  padding: 20,
+                  paddingBottom: 20,
                   fontSize: 18,
                 }}
               >
-                The item you and your followers recycled most this month:
+                The item you and your followers recycled most this month: 
               </Text>
+              <Image
+            style={{
+              width: 100,
+              height: 100,
+              marginBottom: 10,
+              borderRadius: 100,
+              borderWidth: 4,
+              borderColor: colors.secondary,
+            }}
+            source={{
+              uri: "https://assets.sainsburys-groceries.co.uk/gol/2060859/1/1500x1500.jpg",
+            }}
+          ></Image>
             </Surface>
+            <View
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text
+                style={{
+                  textAlign: "center",
+                  marginTop: 20,
+                  fontSize: fonts.titleLarge.fontSize,
+                }}
+              >
+                Your followers total XP this week:
+              </Text>
+
+              <View style={{padding: 20,
+      margin: 20,
+      alignItems: "center",
+      justifyContent: "center",
+      borderRadius:20,
+      borderWidth: 4,
+      borderColor: colors.primary,
+      paddingTop: 40,
+      paddingRight: 20,
+      backgroundColor: "white"}}><Line data={followersLineChart} /></View>
+            </View>
             <Surface elevation={2} style={styles.infoCard}>
               <Image
                 source={require("../../assets/happy-bin.png")}
@@ -99,25 +131,6 @@ export function Stats() {
                 You and your friends recycled 50 bottles of water this week!
               </Text>
             </Surface>
-
-            <View
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text
-                style={{
-                  textAlign: "center",
-                  margin: 20,
-                  fontSize: 18,
-                }}
-              >
-                Your follower's total XP this week:
-              </Text>
-
-              <Line data={followersLineChart} />
-            </View>
           </View>
         ) : value === "postcode" ? (
           <View
@@ -129,23 +142,29 @@ export function Stats() {
           >
             <Pie data={postcodePie} />
             <Surface elevation={2} style={styles.infoCard}>
-              <Image
-                source={require("../../assets/cute-plastic-bottle.png")}
-                style={{
-                  width: "100%",
-                  height: 100,
-                  objectFit: "contain",
-                }}
-              />
+              
               <Text
                 style={{
                   textAlign: "center",
-                  padding: 20,
+                  paddingBottom: 20,
                   fontSize: 18,
                 }}
               >
                 The most recycled item in your postcode:
               </Text>
+              <Image
+            style={{
+              width: 100,
+              height: 100,
+              marginBottom: 10,
+              borderRadius: 100,
+              borderWidth: 4,
+              borderColor: colors.secondary,
+            }}
+            source={{
+              uri: "https://assets.sainsburys-groceries.co.uk/gol/3300763/1/1500x1500.jpg",
+            }}
+          ></Image>
             </Surface>
             <Surface elevation={2} style={styles.infoCard}>
               <Image
@@ -164,10 +183,22 @@ export function Stats() {
               </Text>
             </Surface>
             <View style={{ alignItems: "center", justifyContent: "center" }}>
-              <Text style={{ textAlign: "center", margin: 20, fontSize: 18 }}>
+              <Text style={{
+                textAlign: "center",
+                marginTop: 20,
+                fontSize: fonts.titleLarge.fontSize,}}>
                 Your postcode's total XP this week:
-              </Text>
-              <Line data={postcodeLineChart} />
+              </Text><View style={{padding: 20,
+      margin: 20,
+      alignItems: "center",
+      justifyContent: "center",
+      borderRadius:20,
+      borderWidth: 4,
+      borderColor: colors.primary,
+      paddingTop: 40,
+      paddingRight: 20,
+      backgroundColor: "white"}}>
+              <Line data={postcodeLineChart} /></View>
             </View>
           </View>
         ) : (
@@ -180,23 +211,28 @@ export function Stats() {
           >
             <Pie data={areaPie} />
             <Surface elevation={2} style={styles.infoCard}>
-              <Image
-                source={require("../../assets/cute-plastic-bottle.png")}
-                style={{
-                  width: "100%",
-                  height: 100,
-                  objectFit: "contain",
-                }}
-              />
               <Text
                 style={{
                   textAlign: "center",
-                  padding: 20,
+                  paddingBottom: 20,
                   fontSize: 18,
                 }}
               >
                 The most recycled item in your city:
               </Text>
+              <Image
+            style={{
+              width: 100,
+              height: 100,
+              marginBottom: 10,
+              borderRadius: 100,
+              borderWidth: 4,
+              borderColor: colors.secondary,
+            }}
+            source={{
+              uri: "https://assets.sainsburys-groceries.co.uk/gol/7736185/1/1500x1500.jpg",
+            }}
+          ></Image>
             </Surface>
             <Surface elevation={2} style={styles.infoCard}>
               <Image
@@ -220,11 +256,20 @@ export function Stats() {
             <Text
               style={{
                 textAlign: "center",
-                margin: 20,
-                fontSize: 18,
+                marginTop: 20,
+                fontSize: fonts.titleLarge.fontSize,
               }}
             >{`Your city's total XP this week:`}</Text>
-            <Line data={areaLineChart} />
+            <View style={{padding: 20,
+      margin: 20,
+      alignItems: "center",
+      justifyContent: "center",
+      borderRadius:20,
+      borderWidth: 4,
+      borderColor: colors.primary,
+      paddingTop: 40,
+      paddingRight: 20,
+      backgroundColor: "white"}}><Line data={areaLineChart} /></View>
           </View>
         )}
       </View>
