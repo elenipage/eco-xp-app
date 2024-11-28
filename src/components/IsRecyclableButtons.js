@@ -23,7 +23,8 @@ export function IsRecyclableButtons(props) {
     isRecyclable,
     setIsRecyclable,
     scannedItemData,
-    setIsLoading
+    setIsLoading,
+    setModalVisible,
   } = props
   const { user } = useUser()
   const itemXP = 10
@@ -34,7 +35,11 @@ export function IsRecyclableButtons(props) {
   const navigation = useNavigation()
 
   function handleRecycle() {
-    setIsLoading(true)
+    // setIsLoading(true)
+    setModalVisible(true)
+    setTimeout(() => {
+      setModalVisible(false);
+    }, 1200);
     updateXpByID(user.user_id, itemXP)
       .then(() => {
         setXp((prevXp) => prevXp + itemXP)
