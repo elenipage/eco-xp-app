@@ -3,11 +3,11 @@ import { fetchFollowersByUserID } from "../../utils/api";
 import { Loader } from "../components/Loader";
 import { List } from "react-native-paper";
 import { Avatar } from "react-native-paper";
-import { ScrollView } from "react-native-gesture-handler";
 import { Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import { useUser } from "../context/user-context";
+import { useTheme } from "react-native-paper";
 
 export function Followers() {
 const { user } = useUser()
@@ -16,6 +16,7 @@ const { user } = useUser()
   const navigation = useNavigation();
   const [followers, setFollowers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const {colors} = useTheme()
 
   useEffect(() => {
     setIsLoading(true);
@@ -30,8 +31,7 @@ const { user } = useUser()
   }
 
   return (
-    <ScrollView>
-      <View style={{ width: "100%", padding: 10 }}>
+      <View style={{ width: "100%", height: "100%", padding: 10, backgroundColor: colors.background}}>
         <List.Section
           style={{
             width: "100%",
@@ -48,7 +48,7 @@ const { user } = useUser()
               >
                 <List.Item
                   style={{
-                    backgroundColor: "white",
+                    backgroundColor: colors.surface,
                     marginBottom: 10,
                     paddingLeft: 10,
                     borderRadius: 100,
@@ -69,6 +69,5 @@ const { user } = useUser()
           })}
         </List.Section>
       </View>
-    </ScrollView>
   );
 }

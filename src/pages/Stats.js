@@ -15,15 +15,13 @@ import {
 
 export function Stats() {
   const [value, setValue] = useState("friends");
-  const insets = useSafeAreaInsets();
   return (
     <ScrollView>
       <View
         style={{
           alignItems: "center",
           justifyContent: "center",
-          paddingTop: Platform.OS === "ios" ? insets.top : 0,
-          paddingBottom: Platform.OS === "ios" ? insets.bottom : 0,
+          paddingTop: 0,
           margin: 20,
         }}
       >

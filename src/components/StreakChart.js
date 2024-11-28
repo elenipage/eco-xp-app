@@ -21,7 +21,7 @@ export default function Streak(props) {
     backgroundGradientFromOpacity: 30,
     backgroundGradientTo: "#ffffff",
     backgroundGradientToOpacity: 0.5,
-    color: (opacity = 10) => `rgba(56, 182, 70, ${opacity})`,
+    color: (opacity = 10) => `rgba(121, 194, 39, ${opacity})`,
     strokeWidth: 2,
     barPercentage: 0.5,
     useShadowColorFromDataset: false 

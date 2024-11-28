@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Profile } from "../pages/UserProfile";
 import { Quiz } from "../pages/Quiz";
@@ -20,6 +19,7 @@ import { Scanner } from "../pages/Scanner";
 import BinDates from "../components/BinDates";
 import { Followers } from "../pages/Followers";
 import { Following } from "../pages/Following";
+import { useTheme } from "react-native-paper";
 
 const Stack = createStackNavigator();
 
@@ -27,7 +27,7 @@ function HeaderDemo({ navigation, route, options, back }) {
   const { user } = useUser();
   const { xp } = useXp();
   const [currentXp, setCurrentXp] = useState();
-
+  const { colors } = useTheme()
 
   useEffect(() => {
     setCurrentXp(xp);

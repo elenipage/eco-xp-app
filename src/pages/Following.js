@@ -8,6 +8,7 @@ import { Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import { useUser } from "../context/user-context";
+import { useTheme } from "react-native-paper";
 
 export function Following() {
   const { user } = useUser();
@@ -16,6 +17,7 @@ export function Following() {
   const { user_id } = route.params;
   const [following, setFollowing] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const {colors} = useTheme()
 
   useEffect(() => {
     setIsLoading(true);
@@ -30,8 +32,7 @@ export function Following() {
   }
 
   return (
-    <ScrollView>
-      <View style={{ width: "100%", padding: 10 }}>
+      <View style={{ width: "100%", height:"100%", backgroundColor: colors.background , padding: 10 }}>
         <List.Section
           style={{
             width: "100%",
@@ -51,7 +52,7 @@ export function Following() {
               >
                 <List.Item
                   style={{
-                    backgroundColor: "white",
+                    backgroundColor: colors.surface,
                     marginBottom: 10,
                     paddingLeft: 10,
                     borderRadius: 100,
@@ -72,6 +73,5 @@ export function Following() {
           })}
         </List.Section>
       </View>
-    </ScrollView>
   );
 }
