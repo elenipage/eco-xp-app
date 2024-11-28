@@ -1,3 +1,4 @@
+
 import { StyleSheet, Image, Text, View, Modal } from "react-native"
 import { SafeAreaProvider } from "react-native-safe-area-context"
 import { Surface, Button } from "react-native-paper"
@@ -25,7 +26,7 @@ export function ItemConfirmation() {
   const [modalVisible, setModalVisible] = useState(false);
 
   if (isLoading) {
-    return <Loader />
+    return <Loader />;
   }
 
   return (
@@ -81,15 +82,15 @@ export function ItemConfirmation() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 1,
-    width:"100%"
-  },
+  // container: {
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  //   flex: 1,
+  //   width: "100%",
+  // },
   icon: {
-    width: 100,
-    height: 100,
+    width: 50,
+    height: 50,
     justifyContent: "center",
   },
   item_img: {
@@ -119,7 +120,6 @@ const styles = StyleSheet.create({
   lottie: {
     width: "100%",
     position: "absolute",
-    width: "100%",
     top: 0, left: 0, bottom: 0, right: 0,
   }
 })

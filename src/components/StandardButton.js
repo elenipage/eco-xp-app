@@ -21,8 +21,8 @@ function StandardButton({ buttonText, tapFunction }) {
       <Text
         style={{
           fontSize: 16,
-          // width: "100%",
-          // textAlign: "center",
+          width: "100%",
+          textAlign: "center",
         }}
       >
         {buttonText}
