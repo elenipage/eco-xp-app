@@ -32,7 +32,6 @@ export function IsRecyclableButtons(props) {
   const navigation = useNavigation()
 
   function handleRecycle() {
-    // setIsLoading(true)
     setModalVisible(true)
     setTimeout(() => {
       setModalVisible(false);
@@ -50,6 +49,10 @@ export function IsRecyclableButtons(props) {
         return;
       })
       .catch((err) => {});
+  }
+
+  function handleBin () {
+    navigation.navigate("Main")
   }
 
   useEffect(() => {
@@ -158,22 +161,23 @@ export function IsRecyclableButtons(props) {
           )}
         </View>
       ) : (
-        <View style={styles.container}>
+        <View>
           <Image
             style={styles.icon}
             source={require("../../assets/dustbin.png")}
-          ></Image>
-          <Text style={styles.titleText}>This item is not recyclable</Text>
-          {isBinned ? (
-            <Text>You binned {scannedItemData.item_name}</Text>
+          />
+          {!isRecycled ? (
+            <Text style={styles.title}>Sorry, this item isn't recyclable</Text>
           ) : (
-            <Button
-              onPress={() => setIsBinned(true)}
-              mode="contained-tonal"
-            >
-              Bin item: {scannedItemData.item_name}
-            </Button>
+            <Text style={styles.title}>Recycled!</Text>
           )}
+    
+            <StandardButton
+              buttonText={`Put in the bin`}
+              tapFunction={() => {
+                handleBin();
+              }}
+            />
         </View>
       )}
     </Surface>
