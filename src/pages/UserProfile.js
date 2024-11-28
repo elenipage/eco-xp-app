@@ -6,10 +6,7 @@ import BaseLayout from "../components/BaseLayout";
 import { FollowersFollowing } from "../components/FollowersFollowing";
 import { Surface } from "react-native-paper";
 import { useUser } from "../context/user-context";
-import {
-  fetchFollowersByUserID,
-  fetchFollowingByUserID,
-} from "../../utils/api";
+import { fetchFollowersByUserID, fetchFollowingByUserID } from "../../utils/api";
 import { useEffect, useState } from "react";
 import { Loader } from "../components/Loader";
 import { useTheme } from "react-native-paper";
@@ -20,16 +17,19 @@ export function Profile() {
   const [followerCount, setFollowerCount] = useState(0);
   const [followingCount, setFollowingCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [loadingProgress, setLoadingProgress] = useState(0);
   const [logData, setLogData] = useState([]);
 
   useEffect(() => {
     setIsLoading(true);
-
+    setLoadingProgress(0.1);
     fetchFollowersByUserID(user.user_id)
       .then((followers) => {
         setFollowerCount(followers.length);
+        setLoadingProgress(0.3);
       })
       .then(() => {
+        setLoadingProgress(0.9);
         fetchFollowingByUserID(user.user_id).then((following) => {
           setFollowingCount(following.length);
         });
@@ -37,12 +37,13 @@ export function Profile() {
       .then(() => {
         streakData().then((response) => {
           setLogData(response);
+          setLoadingProgress(1);
           setIsLoading(false);
         });
       });
   }, []);
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <Loader loadingProgress={loadingProgress} />;
 
   return (
     <ScrollView>
@@ -71,9 +72,7 @@ export function Profile() {
             }}
           />
           <View style={{ width: "50%" }}>
-            <Text style={{ fontSize: 25, marginBottom: 10 }}>
-              {user.username}
-            </Text>
+            <Text style={{ fontSize: 25, marginBottom: 10 }}>{user.username}</Text>
             <FollowersFollowing
               user_id={user.user_id}
               followerCount={followerCount}
@@ -89,7 +88,7 @@ export function Profile() {
             padding: 10,
             borderRadius: 10,
             marginBottom: 20,
-            backgroundColor: colors.surface
+            backgroundColor: colors.surface,
           }}
         >
           <Text style={{ width: "100%", fontSize: 20, marginBottom: 10 }}>

@@ -15,13 +15,16 @@ export function LoginPage() {
   const { setXp } = useXp();
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingProgress, setLoadingProgress] = useState(0);
 
   function handleLogin() {
     setIsLoading(true);
+    setLoadingProgress(0.5);
     fetchUserByID(2)
       .then((fetchedUser) => {
         setUser(fetchedUser);
         setXp(fetchedUser.xp);
+        setLoadingProgress(1);
         setIsLoading(false);
         return fetchedUser;
       })
@@ -36,9 +39,7 @@ export function LoginPage() {
     }
   }, [isLoading]);
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <Loader loadingProgress={loadingProgress} />;
 
-  return (
-      <LoginForm handleLogin={handleLogin} />
-  );
+  return <LoginForm handleLogin={handleLogin} />;
 }
