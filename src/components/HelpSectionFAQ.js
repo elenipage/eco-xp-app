@@ -72,7 +72,7 @@ function FAQCard() {
   const styles = StyleSheet.create({
     cardContainer: {
       marginBottom: 15,
-      borderRadius: 12,
+      borderRadius: 20,
       padding: 15,
       width: "90%",
       alignSelf: "center",
@@ -118,8 +118,6 @@ function FAQCard() {
     recyclingFAQs.map((object, index) => {
       return <TouchableOpacity
         key={index}
-        // onPressIn={() => setIsPressed(true)}
-        // onPressOut={() => setIsPressed(false)}
         style={[styles.cardContainer, isPressed && styles.pressedCard]}
       >
         <Surface
