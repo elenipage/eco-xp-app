@@ -95,7 +95,7 @@ export default function Camera() {
           />
 
           
-          <TouchableOpacity style={{backgroundColor:"#91E228",width:100,height:100,top:"85%",borderRadius:100, alignItems:"center",justifyContent:"center"}} onPress={()=>{
+          <TouchableOpacity style={{backgroundColor:"#91E228",width:100,height:100,top:"83%",left:5,borderRadius:100, alignItems:"center",justifyContent:"center"}} onPress={()=>{
             setTorchFunc()
           }}><Text style={{fontSize:50}}>🔦</Text>
 
