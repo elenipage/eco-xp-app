@@ -1,18 +1,19 @@
 import React from "react";
-import { StyleSheet, Text, View, ScrollView, Linking } from "react-native";
+import { StyleSheet, Text, ScrollView, Linking, View } from "react-native";
 import { Button, useTheme, Surface } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function PlasticLifeCycle() {
-  const { fonts, colors } = useTheme()
+  const { colors } = useTheme();
 
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.backgroundColor,
-      width: "100%",
+      backgroundColor: colors.background,
+      justifyContent: "center",
       alignItems: "center",
-      justifyContent: "center"
+      padding: 10,
+      paddingTop: -30,
     },
     header: {
       textAlign: "center",
@@ -25,32 +26,34 @@ export default function PlasticLifeCycle() {
     body: {
       fontSize: 16,
       lineHeight: 24,
-      marginBottom: 10,
+      marginBottom: 20,
     },
-    image: {
+    button: {
+      marginTop: 10,
+      backgroundColor: colors.primary,
+      paddingVertical: 12,
+      borderRadius: 10,
       width: "100%",
-      height: 200,
-      borderRadius: 12,
-      borderWidth: 1,
-      borderColor: "#91E228",
-    }
+      alignItems: "center",
+    },
+    buttonText: {
+      color: colors.onPrimary,
+      fontSize: 16,
+      fontWeight: "bold",
+    },
+    surface: {
+      elevation: 2,
+      borderRadius: 20,
+      padding: 20,
+      marginTop: 20,
+      width: "100%",
+    },
   });
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-      >
-        <Surface elevation={2}
-              style={{
-                height: "95%",
-                width: "95%",
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: 20,
-                padding: 20,
-                margin: 10,
-              }}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <Surface style={styles.surface}>
           <Text style={styles.header}>Life Cycle of a Plastic Bottle</Text>
           <Text style={styles.body}>
             The life cycle of a plastic bottle typically begins with the
@@ -67,17 +70,21 @@ export default function PlasticLifeCycle() {
             rates, using biodegradable alternatives, and promoting reusable
             containers.
           </Text>
-          {/* <Image source={require('../../assets/plastic-bottle-lifecycle.jpg')} style={styles.image}/> */}
-          <Button mode="contained-tonal" onPress={() => {
+
+          <Button
+            mode="contained"
+            style={styles.button}
+            labelStyle={styles.buttonText}
+            onPress={() => {
               Linking.openURL(
                 "https://www.rts.com/blog/the-life-cycle-of-a-plastic-water-bottle/"
               );
-            }}>Learn more</Button>
-          
+            }}
+          >
+            Learn more
+          </Button>
         </Surface>
       </ScrollView>
     </SafeAreaView>
   );
 }
-
-
