@@ -9,8 +9,10 @@ import { useUser } from "../context/user-context";
 import { fetchFollowersByUserID, fetchFollowingByUserID } from "../../utils/api";
 import { useEffect, useState } from "react";
 import { Loader } from "../components/Loader";
+import { useTheme } from "react-native-paper";
 
 export function Profile() {
+  const { colors } = useTheme()
   const { user } = useUser()
   const [followerCount, setFollowerCount] = useState(0)
   const [followingCount, setFollowingCount] = useState(0)
@@ -44,6 +46,8 @@ export function Profile() {
       <BaseLayout>
         <View
           style={{
+            marginTop: 20,
+            marginBottom: 5,
             flexDirection: "row",
             width: "100%",
             alignItems: "center",
@@ -55,6 +59,7 @@ export function Profile() {
               width: 100,
               height: 100,
               marginBottom: 20,
+              marginTop: 5,
               borderRadius: 100,
               border: "5px solid #6DA99A",
             }}
@@ -69,22 +74,22 @@ export function Profile() {
         </View>
         <Surface style={{width:"100%", alignItems:"center", justifyContent: "center", padding:10, borderRadius:10, marginBottom:20}}>
           <Text style={{width:"100%", fontSize:20, marginBottom:10}}>Hi {user.first_name}!</Text>
-          <Text style={{width:"100%", fontSize:16, marginBottom:10}}>Your recycling contributions for November:</Text>
-          <Surface style={{width:270 , justifyContent: "center", alignItems:"center", padding:10, borderRadius:10}}>
+          <Text style={{width:"100%", fontSize:16, marginBottom:10}}>Your recycling contributions for this month:</Text>
+          <View style={{ width:270 , justifyContent: "center", alignItems:"center", padding:10, borderRadius:20, backgroundColor: "white",borderWidth: 4, borderColor: colors.secondary}}>
           <Streak data={logData} />
-          </Surface>
+          </View>
         </Surface>
-        <Surface style={{width:"100%", alignItems:"center", justifyContent: "center", padding:10, borderRadius:10}}>
+        <Surface style={{width:"100%", alignItems:"center", justifyContent: "center", padding:10, borderRadius:10, marginBottom:25}}>
           <Text style={{width:"100%", fontSize:20, marginBottom:10}}>Your Most Recycled Item:</Text>
           <Image style={{
               width: 150,
               height: 150,
               marginBottom: 20,
               borderRadius: 100,
-              border: "5px solid #6DA99A",
+              borderWidth: 4,
+              borderColor: colors.primary,
             }} source={{uri: "https://groceries.morrisons.com/images-v3/4b85987b-1398-4173-a0c1-3546047c9d74/ad3bbebf-cdbb-4b36-8a70-71dd4b5ada8b/500x500.jpg"}}></Image>
         </Surface>
-        
       </BaseLayout>
     </ScrollView>
   );
