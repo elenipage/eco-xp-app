@@ -8,15 +8,12 @@ import {
   Image,
   Vibration,
 } from "react-native"
-import { StatusBar } from "expo-status-bar"
 import { useEffect, useRef, useState } from "react"
-import { BackHandler } from "react-native"
 import { CameraView, useCameraPermissions } from "expo-camera"
 import { useNavigation, useIsFocused } from "@react-navigation/native"
 import { fetchItemByBarcode } from "../../utils/api"
-import { Portal } from "react-native-paper"
 import ConfirmationDialogue from "./ConfirmationDialogue"
-import StandardButton from "./StandardButton"
+
 
 export default function Camera() {
   const cameraref = useRef()
@@ -93,12 +90,9 @@ export default function Camera() {
             style={styles.image}
             source={require("../../assets/barcode-overlay.png")}
           />
-
-          
-          <TouchableOpacity style={{backgroundColor:"#91E228",width:100,height:100,top:"83%",left:5,borderRadius:100, alignItems:"center",justifyContent:"center"}} onPress={()=>{
+          <TouchableOpacity style={{backgroundColor:"#91E228",width:70,height:70,top:"87%",left:5,borderRadius:100, alignItems:"center",justifyContent:"center"}} onPress={()=>{
             setTorchFunc()
-          }}><Text style={{fontSize:50}}>🔦</Text>
-
+          }}><Text style={{fontSize:30}}>🔦</Text>
           </TouchableOpacity>
         </CameraView>
       )}

@@ -1,26 +1,24 @@
 import React from "react";
-import { StyleSheet, Text, SectionList, Linking } from "react-native";
-import { Button, useTheme } from "react-native-paper";
+import { StyleSheet, Text, SectionList, View, Linking } from "react-native";
+import { Button, Surface, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function RecyclingInfo() {
-  const { fonts, colors } = useTheme();
+  const { fonts, colors, surface } = useTheme();
 
   const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: colors.background,
+      height: "80%"
     },
     listContent: {
-      flexGrow: 1,
-      paddingHorizontal: 15,
-      paddingBottom: 20,
+      flex: 1,
     },
     header: {
       fontSize: 18,
-      fontWeight: "bold",
       color: colors.onSecondaryContainer,
-      backgroundColor: colors.secondaryContainer,
+      backgroundColor: colors.primaryContainer,
       padding: 10,
       borderRadius: 8,
       marginBottom: 10,
@@ -32,16 +30,14 @@ export default function RecyclingInfo() {
       paddingHorizontal: 10,
       backgroundColor: colors.surface,
       marginBottom: 6,
-      borderRadius: 5,
-      borderWidth: 1,
-      borderColor: colors.outline,
     },
     button: {
-      marginTop: 10,
-      backgroundColor: colors.primary,
-      paddingVertical: 12,
+      backgroundColor: colors.secondary,
+      padding: 5,
       borderRadius: 10,
       alignItems: "center",
+      justifyContent: "center",
+      marginVertical: 10,
       marginHorizontal: 20,
     },
     buttonText: {
@@ -64,16 +60,15 @@ export default function RecyclingInfo() {
   ];
 
   return (
-    <SafeAreaView style={styles.container}>
-      <SectionList
-        sections={recyclingData}
-        renderItem={({ item }) => <Text style={styles.item}>• {item}</Text>}
-        renderSectionHeader={({ section: { title } }) => (
-          <Text style={styles.header}>{title}</Text>
-        )}
-        contentContainerStyle={styles.listContent}
-        showsVerticalScrollIndicator={false}
-      />
+    <Surface style={{...surface, marginBottom: 50}}>
+      {recyclingData.map((section, index) => (
+        <View key={index} style={styles.section}>
+          <Text style={styles.header}>{section.title}</Text>
+          {section.data.map((item, itemIndex) => (
+            <Text key={itemIndex} style={styles.item}>• {item}</Text>
+          ))}
+        </View>
+      ))}
       <Button
         mode="contained-tonal"
         onPress={() => {
@@ -86,6 +81,8 @@ export default function RecyclingInfo() {
       >
         Learn more
       </Button>
-    </SafeAreaView>
+    </Surface>
+
+    
   );
 }
