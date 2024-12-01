@@ -26,5 +26,3 @@ export default function App() {
     </SafeAreaProvider>
   )
 }
-
-// Find out how to change android status and navbar colours to match app colours

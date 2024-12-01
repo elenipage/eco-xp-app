@@ -42,7 +42,7 @@ function singleFollowerLineChart(user_id) {
           strokeWidth: 3,
         },
       ],
-      legend: ["You", "Jimmy"],
+      legend: ["You", "Other User"],
     };
   });
 }

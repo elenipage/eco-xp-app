@@ -29,12 +29,7 @@ export function Loader(props) {
           name="recycle"
           size={100}
           color="#91E228"
-          // style={}
         />
-        {/* <ActivityIndicator
-          size="large"
-          style={styles.itemMargins}
-        /> */}
 
         <Text style={fonts.headlineSmall}>Loading, please wait</Text>
       </View>

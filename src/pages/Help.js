@@ -68,7 +68,6 @@ const styles = StyleSheet.create({
   imageStyling: {
     width: "100%",
     height: imageHeight,
-    // marginBottom: 20,
     resizeMode: "contain",
   },
 });

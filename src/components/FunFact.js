@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, Surface } from "react-native-paper";
+import { Text, Surface } from "react-native-paper";
 
 export function FunFact() {
   const recyclingFacts = [
@@ -28,12 +28,8 @@ export function FunFact() {
       style={{
         marginBottom:20,
         padding: 20,
-        // marginTop: 20,
-        // height: 120,
-        // width: "80%",
         alignItems: "center",
         justifyContent: "center",
-        // border:"hidden",
         borderRadius:20
       }}
     >

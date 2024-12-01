@@ -31,11 +31,6 @@ function RecyclingTipsCarousel() {
 
   return (
       <Swiper
-        // style={{
-        //   alignItems: "center",
-        //   justifyContent: "center",
-        //   overflow: "visible",
-        // }}
         showsButtons={false}
         loop={true}
         autoplay
