@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { Surface, useTheme } from "react-native-paper";
+import { useTheme } from "react-native-paper";
 
 export default function BinDateCard({ title, date, icon, color, size }) {
   const { fonts, colors } = useTheme();
@@ -9,7 +9,6 @@ export default function BinDateCard({ title, date, icon, color, size }) {
   const styles = StyleSheet.create({
     card: {
       padding: 10,
-      // paddingBottom: 20,
       marginVertical: 5,
       marginBottom: 10,
       backgroundColor: colors.surfaceVariant,

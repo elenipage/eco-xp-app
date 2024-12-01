@@ -81,7 +81,6 @@ export default function Camera() {
               .catch((error) => {
                 if (error.response.status === 404) {
                   setShowDialog(true)
-                  // navigation.navigate("Add a New Item", { barcodeValue: data });
                 }
               })
           }}

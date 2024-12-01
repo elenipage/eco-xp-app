@@ -91,8 +91,6 @@ export function AddNewItem() {
         img_url: data.publicUrl
       }
 
-      console.log(obj)
-
       postNewItem(obj)
       .then(({data}) => {
         setXp(xp + 10)

@@ -66,7 +66,6 @@ export function IsRecyclableButtons(props) {
       justifyContent: "center",
       alignItems: "center",
       flex: 1,
-      // margin: 100,
       width: "100%",
     },
     icon: {
@@ -110,16 +109,12 @@ export function IsRecyclableButtons(props) {
     <Surface
       elevation={3}
       style={{
-        // marginBottom: 20,
         padding: 20,
-        // height: "50%",
         width: "100%",
-        // margin: 20,
         alignItems: "center",
         justifyContent: "center",
         borderRadius: 20,
       }}
-      // style={surface}
     >
       {isRecyclable ? (
         <View>

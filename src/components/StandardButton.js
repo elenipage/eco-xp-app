@@ -6,7 +6,6 @@ function StandardButton({ buttonText, tapFunction }) {
     <Button
       mode="contained-tonal"
       style={{
-        // height: 60,
         width: "100%",
         borderRadius: 30,
         marginBottom:10
@@ -14,7 +13,6 @@ function StandardButton({ buttonText, tapFunction }) {
       contentStyle={{
         height: 60,
         width: "100%",
-        // justifyContent: "center",
       }}
       onPress={tapFunction}
     >
