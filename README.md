@@ -17,51 +17,11 @@ Much of the council and area data has been inserted for demo purposes for the ti
 
 ## Using the App  
 
-### How to Run EcoXp Locally  
+Currently we are working on modifying the app so that users can be authenticated and can therefore run the app locally on their mobile devices. 
 
-To view and use EcoXp on your local machine:  
+In the meantime, you can view the demo video for our project as well as some info about the team [here](https://northcoders.com/project-phase/ecoxp)!
 
-### Prerequisites  
-
-To run this project locally you will need:
-
-- `Node.js` version `22.7.0`
-- [Expo Go](https://expo.dev/go) installed on a mobile device
---- 
-
-### Cloning and Installation
-
-To clone this repo, run: 
-```bash
-git clone https://github.com/elenipage/eco-xp-app
-```
-Navigate into your local repo:
-```bash
-cd eco-xp-app
-```
-
-To install the required dependencies, run:
- 
-```bash
-npm install
-```
-You will need a .env file in the root of your repo which links to a [supabase bucket](https://supabase.com/docs/guides/storage) that can store any images you might take. The contents are the file need to be something like the following:
-
-```sh
-SUPABASE_URL=example-url
-SUPABASE_SERVICE_KEY=example-key
-```
-
---- 
-### Launch the app and view it using your phone
-First, to go live, run:
-```sh
-npm run start
-```
-This will create a QR code that you can scan with either your phone camera if your device uses iOS, or scan it in your Expo Go app if your device uses Android.
-
-### Now you can explore the app's UI and use it to scan your items!
-
+<img src='./assets/Screenshot 2024-12-04 at 12.20.20.png' href='https://northcoders.com/project-phase/ecoxp'>
 
 ---
 
