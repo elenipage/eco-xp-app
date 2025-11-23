@@ -19,7 +19,7 @@ Much of the council and area data has been inserted for demo purposes for the ti
 
 Currently we are working on modifying the app so that users can be authenticated and can therefore run the app locally on their mobile devices. 
 
-In the meantime, you can view the demo video for our project as well as some info about the team [here](https://northcoders.com/project-phase/ecoxp)!
+In the meantime, you can view the demo video for our project as well as some info about the team [here](https://www.northcoders.com/blog/student-projects-ecoxp/)!
 
 <img src='./assets/Screenshot 2024-12-04 at 12.20.20.png' href='https://northcoders.com/project-phase/ecoxp'>
 
